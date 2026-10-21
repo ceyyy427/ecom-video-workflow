@@ -1,0 +1,12 @@
+{
+  "repository": "https://github.com/westng/ocean-watch",
+  "commit": "9b05b3b51c1dba8a8f95937976e95162b5e748e3",
+  "version": "1.0.9+codex.20260924172936",
+  "sha256": {
+    "ocean-watch_darwin_amd64": "cc413de1f69df29587142e764e53a633401e6d572c75d4ee9f271592bbc6e427",
+    "ocean-watch_darwin_arm64": "84971a8b18fa59922e9b3bf330f247bb43c78f4a91b15162ae0a4fdfbb29e2cf",
+    "ocean-watch_linux_amd64": "becd8ad6ea94d731cbfbebbb05ac5fd9708b8b27c905bcd33e8a53e308f6c218",
+    "ocean-watch_linux_arm64": "1f3fe604672e2bf5297a722f2f1fbb3395bfbded9b8947e77e03be1c09deffe2",
+    "ocean-watch_windows_amd64.exe": "df0ede2ceca03032c56b02c90a101dfc97bfb444122f2726988643eb3bcd8f5a"
+  }
+}

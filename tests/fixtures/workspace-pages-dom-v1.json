@@ -1,0 +1,2982 @@
+{
+  "samples.html": {
+    "ids": {
+      "materialExamples": {
+        "tag": "section",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "materialGallery": {
+        "tag": "div",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "semanticExamples": {
+        "tag": "section",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "semanticGallery": {
+        "tag": "div",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "productCardExamples": {
+        "tag": "section",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "productCardGallery": {
+        "tag": "div",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "libraryMotionExamples": {
+        "tag": "section",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "libraryMotionGallery": {
+        "tag": "div",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "promptCategoryExamples": {
+        "tag": "section",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "promptCategoryGallery": {
+        "tag": "div",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "promptExamples": {
+        "tag": "section",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "promptGallery": {
+        "tag": "div",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "framingExamples": {
+        "tag": "section",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "framingGallery": {
+        "tag": "div",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "refinementExamples": {
+        "tag": "section",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "refinementGallery": {
+        "tag": "div",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "qualityExamples": {
+        "tag": "section",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "qualityGallery": {
+        "tag": "div",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "readinessExamples": {
+        "tag": "section",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "readinessGallery": {
+        "tag": "div",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "productionExamples": {
+        "tag": "section",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "productionGallery": {
+        "tag": "div",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "narrativeExamples": {
+        "tag": "section",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "narrativeGallery": {
+        "tag": "div",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "motionExamples": {
+        "tag": "section",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "motionGallery": {
+        "tag": "div",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "categoryExamples": {
+        "tag": "section",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "categoryGallery": {
+        "tag": "div",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "contextualExamples": {
+        "tag": "section",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "contextualGallery": {
+        "tag": "div",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "clientGallery": {
+        "tag": "div",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "sampleGallery": {
+        "tag": "div",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      }
+    },
+    "forms": [],
+    "links": [
+      "/",
+      "/create",
+      "/distribution#review",
+      "/studio",
+      "/guide",
+      "/prompts"
+    ],
+    "scripts": [
+      "/static/samples.js"
+    ],
+    "classes": [
+      [
+        "materialExamples",
+        "section",
+        [
+          "panel"
+        ]
+      ],
+      [
+        "materialGallery",
+        "div",
+        [
+          "sample-gallery"
+        ]
+      ],
+      [
+        "semanticExamples",
+        "section",
+        [
+          "panel"
+        ]
+      ],
+      [
+        "semanticGallery",
+        "div",
+        [
+          "sample-gallery"
+        ]
+      ],
+      [
+        "productCardExamples",
+        "section",
+        [
+          "panel"
+        ]
+      ],
+      [
+        "productCardGallery",
+        "div",
+        [
+          "sample-gallery"
+        ]
+      ],
+      [
+        "libraryMotionExamples",
+        "section",
+        [
+          "panel"
+        ]
+      ],
+      [
+        "libraryMotionGallery",
+        "div",
+        [
+          "sample-gallery"
+        ]
+      ],
+      [
+        "promptCategoryExamples",
+        "section",
+        [
+          "panel"
+        ]
+      ],
+      [
+        "promptCategoryGallery",
+        "div",
+        [
+          "sample-gallery"
+        ]
+      ],
+      [
+        "promptExamples",
+        "section",
+        [
+          "panel"
+        ]
+      ],
+      [
+        "promptGallery",
+        "div",
+        [
+          "sample-gallery"
+        ]
+      ],
+      [
+        "framingExamples",
+        "section",
+        [
+          "panel"
+        ]
+      ],
+      [
+        "framingGallery",
+        "div",
+        [
+          "sample-gallery"
+        ]
+      ],
+      [
+        "refinementExamples",
+        "section",
+        [
+          "panel"
+        ]
+      ],
+      [
+        "refinementGallery",
+        "div",
+        [
+          "sample-gallery"
+        ]
+      ],
+      [
+        "qualityExamples",
+        "section",
+        [
+          "panel"
+        ]
+      ],
+      [
+        "qualityGallery",
+        "div",
+        [
+          "sample-gallery"
+        ]
+      ],
+      [
+        "readinessExamples",
+        "section",
+        [
+          "panel"
+        ]
+      ],
+      [
+        "readinessGallery",
+        "div",
+        [
+          "sample-gallery"
+        ]
+      ],
+      [
+        "productionExamples",
+        "section",
+        [
+          "panel"
+        ]
+      ],
+      [
+        "productionGallery",
+        "div",
+        [
+          "sample-gallery"
+        ]
+      ],
+      [
+        "narrativeExamples",
+        "section",
+        [
+          "panel"
+        ]
+      ],
+      [
+        "narrativeGallery",
+        "div",
+        [
+          "sample-gallery"
+        ]
+      ],
+      [
+        "motionExamples",
+        "section",
+        [
+          "panel"
+        ]
+      ],
+      [
+        "motionGallery",
+        "div",
+        [
+          "sample-gallery"
+        ]
+      ],
+      [
+        "categoryExamples",
+        "section",
+        [
+          "panel"
+        ]
+      ],
+      [
+        "categoryGallery",
+        "div",
+        [
+          "sample-gallery"
+        ]
+      ],
+      [
+        "contextualExamples",
+        "section",
+        [
+          "panel"
+        ]
+      ],
+      [
+        "contextualGallery",
+        "div",
+        [
+          "sample-gallery"
+        ]
+      ],
+      [
+        "clientGallery",
+        "div",
+        [
+          "sample-gallery"
+        ]
+      ],
+      [
+        "sampleGallery",
+        "div",
+        [
+          "sample-gallery"
+        ]
+      ]
+    ]
+  },
+  "distribution.html": {
+    "ids": {
+      "notice": {
+        "tag": "div",
+        "attrs": {
+          "hidden": "",
+          "role": "status",
+          "aria-live": "polite"
+        },
+        "parents": [],
+        "options": null
+      },
+      "capabilities": {
+        "tag": "p",
+        "attrs": {
+          "role": "status"
+        },
+        "parents": [],
+        "options": null
+      },
+      "account": {
+        "tag": "select",
+        "attrs": {},
+        "parents": [],
+        "options": [
+          [
+            "",
+            "请先添加账户"
+          ]
+        ]
+      },
+      "accountForm": {
+        "tag": "form",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "accountName": {
+        "tag": "input",
+        "attrs": {
+          "required": "",
+          "maxlength": "120"
+        },
+        "parents": [
+          [
+            "form",
+            "accountForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "platform": {
+        "tag": "select",
+        "attrs": {},
+        "parents": [
+          [
+            "form",
+            "accountForm",
+            null
+          ]
+        ],
+        "options": [
+          [
+            "qianchuan",
+            "巨量千川"
+          ],
+          [
+            "oceanengine",
+            "巨量引擎（CSV 复盘）"
+          ]
+        ]
+      },
+      "advertiser": {
+        "tag": "input",
+        "attrs": {
+          "required": "",
+          "pattern": "[1-9][0-9]{0,29}"
+        },
+        "parents": [
+          [
+            "form",
+            "accountForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "authAlias": {
+        "tag": "input",
+        "attrs": {
+          "pattern": "[A-Za-z0-9_-]{1,100}"
+        },
+        "parents": [
+          [
+            "form",
+            "accountForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "review": {
+        "tag": "section",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "exportReview": {
+        "tag": "a",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "filterForm": {
+        "tag": "form",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "startDate": {
+        "tag": "input",
+        "attrs": {
+          "type": "date",
+          "required": ""
+        },
+        "parents": [
+          [
+            "form",
+            "filterForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "endDate": {
+        "tag": "input",
+        "attrs": {
+          "type": "date",
+          "required": ""
+        },
+        "parents": [
+          [
+            "form",
+            "filterForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "importForm": {
+        "tag": "form",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "reportFile": {
+        "tag": "input",
+        "attrs": {
+          "type": "file",
+          "accept": ".csv",
+          "required": ""
+        },
+        "parents": [
+          [
+            "form",
+            "importForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "importActor": {
+        "tag": "input",
+        "attrs": {
+          "required": "",
+          "maxlength": "120"
+        },
+        "parents": [
+          [
+            "form",
+            "importForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "importWindow": {
+        "tag": "input",
+        "attrs": {
+          "maxlength": "80"
+        },
+        "parents": [
+          [
+            "form",
+            "importForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "importWindowCheck": {
+        "tag": "input",
+        "attrs": {
+          "type": "checkbox"
+        },
+        "parents": [
+          [
+            "form",
+            "importForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "importCheck": {
+        "tag": "input",
+        "attrs": {
+          "type": "checkbox",
+          "required": ""
+        },
+        "parents": [
+          [
+            "form",
+            "importForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "syncForm": {
+        "tag": "form",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "syncActor": {
+        "tag": "input",
+        "attrs": {
+          "required": "",
+          "maxlength": "120"
+        },
+        "parents": [
+          [
+            "form",
+            "syncForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "syncs": {
+        "tag": "div",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "dashboard": {
+        "tag": "div",
+        "attrs": {
+          "hidden": ""
+        },
+        "parents": [],
+        "options": null
+      },
+      "coverage": {
+        "tag": "p",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "kpis": {
+        "tag": "div",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "basis": {
+        "tag": "p",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "chart": {
+        "tag": "div",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "dailyRows": {
+        "tag": "tbody",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "materialRows": {
+        "tag": "tbody",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "bindingForm": {
+        "tag": "form",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "materialId": {
+        "tag": "input",
+        "attrs": {
+          "required": ""
+        },
+        "parents": [
+          [
+            "form",
+            "bindingForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "bindingJob": {
+        "tag": "select",
+        "attrs": {
+          "required": ""
+        },
+        "parents": [
+          [
+            "form",
+            "bindingForm",
+            null
+          ]
+        ],
+        "options": []
+      },
+      "bindingActor": {
+        "tag": "input",
+        "attrs": {
+          "required": "",
+          "maxlength": "120"
+        },
+        "parents": [
+          [
+            "form",
+            "bindingForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "bindingCheck": {
+        "tag": "input",
+        "attrs": {
+          "type": "checkbox",
+          "required": ""
+        },
+        "parents": [
+          [
+            "form",
+            "bindingForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "batches": {
+        "tag": "div",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "insights": {
+        "tag": "ul",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "frozenPanel": {
+        "tag": "section",
+        "attrs": {
+          "hidden": ""
+        },
+        "parents": [],
+        "options": null
+      },
+      "freezeForm": {
+        "tag": "form",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "reviewActor": {
+        "tag": "input",
+        "attrs": {
+          "required": "",
+          "maxlength": "120"
+        },
+        "parents": [
+          [
+            "form",
+            "freezeForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "freezeCheck": {
+        "tag": "input",
+        "attrs": {
+          "type": "checkbox",
+          "required": ""
+        },
+        "parents": [
+          [
+            "form",
+            "freezeForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "freezeButton": {
+        "tag": "button",
+        "attrs": {},
+        "parents": [
+          [
+            "form",
+            "freezeForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "reviewNotice": {
+        "tag": "p",
+        "attrs": {
+          "role": "status",
+          "aria-live": "polite"
+        },
+        "parents": [],
+        "options": null
+      },
+      "frozenHistory": {
+        "tag": "select",
+        "attrs": {},
+        "parents": [],
+        "options": [
+          [
+            "",
+            "选择已冻结复盘"
+          ]
+        ]
+      },
+      "frozenId": {
+        "tag": "input",
+        "attrs": {
+          "maxlength": "32",
+          "pattern": "[a-f0-9]{32}"
+        },
+        "parents": [],
+        "options": null
+      },
+      "openFrozenId": {
+        "tag": "button",
+        "attrs": {
+          "type": "button"
+        },
+        "parents": [],
+        "options": null
+      },
+      "frozenView": {
+        "tag": "div",
+        "attrs": {
+          "hidden": ""
+        },
+        "parents": [],
+        "options": null
+      },
+      "frozenTitle": {
+        "tag": "h3",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "frozenMeta": {
+        "tag": "p",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "frozenHash": {
+        "tag": "p",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "frozenBasis": {
+        "tag": "p",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "frozenIssues": {
+        "tag": "p",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "frozenKpis": {
+        "tag": "div",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "frozenDownload": {
+        "tag": "a",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "verifyFrozen": {
+        "tag": "button",
+        "attrs": {
+          "type": "button"
+        },
+        "parents": [],
+        "options": null
+      },
+      "frozenRows": {
+        "tag": "tbody",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "frozenPrev": {
+        "tag": "button",
+        "attrs": {
+          "type": "button"
+        },
+        "parents": [],
+        "options": null
+      },
+      "frozenRowCount": {
+        "tag": "span",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "frozenNext": {
+        "tag": "button",
+        "attrs": {
+          "type": "button"
+        },
+        "parents": [],
+        "options": null
+      },
+      "frozenFeatures": {
+        "tag": "div",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "frozenMaterialPrev": {
+        "tag": "button",
+        "attrs": {
+          "type": "button"
+        },
+        "parents": [],
+        "options": null
+      },
+      "frozenMaterialCount": {
+        "tag": "span",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "frozenMaterialNext": {
+        "tag": "button",
+        "attrs": {
+          "type": "button"
+        },
+        "parents": [],
+        "options": null
+      },
+      "frozenSources": {
+        "tag": "div",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "publish": {
+        "tag": "section",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "refreshTasks": {
+        "tag": "button",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "taskForm": {
+        "tag": "form",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "job": {
+        "tag": "select",
+        "attrs": {
+          "required": ""
+        },
+        "parents": [
+          [
+            "form",
+            "taskForm",
+            null
+          ]
+        ],
+        "options": []
+      },
+      "planName": {
+        "tag": "input",
+        "attrs": {
+          "required": "",
+          "maxlength": "100"
+        },
+        "parents": [
+          [
+            "form",
+            "taskForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "budget": {
+        "tag": "input",
+        "attrs": {
+          "required": ""
+        },
+        "parents": [
+          [
+            "form",
+            "taskForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "targetRoi": {
+        "tag": "input",
+        "attrs": {
+          "required": ""
+        },
+        "parents": [
+          [
+            "form",
+            "taskForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "tasks": {
+        "tag": "div",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "taskDialog": {
+        "tag": "dialog",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "taskTitle": {
+        "tag": "h2",
+        "attrs": {},
+        "parents": [
+          [
+            "dialog",
+            "taskDialog",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "taskSummary": {
+        "tag": "div",
+        "attrs": {},
+        "parents": [
+          [
+            "dialog",
+            "taskDialog",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "videoLink": {
+        "tag": "a",
+        "attrs": {},
+        "parents": [
+          [
+            "dialog",
+            "taskDialog",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "packageLink": {
+        "tag": "a",
+        "attrs": {
+          "hidden": ""
+        },
+        "parents": [
+          [
+            "dialog",
+            "taskDialog",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "approvalForm": {
+        "tag": "form",
+        "attrs": {},
+        "parents": [
+          [
+            "dialog",
+            "taskDialog",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "approver": {
+        "tag": "input",
+        "attrs": {
+          "required": "",
+          "maxlength": "120"
+        },
+        "parents": [
+          [
+            "form",
+            "approvalForm",
+            null
+          ],
+          [
+            "dialog",
+            "taskDialog",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "approvalNote": {
+        "tag": "textarea",
+        "attrs": {
+          "required": "",
+          "maxlength": "2000"
+        },
+        "parents": [
+          [
+            "form",
+            "approvalForm",
+            null
+          ],
+          [
+            "dialog",
+            "taskDialog",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "approvalCheck": {
+        "tag": "input",
+        "attrs": {
+          "type": "checkbox",
+          "required": ""
+        },
+        "parents": [
+          [
+            "form",
+            "approvalForm",
+            null
+          ],
+          [
+            "dialog",
+            "taskDialog",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "receiptForm": {
+        "tag": "form",
+        "attrs": {
+          "hidden": ""
+        },
+        "parents": [
+          [
+            "dialog",
+            "taskDialog",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "adId": {
+        "tag": "input",
+        "attrs": {
+          "required": "",
+          "pattern": "[1-9][0-9]{0,29}"
+        },
+        "parents": [
+          [
+            "form",
+            "receiptForm",
+            null
+          ],
+          [
+            "dialog",
+            "taskDialog",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "receiptStatus": {
+        "tag": "select",
+        "attrs": {},
+        "parents": [
+          [
+            "form",
+            "receiptForm",
+            null
+          ],
+          [
+            "dialog",
+            "taskDialog",
+            null
+          ]
+        ],
+        "options": []
+      },
+      "receiptActor": {
+        "tag": "input",
+        "attrs": {
+          "required": "",
+          "maxlength": "120"
+        },
+        "parents": [
+          [
+            "form",
+            "receiptForm",
+            null
+          ],
+          [
+            "dialog",
+            "taskDialog",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "receiptNote": {
+        "tag": "textarea",
+        "attrs": {
+          "required": "",
+          "maxlength": "2000"
+        },
+        "parents": [
+          [
+            "form",
+            "receiptForm",
+            null
+          ],
+          [
+            "dialog",
+            "taskDialog",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "receiptCheck": {
+        "tag": "input",
+        "attrs": {
+          "type": "checkbox",
+          "required": ""
+        },
+        "parents": [
+          [
+            "form",
+            "receiptForm",
+            null
+          ],
+          [
+            "dialog",
+            "taskDialog",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "cancelTask": {
+        "tag": "button",
+        "attrs": {
+          "hidden": ""
+        },
+        "parents": [
+          [
+            "dialog",
+            "taskDialog",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "taskEvents": {
+        "tag": "pre",
+        "attrs": {},
+        "parents": [
+          [
+            "dialog",
+            "taskDialog",
+            null
+          ]
+        ],
+        "options": null
+      }
+    },
+    "forms": [
+      {
+        "attrs": {
+          "id": "accountForm",
+          "class": [
+            "form-grid"
+          ]
+        },
+        "controls": [
+          [
+            "input",
+            {
+              "id": "accountName",
+              "maxlength": "120",
+              "required": "",
+              "placeholder": "例如：品牌千川账户"
+            },
+            ""
+          ],
+          [
+            "select",
+            {
+              "id": "platform"
+            },
+            ""
+          ],
+          [
+            "input",
+            {
+              "id": "advertiser",
+              "inputmode": "numeric",
+              "pattern": "[1-9][0-9]{0,29}",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "input",
+            {
+              "id": "authAlias",
+              "pattern": "[A-Za-z0-9_-]{1,100}",
+              "placeholder": "本地授权记录别名，不是密钥"
+            },
+            ""
+          ],
+          [
+            "button",
+            {},
+            "保存账户"
+          ]
+        ]
+      },
+      {
+        "attrs": {
+          "id": "filterForm",
+          "class": [
+            "filter-form"
+          ]
+        },
+        "controls": [
+          [
+            "input",
+            {
+              "id": "startDate",
+              "type": "date",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "input",
+            {
+              "id": "endDate",
+              "type": "date",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "button",
+            {},
+            "查看复盘"
+          ]
+        ]
+      },
+      {
+        "attrs": {
+          "id": "importForm"
+        },
+        "controls": [
+          [
+            "input",
+            {
+              "id": "reportFile",
+              "type": "file",
+              "accept": ".csv",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "input",
+            {
+              "id": "importActor",
+              "maxlength": "120",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "input",
+            {
+              "id": "importWindow",
+              "maxlength": "80",
+              "placeholder": "照抄平台导出设置，例如 7d_click"
+            },
+            ""
+          ],
+          [
+            "input",
+            {
+              "id": "importWindowCheck",
+              "type": "checkbox"
+            },
+            ""
+          ],
+          [
+            "input",
+            {
+              "id": "importCheck",
+              "type": "checkbox",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "button",
+            {},
+            "校验并导入"
+          ]
+        ]
+      },
+      {
+        "attrs": {
+          "id": "syncForm"
+        },
+        "controls": [
+          [
+            "input",
+            {
+              "id": "syncActor",
+              "maxlength": "120",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "button",
+            {},
+            "排队同步只读报表"
+          ]
+        ]
+      },
+      {
+        "attrs": {
+          "id": "bindingForm",
+          "class": [
+            "form-grid"
+          ]
+        },
+        "controls": [
+          [
+            "input",
+            {
+              "id": "materialId",
+              "inputmode": "numeric",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "select",
+            {
+              "id": "bindingJob",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "input",
+            {
+              "id": "bindingActor",
+              "maxlength": "120",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "input",
+            {
+              "id": "bindingCheck",
+              "type": "checkbox",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "button",
+            {},
+            "保存关联"
+          ]
+        ]
+      },
+      {
+        "attrs": {
+          "id": "freezeForm",
+          "class": [
+            "form-grid"
+          ]
+        },
+        "controls": [
+          [
+            "input",
+            {
+              "id": "reviewActor",
+              "maxlength": "120",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "input",
+            {
+              "id": "freezeCheck",
+              "type": "checkbox",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "button",
+            {
+              "id": "freezeButton"
+            },
+            "冻结当前复盘"
+          ]
+        ]
+      },
+      {
+        "attrs": {
+          "id": "taskForm",
+          "class": [
+            "form-grid"
+          ]
+        },
+        "controls": [
+          [
+            "select",
+            {
+              "id": "job",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "input",
+            {
+              "id": "planName",
+              "maxlength": "100",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "input",
+            {
+              "id": "budget",
+              "inputmode": "decimal",
+              "required": "",
+              "placeholder": "请填写预算"
+            },
+            ""
+          ],
+          [
+            "input",
+            {
+              "id": "targetRoi",
+              "inputmode": "decimal",
+              "required": "",
+              "placeholder": "例如 1.5"
+            },
+            ""
+          ],
+          [
+            "button",
+            {},
+            "生成待确认任务"
+          ]
+        ]
+      },
+      {
+        "attrs": {
+          "method": "dialog"
+        },
+        "controls": [
+          [
+            "button",
+            {
+              "aria-label": "关闭任务详情"
+            },
+            "\n              关闭\n            "
+          ]
+        ]
+      },
+      {
+        "attrs": {
+          "id": "approvalForm"
+        },
+        "controls": [
+          [
+            "input",
+            {
+              "id": "approver",
+              "maxlength": "120",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "textarea",
+            {
+              "id": "approvalNote",
+              "maxlength": "2000",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "input",
+            {
+              "id": "approvalCheck",
+              "type": "checkbox",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "button",
+            {},
+            "确认并生成投放包"
+          ]
+        ]
+      },
+      {
+        "attrs": {
+          "id": "receiptForm",
+          "hidden": ""
+        },
+        "controls": [
+          [
+            "input",
+            {
+              "id": "adId",
+              "inputmode": "numeric",
+              "pattern": "[1-9][0-9]{0,29}",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "select",
+            {
+              "id": "receiptStatus"
+            },
+            ""
+          ],
+          [
+            "input",
+            {
+              "id": "receiptActor",
+              "maxlength": "120",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "textarea",
+            {
+              "id": "receiptNote",
+              "maxlength": "2000",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "input",
+            {
+              "id": "receiptCheck",
+              "type": "checkbox",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "button",
+            {},
+            "保存人工回执"
+          ]
+        ]
+      }
+    ],
+    "links": [
+      "/",
+      "/create",
+      "/distribution",
+      "/guide",
+      "/experiments",
+      "#review",
+      "#publish",
+      "/api/reports/template"
+    ],
+    "scripts": [
+      "/static/distribution.js",
+      "/static/reviews.js"
+    ],
+    "classes": [
+      [
+        "notice",
+        "div",
+        null
+      ],
+      [
+        "capabilities",
+        "p",
+        [
+          "capability"
+        ]
+      ],
+      [
+        "account",
+        "select",
+        null
+      ],
+      [
+        "accountForm",
+        "form",
+        [
+          "form-grid"
+        ]
+      ],
+      [
+        "accountName",
+        "input",
+        null
+      ],
+      [
+        "platform",
+        "select",
+        null
+      ],
+      [
+        "advertiser",
+        "input",
+        null
+      ],
+      [
+        "authAlias",
+        "input",
+        null
+      ],
+      [
+        "review",
+        "section",
+        [
+          "panel"
+        ]
+      ],
+      [
+        "exportReview",
+        "a",
+        null
+      ],
+      [
+        "filterForm",
+        "form",
+        [
+          "filter-form"
+        ]
+      ],
+      [
+        "startDate",
+        "input",
+        null
+      ],
+      [
+        "endDate",
+        "input",
+        null
+      ],
+      [
+        "importForm",
+        "form",
+        null
+      ],
+      [
+        "reportFile",
+        "input",
+        null
+      ],
+      [
+        "importActor",
+        "input",
+        null
+      ],
+      [
+        "importWindow",
+        "input",
+        null
+      ],
+      [
+        "importWindowCheck",
+        "input",
+        null
+      ],
+      [
+        "importCheck",
+        "input",
+        null
+      ],
+      [
+        "syncForm",
+        "form",
+        null
+      ],
+      [
+        "syncActor",
+        "input",
+        null
+      ],
+      [
+        "syncs",
+        "div",
+        null
+      ],
+      [
+        "dashboard",
+        "div",
+        null
+      ],
+      [
+        "coverage",
+        "p",
+        [
+          "capability"
+        ]
+      ],
+      [
+        "kpis",
+        "div",
+        [
+          "kpis"
+        ]
+      ],
+      [
+        "basis",
+        "p",
+        [
+          "muted"
+        ]
+      ],
+      [
+        "chart",
+        "div",
+        [
+          "chart"
+        ]
+      ],
+      [
+        "dailyRows",
+        "tbody",
+        null
+      ],
+      [
+        "materialRows",
+        "tbody",
+        null
+      ],
+      [
+        "bindingForm",
+        "form",
+        [
+          "form-grid"
+        ]
+      ],
+      [
+        "materialId",
+        "input",
+        null
+      ],
+      [
+        "bindingJob",
+        "select",
+        null
+      ],
+      [
+        "bindingActor",
+        "input",
+        null
+      ],
+      [
+        "bindingCheck",
+        "input",
+        null
+      ],
+      [
+        "batches",
+        "div",
+        null
+      ],
+      [
+        "insights",
+        "ul",
+        null
+      ],
+      [
+        "frozenPanel",
+        "section",
+        [
+          "panel"
+        ]
+      ],
+      [
+        "freezeForm",
+        "form",
+        [
+          "form-grid"
+        ]
+      ],
+      [
+        "reviewActor",
+        "input",
+        null
+      ],
+      [
+        "freezeCheck",
+        "input",
+        null
+      ],
+      [
+        "freezeButton",
+        "button",
+        null
+      ],
+      [
+        "reviewNotice",
+        "p",
+        null
+      ],
+      [
+        "frozenHistory",
+        "select",
+        null
+      ],
+      [
+        "frozenId",
+        "input",
+        null
+      ],
+      [
+        "openFrozenId",
+        "button",
+        [
+          "secondary"
+        ]
+      ],
+      [
+        "frozenView",
+        "div",
+        null
+      ],
+      [
+        "frozenTitle",
+        "h3",
+        null
+      ],
+      [
+        "frozenMeta",
+        "p",
+        null
+      ],
+      [
+        "frozenHash",
+        "p",
+        [
+          "hash"
+        ]
+      ],
+      [
+        "frozenBasis",
+        "p",
+        [
+          "muted"
+        ]
+      ],
+      [
+        "frozenIssues",
+        "p",
+        [
+          "capability"
+        ]
+      ],
+      [
+        "frozenKpis",
+        "div",
+        [
+          "kpis"
+        ]
+      ],
+      [
+        "frozenDownload",
+        "a",
+        null
+      ],
+      [
+        "verifyFrozen",
+        "button",
+        [
+          "secondary"
+        ]
+      ],
+      [
+        "frozenRows",
+        "tbody",
+        null
+      ],
+      [
+        "frozenPrev",
+        "button",
+        [
+          "secondary"
+        ]
+      ],
+      [
+        "frozenRowCount",
+        "span",
+        null
+      ],
+      [
+        "frozenNext",
+        "button",
+        [
+          "secondary"
+        ]
+      ],
+      [
+        "frozenFeatures",
+        "div",
+        null
+      ],
+      [
+        "frozenMaterialPrev",
+        "button",
+        [
+          "secondary"
+        ]
+      ],
+      [
+        "frozenMaterialCount",
+        "span",
+        null
+      ],
+      [
+        "frozenMaterialNext",
+        "button",
+        [
+          "secondary"
+        ]
+      ],
+      [
+        "frozenSources",
+        "div",
+        null
+      ],
+      [
+        "publish",
+        "section",
+        [
+          "panel"
+        ]
+      ],
+      [
+        "refreshTasks",
+        "button",
+        [
+          "secondary"
+        ]
+      ],
+      [
+        "taskForm",
+        "form",
+        [
+          "form-grid"
+        ]
+      ],
+      [
+        "job",
+        "select",
+        null
+      ],
+      [
+        "planName",
+        "input",
+        null
+      ],
+      [
+        "budget",
+        "input",
+        null
+      ],
+      [
+        "targetRoi",
+        "input",
+        null
+      ],
+      [
+        "tasks",
+        "div",
+        [
+          "task-list"
+        ]
+      ],
+      [
+        "taskDialog",
+        "dialog",
+        null
+      ],
+      [
+        "taskTitle",
+        "h2",
+        null
+      ],
+      [
+        "taskSummary",
+        "div",
+        null
+      ],
+      [
+        "videoLink",
+        "a",
+        null
+      ],
+      [
+        "packageLink",
+        "a",
+        null
+      ],
+      [
+        "approvalForm",
+        "form",
+        null
+      ],
+      [
+        "approver",
+        "input",
+        null
+      ],
+      [
+        "approvalNote",
+        "textarea",
+        null
+      ],
+      [
+        "approvalCheck",
+        "input",
+        null
+      ],
+      [
+        "receiptForm",
+        "form",
+        null
+      ],
+      [
+        "adId",
+        "input",
+        null
+      ],
+      [
+        "receiptStatus",
+        "select",
+        null
+      ],
+      [
+        "receiptActor",
+        "input",
+        null
+      ],
+      [
+        "receiptNote",
+        "textarea",
+        null
+      ],
+      [
+        "receiptCheck",
+        "input",
+        null
+      ],
+      [
+        "cancelTask",
+        "button",
+        [
+          "secondary"
+        ]
+      ],
+      [
+        "taskEvents",
+        "pre",
+        null
+      ]
+    ]
+  },
+  "setup.html": {
+    "ids": {
+      "refreshSetup": {
+        "tag": "button",
+        "attrs": {
+          "type": "button"
+        },
+        "parents": [],
+        "options": null
+      },
+      "setupState": {
+        "tag": "p",
+        "attrs": {
+          "role": "status",
+          "aria-live": "polite"
+        },
+        "parents": [],
+        "options": null
+      },
+      "environmentChecks": {
+        "tag": "ul",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "diskStatus": {
+        "tag": "p",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "visionStatus": {
+        "tag": "p",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "visionModel": {
+        "tag": "select",
+        "attrs": {},
+        "parents": [],
+        "options": []
+      },
+      "saveVision": {
+        "tag": "button",
+        "attrs": {
+          "type": "button"
+        },
+        "parents": [],
+        "options": null
+      },
+      "visionResult": {
+        "tag": "p",
+        "attrs": {
+          "role": "status"
+        },
+        "parents": [],
+        "options": null
+      },
+      "asrStatus": {
+        "tag": "p",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "asrConsent": {
+        "tag": "input",
+        "attrs": {
+          "type": "checkbox"
+        },
+        "parents": [],
+        "options": null
+      },
+      "installAsr": {
+        "tag": "button",
+        "attrs": {
+          "type": "button",
+          "disabled": ""
+        },
+        "parents": [],
+        "options": null
+      },
+      "cancelAsr": {
+        "tag": "button",
+        "attrs": {
+          "type": "button",
+          "disabled": ""
+        },
+        "parents": [],
+        "options": null
+      },
+      "asrProgress": {
+        "tag": "p",
+        "attrs": {
+          "role": "status",
+          "aria-live": "polite"
+        },
+        "parents": [],
+        "options": null
+      },
+      "voiceStatus": {
+        "tag": "p",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "voiceForm": {
+        "tag": "form",
+        "attrs": {
+          "autocomplete": "off"
+        },
+        "parents": [],
+        "options": null
+      },
+      "voiceKey": {
+        "tag": "input",
+        "attrs": {
+          "type": "password",
+          "required": "",
+          "maxlength": "4096",
+          "autocomplete": "new-password",
+          "spellcheck": "false"
+        },
+        "parents": [
+          [
+            "form",
+            "voiceForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "setupSpeaker": {
+        "tag": "select",
+        "attrs": {},
+        "parents": [
+          [
+            "form",
+            "voiceForm",
+            null
+          ]
+        ],
+        "options": []
+      },
+      "replaceVoice": {
+        "tag": "input",
+        "attrs": {
+          "type": "checkbox"
+        },
+        "parents": [
+          [
+            "form",
+            "voiceForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "saveVoice": {
+        "tag": "button",
+        "attrs": {
+          "type": "submit"
+        },
+        "parents": [
+          [
+            "form",
+            "voiceForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "voiceResult": {
+        "tag": "p",
+        "attrs": {
+          "role": "status",
+          "aria-live": "polite"
+        },
+        "parents": [],
+        "options": null
+      }
+    },
+    "forms": [
+      {
+        "attrs": {
+          "id": "voiceForm",
+          "autocomplete": "off"
+        },
+        "controls": [
+          [
+            "input",
+            {
+              "id": "voiceKey",
+              "type": "password",
+              "maxlength": "4096",
+              "autocomplete": "new-password",
+              "spellcheck": "false",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "select",
+            {
+              "id": "setupSpeaker"
+            },
+            ""
+          ],
+          [
+            "input",
+            {
+              "id": "replaceVoice",
+              "type": "checkbox"
+            },
+            ""
+          ],
+          [
+            "button",
+            {
+              "id": "saveVoice",
+              "type": "submit"
+            },
+            "仅保存本机配音配置"
+          ]
+        ]
+      }
+    ],
+    "links": [
+      "/",
+      "/setup",
+      "/create",
+      "/guide",
+      "/maintenance",
+      "/api/system/install-guide",
+      "/api/system/windows-guide",
+      "/api/system/handoff-guide",
+      "/create",
+      "/samples"
+    ],
+    "scripts": [
+      "/static/setup.js"
+    ],
+    "classes": [
+      [
+        "refreshSetup",
+        "button",
+        null
+      ],
+      [
+        "setupState",
+        "p",
+        null
+      ],
+      [
+        "environmentChecks",
+        "ul",
+        null
+      ],
+      [
+        "diskStatus",
+        "p",
+        null
+      ],
+      [
+        "visionStatus",
+        "p",
+        null
+      ],
+      [
+        "visionModel",
+        "select",
+        null
+      ],
+      [
+        "saveVision",
+        "button",
+        null
+      ],
+      [
+        "visionResult",
+        "p",
+        null
+      ],
+      [
+        "asrStatus",
+        "p",
+        null
+      ],
+      [
+        "asrConsent",
+        "input",
+        null
+      ],
+      [
+        "installAsr",
+        "button",
+        null
+      ],
+      [
+        "cancelAsr",
+        "button",
+        [
+          "secondary"
+        ]
+      ],
+      [
+        "asrProgress",
+        "p",
+        null
+      ],
+      [
+        "voiceStatus",
+        "p",
+        null
+      ],
+      [
+        "voiceForm",
+        "form",
+        null
+      ],
+      [
+        "voiceKey",
+        "input",
+        null
+      ],
+      [
+        "setupSpeaker",
+        "select",
+        null
+      ],
+      [
+        "replaceVoice",
+        "input",
+        null
+      ],
+      [
+        "saveVoice",
+        "button",
+        null
+      ],
+      [
+        "voiceResult",
+        "p",
+        null
+      ]
+    ]
+  },
+  "recovery.html": {
+    "ids": {
+      "currentVersion": {
+        "tag": "p",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "refreshRecovery": {
+        "tag": "button",
+        "attrs": {
+          "type": "button"
+        },
+        "parents": [],
+        "options": null
+      },
+      "recoveryState": {
+        "tag": "p",
+        "attrs": {
+          "role": "status",
+          "aria-live": "polite"
+        },
+        "parents": [],
+        "options": null
+      },
+      "backupConsent": {
+        "tag": "input",
+        "attrs": {
+          "type": "checkbox"
+        },
+        "parents": [],
+        "options": null
+      },
+      "makeBackup": {
+        "tag": "button",
+        "attrs": {
+          "type": "button",
+          "disabled": ""
+        },
+        "parents": [],
+        "options": null
+      },
+      "backupList": {
+        "tag": "div",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "importForm": {
+        "tag": "form",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "backupZip": {
+        "tag": "input",
+        "attrs": {
+          "type": "file",
+          "accept": ".zip",
+          "required": ""
+        },
+        "parents": [
+          [
+            "form",
+            "importForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "importConsent": {
+        "tag": "input",
+        "attrs": {
+          "type": "checkbox",
+          "required": ""
+        },
+        "parents": [
+          [
+            "form",
+            "importForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "restoreList": {
+        "tag": "div",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "packageForm": {
+        "tag": "form",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "releaseZip": {
+        "tag": "input",
+        "attrs": {
+          "type": "file",
+          "accept": ".zip",
+          "required": ""
+        },
+        "parents": [
+          [
+            "form",
+            "packageForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "releaseSha": {
+        "tag": "input",
+        "attrs": {
+          "type": "text",
+          "required": "",
+          "maxlength": "64",
+          "pattern": "[a-f0-9]{64}"
+        },
+        "parents": [
+          [
+            "form",
+            "packageForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "codeConsent": {
+        "tag": "input",
+        "attrs": {
+          "type": "checkbox",
+          "required": ""
+        },
+        "parents": [
+          [
+            "form",
+            "packageForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "packageList": {
+        "tag": "div",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "releaseList": {
+        "tag": "div",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      },
+      "operationList": {
+        "tag": "div",
+        "attrs": {},
+        "parents": [],
+        "options": null
+      }
+    },
+    "forms": [
+      {
+        "attrs": {
+          "id": "importForm"
+        },
+        "controls": [
+          [
+            "input",
+            {
+              "id": "backupZip",
+              "type": "file",
+              "accept": ".zip",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "input",
+            {
+              "id": "importConsent",
+              "type": "checkbox",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "button",
+            {
+              "type": "submit"
+            },
+            "导入并校验备份"
+          ]
+        ]
+      },
+      {
+        "attrs": {
+          "id": "packageForm"
+        },
+        "controls": [
+          [
+            "input",
+            {
+              "id": "releaseZip",
+              "type": "file",
+              "accept": ".zip",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "input",
+            {
+              "id": "releaseSha",
+              "type": "text",
+              "pattern": "[a-f0-9]{64}",
+              "maxlength": "64",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "input",
+            {
+              "id": "codeConsent",
+              "type": "checkbox",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "button",
+            {
+              "type": "submit"
+            },
+            "校验并登记安装包"
+          ]
+        ]
+      }
+    ],
+    "links": [
+      "/",
+      "/setup",
+      "/create",
+      "/maintenance",
+      "/guide",
+      "/api/system/install-guide"
+    ],
+    "scripts": [
+      "/static/recovery.js"
+    ],
+    "classes": [
+      [
+        "currentVersion",
+        "p",
+        null
+      ],
+      [
+        "refreshRecovery",
+        "button",
+        null
+      ],
+      [
+        "recoveryState",
+        "p",
+        null
+      ],
+      [
+        "backupConsent",
+        "input",
+        null
+      ],
+      [
+        "makeBackup",
+        "button",
+        null
+      ],
+      [
+        "backupList",
+        "div",
+        null
+      ],
+      [
+        "importForm",
+        "form",
+        null
+      ],
+      [
+        "backupZip",
+        "input",
+        null
+      ],
+      [
+        "importConsent",
+        "input",
+        null
+      ],
+      [
+        "restoreList",
+        "div",
+        null
+      ],
+      [
+        "packageForm",
+        "form",
+        null
+      ],
+      [
+        "releaseZip",
+        "input",
+        null
+      ],
+      [
+        "releaseSha",
+        "input",
+        null
+      ],
+      [
+        "codeConsent",
+        "input",
+        null
+      ],
+      [
+        "packageList",
+        "div",
+        null
+      ],
+      [
+        "releaseList",
+        "div",
+        null
+      ],
+      [
+        "operationList",
+        "div",
+        null
+      ]
+    ]
+  }
+}

@@ -1,0 +1,38 @@
+[project]
+name = "ecom-video-workflow"
+version = "0.13.1"
+description = "Local, reviewable ecommerce video production workflow"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi==0.141.1",
+    "uvicorn==0.54.0",
+    "python-multipart==0.0.32",
+    "Pillow==12.3.0",
+    "pypdf==6.20.1",
+    "beautifulsoup4==4.14.3",
+    "defusedxml==0.7.1",
+    "httpx==0.28.1",
+    "sherpa-onnx==1.13.8",
+    "sherpa-onnx-core==1.13.8",
+    "soundfile==0.14.0",
+    "numpy==2.4.6",
+    "zhconv==1.4.3",
+    "pypinyin==0.55.0",
+]
+[dependency-groups]
+browser = [
+    "playwright==1.61.0",
+]
+dev = [
+    "pytest==9.1.1",
+    "httpx2==2.13.1",
+    "ruff==0.17.0",
+]
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I", "B", "SIM", "C4"]

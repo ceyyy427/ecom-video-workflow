@@ -1,0 +1,1088 @@
+{
+  "message": {
+    "tag": "div",
+    "attrs": {
+      "role": "status",
+      "aria-live": "polite"
+    },
+    "fieldsets": [],
+    "options": null
+  },
+  "customerIteration": {
+    "tag": "p",
+    "attrs": {
+      "hidden": ""
+    },
+    "fieldsets": [],
+    "options": null
+  },
+  "customerIterationText": {
+    "tag": "span",
+    "attrs": {},
+    "fieldsets": [],
+    "options": null
+  },
+  "customerIterationLink": {
+    "tag": "a",
+    "attrs": {},
+    "fieldsets": [],
+    "options": null
+  },
+  "projectControls": {
+    "tag": "fieldset",
+    "attrs": {
+      "disabled": ""
+    },
+    "fieldsets": [],
+    "options": null
+  },
+  "projectSelect": {
+    "tag": "select",
+    "attrs": {},
+    "fieldsets": [
+      "projectControls"
+    ],
+    "options": [
+      [
+        "",
+        "新建客户商品"
+      ]
+    ]
+  },
+  "newTitle": {
+    "tag": "input",
+    "attrs": {
+      "maxlength": "120"
+    },
+    "fieldsets": [
+      "projectControls"
+    ],
+    "options": null
+  },
+  "createProject": {
+    "tag": "button",
+    "attrs": {
+      "type": "button"
+    },
+    "fieldsets": [
+      "projectControls"
+    ],
+    "options": null
+  },
+  "work": {
+    "tag": "fieldset",
+    "attrs": {
+      "disabled": "",
+      "hidden": ""
+    },
+    "fieldsets": [],
+    "options": null
+  },
+  "projectState": {
+    "tag": "small",
+    "attrs": {},
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "format": {
+    "tag": "select",
+    "attrs": {},
+    "fieldsets": [
+      "work"
+    ],
+    "options": [
+      [
+        "narrated",
+        "商品展示＋配音"
+      ],
+      [
+        "showcase",
+        "纯商品展示"
+      ],
+      [
+        "recommendation",
+        "场景种草"
+      ],
+      [
+        "review",
+        "测评视频"
+      ]
+    ]
+  },
+  "brandName": {
+    "tag": "input",
+    "attrs": {
+      "maxlength": "24"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "category": {
+    "tag": "input",
+    "attrs": {
+      "maxlength": "80"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "audience": {
+    "tag": "input",
+    "attrs": {
+      "maxlength": "120"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "tone": {
+    "tag": "input",
+    "attrs": {
+      "maxlength": "120"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "motionRepeatLimit": {
+    "tag": "select",
+    "attrs": {},
+    "fieldsets": [
+      "work"
+    ],
+    "options": [
+      [
+        "1",
+        "1次"
+      ],
+      [
+        "2",
+        "2次"
+      ],
+      [
+        "3",
+        "3次"
+      ],
+      [
+        "4",
+        "4次"
+      ]
+    ]
+  },
+  "autoSelect": {
+    "tag": "input",
+    "attrs": {
+      "type": "checkbox"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "productReference": {
+    "tag": "select",
+    "attrs": {},
+    "fieldsets": [
+      "work"
+    ],
+    "options": [
+      [
+        "",
+        "请先上传清楚的商品图片"
+      ]
+    ]
+  },
+  "referenceOnly": {
+    "tag": "input",
+    "attrs": {
+      "type": "checkbox"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "materialChecks": {
+    "tag": "input",
+    "attrs": {
+      "type": "checkbox"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "strictProduct": {
+    "tag": "input",
+    "attrs": {
+      "type": "checkbox"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "actionTiming": {
+    "tag": "input",
+    "attrs": {
+      "type": "checkbox"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "reviewContext": {
+    "tag": "textarea",
+    "attrs": {
+      "maxlength": "1000"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "saveSettings": {
+    "tag": "button",
+    "attrs": {
+      "type": "button"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "documents": {
+    "tag": "input",
+    "attrs": {
+      "type": "file",
+      "accept": ".txt,.md,.pdf,.docx",
+      "multiple": ""
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "visuals": {
+    "tag": "input",
+    "attrs": {
+      "type": "file",
+      "accept": ".jpg,.jpeg,.png,.webp,.mp4,.mov,.webm",
+      "multiple": ""
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "voiceUpload": {
+    "tag": "input",
+    "attrs": {
+      "type": "file",
+      "accept": ".mp3,.wav,.m4a"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "musicUpload": {
+    "tag": "input",
+    "attrs": {
+      "type": "file",
+      "accept": ".mp3,.wav,.m4a"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "sourceList": {
+    "tag": "div",
+    "attrs": {},
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "mediaList": {
+    "tag": "div",
+    "attrs": {},
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "facts": {
+    "tag": "div",
+    "attrs": {},
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "factReviewer": {
+    "tag": "input",
+    "attrs": {
+      "maxlength": "80"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "factNote": {
+    "tag": "input",
+    "attrs": {
+      "maxlength": "1000"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "factsChecked": {
+    "tag": "input",
+    "attrs": {
+      "type": "checkbox"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "confirmFacts": {
+    "tag": "button",
+    "attrs": {
+      "type": "button"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "scriptPanel": {
+    "tag": "div",
+    "attrs": {
+      "hidden": ""
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "previewAlternatives": {
+    "tag": "button",
+    "attrs": {
+      "type": "button"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "scriptAlternatives": {
+    "tag": "div",
+    "attrs": {
+      "aria-live": "polite"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "generateDirected": {
+    "tag": "button",
+    "attrs": {
+      "type": "button"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "scriptPaste": {
+    "tag": "textarea",
+    "attrs": {
+      "maxlength": "3000"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "scriptUpload": {
+    "tag": "input",
+    "attrs": {
+      "type": "file",
+      "accept": ".txt"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "applyScript": {
+    "tag": "button",
+    "attrs": {
+      "type": "button"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "scriptScenes": {
+    "tag": "div",
+    "attrs": {},
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "checkMaterials": {
+    "tag": "button",
+    "attrs": {
+      "type": "button"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "materialReadiness": {
+    "tag": "div",
+    "attrs": {
+      "aria-live": "polite"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "scriptReviewer": {
+    "tag": "input",
+    "attrs": {
+      "maxlength": "80"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "scriptNote": {
+    "tag": "input",
+    "attrs": {
+      "maxlength": "1000"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "scriptChecked": {
+    "tag": "input",
+    "attrs": {
+      "type": "checkbox"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "approveScript": {
+    "tag": "button",
+    "attrs": {
+      "type": "button"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "approvedHint": {
+    "tag": "p",
+    "attrs": {},
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "prepare": {
+    "tag": "button",
+    "attrs": {
+      "type": "button"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "styleState": {
+    "tag": "small",
+    "attrs": {},
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "directions": {
+    "tag": "div",
+    "attrs": {},
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "promptMatches": {
+    "tag": "div",
+    "attrs": {
+      "aria-live": "polite"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "previewState": {
+    "tag": "p",
+    "attrs": {
+      "role": "status"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "previewStyles": {
+    "tag": "button",
+    "attrs": {
+      "type": "button",
+      "hidden": ""
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "voiceHeading": {
+    "tag": "h3",
+    "attrs": {},
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "volcVoiceProfile": {
+    "tag": "p",
+    "attrs": {},
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "volcVoiceState": {
+    "tag": "p",
+    "attrs": {
+      "role": "status"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "volcVoiceSpeaker": {
+    "tag": "select",
+    "attrs": {},
+    "fieldsets": [
+      "work"
+    ],
+    "options": []
+  },
+  "volcVoiceConsent": {
+    "tag": "input",
+    "attrs": {
+      "type": "checkbox"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "volcVoicePreview": {
+    "tag": "button",
+    "attrs": {
+      "type": "button",
+      "disabled": ""
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "volcVoiceGenerate": {
+    "tag": "button",
+    "attrs": {
+      "type": "button",
+      "disabled": ""
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "volcVoiceRefresh": {
+    "tag": "button",
+    "attrs": {
+      "type": "button"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "volcVoicePreviewText": {
+    "tag": "p",
+    "attrs": {},
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "volcVoicePreviewPlayer": {
+    "tag": "audio",
+    "attrs": {
+      "hidden": "",
+      "controls": "",
+      "preload": "none"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "volcVoiceHistory": {
+    "tag": "div",
+    "attrs": {},
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "alignmentPanel": {
+    "tag": "div",
+    "attrs": {
+      "hidden": ""
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "voicePlayer": {
+    "tag": "audio",
+    "attrs": {
+      "controls": "",
+      "preload": "metadata"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "alignmentState": {
+    "tag": "p",
+    "attrs": {},
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "alignmentDiagnosis": {
+    "tag": "div",
+    "attrs": {
+      "hidden": ""
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "retryAlignment": {
+    "tag": "button",
+    "attrs": {
+      "type": "button"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "alignmentDetail": {
+    "tag": "a",
+    "attrs": {},
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "sentences": {
+    "tag": "div",
+    "attrs": {},
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "voiceReviewer": {
+    "tag": "input",
+    "attrs": {
+      "maxlength": "120"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "voiceChecked": {
+    "tag": "input",
+    "attrs": {
+      "type": "checkbox"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "confirmListening": {
+    "tag": "button",
+    "attrs": {
+      "type": "button"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "makeBoard": {
+    "tag": "button",
+    "attrs": {
+      "type": "button"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "selectionHint": {
+    "tag": "p",
+    "attrs": {},
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "jobState": {
+    "tag": "small",
+    "attrs": {},
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "inputChanged": {
+    "tag": "div",
+    "attrs": {
+      "hidden": ""
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "planningNotes": {
+    "tag": "div",
+    "attrs": {},
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "shotList": {
+    "tag": "div",
+    "attrs": {},
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "render": {
+    "tag": "button",
+    "attrs": {
+      "type": "button"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "cancelRender": {
+    "tag": "button",
+    "attrs": {
+      "type": "button",
+      "hidden": ""
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "retryRender": {
+    "tag": "button",
+    "attrs": {
+      "type": "button",
+      "hidden": ""
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "film": {
+    "tag": "video",
+    "attrs": {
+      "hidden": "",
+      "controls": "",
+      "playsinline": ""
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "renderMessage": {
+    "tag": "p",
+    "attrs": {},
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "downloads": {
+    "tag": "div",
+    "attrs": {},
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "advanced": {
+    "tag": "a",
+    "attrs": {},
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "combinedAudit": {
+    "tag": "section",
+    "attrs": {},
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "combinedAuditBody": {
+    "tag": "div",
+    "attrs": {},
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "reviewPanel": {
+    "tag": "div",
+    "attrs": {
+      "hidden": ""
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "filmReviewer": {
+    "tag": "input",
+    "attrs": {
+      "maxlength": "120"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "filmNote": {
+    "tag": "textarea",
+    "attrs": {
+      "maxlength": "2000"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "filmChecked": {
+    "tag": "input",
+    "attrs": {
+      "type": "checkbox"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "acceptFilm": {
+    "tag": "button",
+    "attrs": {
+      "type": "button"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "versions": {
+    "tag": "div",
+    "attrs": {},
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "agentPanel": {
+    "tag": "section",
+    "attrs": {
+      "hidden": ""
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "agentSteps": {
+    "tag": "input",
+    "attrs": {
+      "type": "number",
+      "min": "1",
+      "max": "80",
+      "value": "40"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "agentSeconds": {
+    "tag": "input",
+    "attrs": {
+      "type": "number",
+      "min": "30",
+      "max": "14400",
+      "value": "3600"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "agentCalls": {
+    "tag": "input",
+    "attrs": {
+      "type": "number",
+      "min": "0",
+      "max": "500",
+      "value": "120"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "agentReviewer": {
+    "tag": "input",
+    "attrs": {
+      "maxlength": "120"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "agentStyleChecked": {
+    "tag": "input",
+    "attrs": {
+      "type": "checkbox"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "agentState": {
+    "tag": "p",
+    "attrs": {
+      "role": "status"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "agentStart": {
+    "tag": "button",
+    "attrs": {
+      "type": "button"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "agentPause": {
+    "tag": "button",
+    "attrs": {
+      "type": "button"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "agentResume": {
+    "tag": "button",
+    "attrs": {
+      "type": "button"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  },
+  "agentCancel": {
+    "tag": "button",
+    "attrs": {
+      "type": "button"
+    },
+    "fieldsets": [
+      "work"
+    ],
+    "options": null
+  }
+}

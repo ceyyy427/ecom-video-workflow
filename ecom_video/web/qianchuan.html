@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>剪序 · 千川投放</title>
+    <link rel="stylesheet" href="/static/style.css" />
+    <link rel="stylesheet" href="/static/distribution.css" />
+    <script src="/static/qianchuan.js" defer></script>
+  </head>
+  <body class="distribution-page">
+    <header>
+      <a class="brand" href="/"
+        >▧ <strong>剪序</strong><span>电商视频工作台</span></a
+      ><a href="/distribution">投放与复盘</a
+      ><span class="edition">本地版 P4</span>
+    </header>
+    <div id="notice" role="status" aria-live="polite" hidden></div>
+    <main class="distribution-main">
+      <div class="page-heading">
+        <div>
+          <p class="eyebrow">审核成片 → 上传 → 确认广告 → 复盘</p>
+          <h1>千川接口配置（可选）</h1>
+          <p class="muted">
+            本项目默认由客户自行投放，仅做视频制作与投放后复盘。以下保留原生接口供客户独立配置，不是使用剪辑或 CSV 复盘的前提。
+          </p>
+        </div>
+        <a href="/distribution#review">查看数据复盘 →</a>
+      </div>
+      <section class="panel">
+        <h2>01 / 授权广告主</h2>
+        <label>千川账户<select id="account"></select></label>
+        <p><a href="/distribution">添加或查看账户</a></p>
+        <p id="authStatus" class="capability">读取授权状态…</p>
+        <p id="setup" class="muted">
+          首次使用：在本机运行 scripts/qianchuan_setup.py，设置应用
+          ID、Secret、回调地址和每计划预算参数上限。Secret
+          不在网页输入。仅同步报表时保持 ECOM_QIANCHUAN_WRITES 关闭；写入能力不属于当前交付流程。
+        </p>
+        <button id="authorize">生成授权链接</button>
+        <a id="oauthLink" target="_blank" rel="noopener noreferrer" hidden
+          >前往千川授权 ↗</a
+        >
+        <button id="verify" class="secondary">重新核验授权</button>
+        <button id="disconnect" class="secondary">断开本地授权</button>
+        <p class="muted">
+          断开本地授权会阻止后续请求；平台侧撤销请在巨量开放平台操作。
+        </p>
+      </section>
+      <section class="panel">
+        <h2>02 / 创建投放草稿</h2>
+        <p class="muted">
+          本版支持：一条已审核竖版视频、一个商品、自定义目标
+          ROI2、立即开始排期。关闭智能优选素材。预算参数的周期与平台限额请在千川核对。
+        </p>
+        <form id="draftForm" class="form-grid">
+          <label class="wide"
+            >已审核成片<select id="job" required></select></label
+          ><label>计划名称<input id="name" maxlength="40" required /></label
+          ><label
+            >商品 ID<input
+              id="product"
+              pattern="[1-9][0-9]{0,18}"
+              required /></label
+          ><label
+            >抖音号 ID（aweme_id）<input
+              id="aweme"
+              pattern="[1-9][0-9]{0,18}"
+              required /></label
+          ><label
+            >创意标题（5–30 字）<input
+              id="title"
+              minlength="5"
+              maxlength="30"
+              required /></label
+          ><label
+            >预算参数（元）<input
+              id="budget"
+              inputmode="decimal"
+              required /></label
+          ><label
+            >目标 ROI2<input id="roi" inputmode="decimal" required /></label
+          ><label
+            >AIGC 属性<select id="aigc" required>
+              <option value="">请选择</option>
+              <option value="true">是，包含 AI 生成内容</option>
+              <option value="false">否</option>
+            </select></label
+          ><button>保存投放草稿</button>
+        </form>
+      </section>
+      <section class="panel">
+        <div class="section-top">
+          <h2>03 / 确认与执行记录</h2>
+          <button id="refresh" class="secondary">刷新状态</button>
+        </div>
+        <div id="tasks" class="task-list"></div>
+      </section>
+      <dialog id="detail">
+        <form method="dialog">
+          <button class="secondary close">关闭</button>
+        </form>
+        <h2 id="taskTitle"></h2>
+        <p id="summary"></p>
+        <a id="video" target="_blank" rel="noopener">查看已审核成片 ↗</a>
+        <p id="taskError" role="status"></p>
+        <pre id="payload"></pre>
+        <p id="hash" class="hash"></p>
+        <form id="consentForm">
+          <label>确认人<input id="reviewer" maxlength="120" required /></label
+          ><label
+            >核对说明<textarea
+              id="note"
+              maxlength="2000"
+              required
+            ></textarea></label
+          ><label class="check"
+            ><input id="confirmed" type="checkbox" required /><span
+              id="consentLabel"
+            ></span></label
+          ><button id="submitConsent"></button>
+        </form>
+        <form id="resolveForm" hidden>
+          <p>
+            请先在平台核对广告主、计划名后缀和提交时间。仅登记人工核验结果，不自动重试。
+          </p>
+          <label
+            >核验结果<select id="outcome">
+              <option value="found">已找到广告计划</option>
+              <option value="not_created">已确认未产生该写入</option>
+            </select></label
+          ><label
+            >广告计划 ID（找到时必填）<input
+              id="adId"
+              inputmode="numeric" /></label
+          ><label>核验人<input id="resolveActor" required /></label
+          ><label
+            >平台核验依据<textarea
+              id="resolveNote"
+              required
+              maxlength="2000"
+            ></textarea></label
+          ><label class="check"
+            ><input
+              id="resolveCheck"
+              type="checkbox"
+              required
+            />我已在平台核实，理解错误登记可能造成重复上传或投放。</label
+          ><button>保存人工核验</button>
+        </form>
+        <button id="recheck" class="secondary" hidden>
+          重新查询素材并生成预览
+        </button>
+        <button id="cancel" class="secondary" hidden>取消后续本地步骤</button>
+        <details>
+          <summary>完整审计记录</summary>
+          <pre id="events"></pre>
+        </details>
+      </dialog>
+    </main>
+  </body>
+</html>

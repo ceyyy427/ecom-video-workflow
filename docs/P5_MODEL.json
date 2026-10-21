@@ -1,0 +1,9 @@
+{
+  "repo": "csukuangfj2/sherpa-onnx-fire-red-asr2-ctc-zh_en-int8-2026-02-25",
+  "revision": "main",
+  "revision_note": "Remote commit lookup timed out; content is pinned by SHA256, changed bytes are rejected.",
+  "files": {
+    "model.int8.onnx": "ca3dbabd82170110cc0b343c2890866d449984bc9cd92b9a18371ff80a81bb99",
+    "tokens.txt": "1bc613de2112d257e61a349c3e72d1b1a9cf19c33d3ca954197ad2171e5ea07b"
+  }
+}

@@ -1,0 +1,310 @@
+{
+  "tech-punch-v1": {
+    "id": "tech-punch-v1",
+    "name": "科技定点急推",
+    "recipe": "media-punch-in",
+    "keywords": [
+      "数码",
+      "科技",
+      "通勤",
+      "耳机",
+      "专业",
+      "利落"
+    ],
+    "prompt": "先让观众看清商品整体，在对应口播摘句到来时向已核对焦点短促推近，落定留看，再回到整体。只处理真实画面，不震屏、不闪白、不改变源视频速度；动作保护区间内关闭。",
+    "source": {
+      "repository": "Vincentwei1021/video-shotcraft",
+      "commit": "43bd349a136651865ecfa6ea1cf012f6e957d304",
+      "license": "Apache-2.0",
+      "url": "https://vincentwei1021.github.io/video-shotcraft/source/crash-zoom-punch.md",
+      "local_reference": "vendor/video-shotcraft/2026-10-motion/references/shots/camera/crash-zoom-punch.md"
+    },
+    "adaptation": "本项目原创竖屏适配；引用镜头方法，不执行上游代码或生成商品事实",
+    "presentation": {
+      "zoom": 1.18,
+      "travel_frames": 10,
+      "shape": "rounded"
+    },
+    "requirements": [
+      "有使用权的同款商品画面",
+      "短边至少720像素",
+      "人工核对焦点、裁切和动作保护区间"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "78e81c1f1c012917ba26ec112be61070b6f71b5eef4eaffed8f73d0405e2c231"
+  },
+  "sport-punch-v1": {
+    "id": "sport-punch-v1",
+    "name": "活力商品重拍",
+    "recipe": "media-punch-in",
+    "keywords": [
+      "年轻",
+      "学生",
+      "运动",
+      "活泼",
+      "节奏",
+      "潮流"
+    ],
+    "prompt": "先让观众看清商品整体，在对应口播摘句到来时向已核对焦点短促推近，落定留看，再回到整体。只处理真实画面，不震屏、不闪白、不改变源视频速度；动作保护区间内关闭。",
+    "source": {
+      "repository": "Vincentwei1021/video-shotcraft",
+      "commit": "43bd349a136651865ecfa6ea1cf012f6e957d304",
+      "license": "Apache-2.0",
+      "url": "https://vincentwei1021.github.io/video-shotcraft/source/crash-zoom-punch.md",
+      "local_reference": "vendor/video-shotcraft/2026-10-motion/references/shots/camera/crash-zoom-punch.md"
+    },
+    "adaptation": "本项目原创竖屏适配；引用镜头方法，不执行上游代码或生成商品事实",
+    "presentation": {
+      "zoom": 1.23,
+      "travel_frames": 7,
+      "shape": "diagonal"
+    },
+    "requirements": [
+      "有使用权的同款商品画面",
+      "短边至少720像素",
+      "人工核对焦点、裁切和动作保护区间"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "0d2595c0347f290df0219eb1d25e6db75dbd18a872e0d8f8ef7db40d454cc3b9"
+  },
+  "daily-punch-v1": {
+    "id": "daily-punch-v1",
+    "name": "日常轻推点题",
+    "recipe": "media-punch-in",
+    "keywords": [
+      "生活",
+      "亲切",
+      "日常",
+      "家居",
+      "食品",
+      "自然"
+    ],
+    "prompt": "先让观众看清商品整体，在对应口播摘句到来时向已核对焦点短促推近，落定留看，再回到整体。只处理真实画面，不震屏、不闪白、不改变源视频速度；动作保护区间内关闭。",
+    "source": {
+      "repository": "Vincentwei1021/video-shotcraft",
+      "commit": "43bd349a136651865ecfa6ea1cf012f6e957d304",
+      "license": "Apache-2.0",
+      "url": "https://vincentwei1021.github.io/video-shotcraft/source/crash-zoom-punch.md",
+      "local_reference": "vendor/video-shotcraft/2026-10-motion/references/shots/camera/crash-zoom-punch.md"
+    },
+    "adaptation": "本项目原创竖屏适配；引用镜头方法，不执行上游代码或生成商品事实",
+    "presentation": {
+      "zoom": 1.12,
+      "travel_frames": 16,
+      "shape": "circle"
+    },
+    "requirements": [
+      "有使用权的同款商品画面",
+      "短边至少720像素",
+      "人工核对焦点、裁切和动作保护区间"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "0c1dac9852198fffa15cf28271a2f53aba14eb98e93533c14844e3f01a91418b"
+  },
+  "precision-dual-v1": {
+    "id": "precision-dual-v1",
+    "name": "理性结构双窗",
+    "recipe": "detail-dual-window",
+    "keywords": [
+      "测评",
+      "理性",
+      "参数",
+      "数码",
+      "工具",
+      "严谨",
+      "接口"
+    ],
+    "prompt": "上窗持续显示同一时刻的商品整体，下窗同步展示同一画面的焦点放大。先落整体，再展开细节窗；标明整体与细节视图。不是前后效果对比，不生成内部结构或测量结论，动作段保持完整单窗。",
+    "source": {
+      "repository": "alchaincyf/huashu-motion",
+      "commit": "3e927801e78b587878fb7dbb65d616326df00c21",
+      "license": "MIT",
+      "url": "https://github.com/alchaincyf/huashu-motion/blob/3e927801e78b587878fb7dbb65d616326df00c21/skills/huashu-motion/references/library/languages/photo-led.md",
+      "local_reference": "vendor/huashu-motion/skills/huashu-motion/references/library/languages/photo-led.md"
+    },
+    "adaptation": "本项目原创竖屏适配；引用镜头方法，不执行上游代码或生成商品事实",
+    "presentation": {
+      "zoom": 1.65,
+      "travel_frames": 14,
+      "shape": "rounded"
+    },
+    "requirements": [
+      "有使用权的同款商品画面",
+      "短边至少720像素",
+      "人工核对焦点、裁切和动作保护区间"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "7c3f8bc46a82439a38c0b8910f09b06be941138cfa0f411671c7bed3a4218f48"
+  },
+  "texture-dual-v1": {
+    "id": "texture-dual-v1",
+    "name": "材质纹理双窗",
+    "recipe": "detail-dual-window",
+    "keywords": [
+      "美妆",
+      "材质",
+      "纹理",
+      "精致",
+      "工艺",
+      "瓶身",
+      "珠宝"
+    ],
+    "prompt": "上窗持续显示同一时刻的商品整体，下窗同步展示同一画面的焦点放大。先落整体，再展开细节窗；标明整体与细节视图。不是前后效果对比，不生成内部结构或测量结论，动作段保持完整单窗。",
+    "source": {
+      "repository": "alchaincyf/huashu-motion",
+      "commit": "3e927801e78b587878fb7dbb65d616326df00c21",
+      "license": "MIT",
+      "url": "https://github.com/alchaincyf/huashu-motion/blob/3e927801e78b587878fb7dbb65d616326df00c21/skills/huashu-motion/references/library/languages/photo-led.md",
+      "local_reference": "vendor/huashu-motion/skills/huashu-motion/references/library/languages/photo-led.md"
+    },
+    "adaptation": "本项目原创竖屏适配；引用镜头方法，不执行上游代码或生成商品事实",
+    "presentation": {
+      "zoom": 1.45,
+      "travel_frames": 20,
+      "shape": "rounded"
+    },
+    "requirements": [
+      "有使用权的同款商品画面",
+      "短边至少720像素",
+      "人工核对焦点、裁切和动作保护区间"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "a6159b9e54d05a5cb131307df8011bc5580b79e1b5ec10a4bbb7a3386c33553d"
+  },
+  "usage-dual-v1": {
+    "id": "usage-dual-v1",
+    "name": "日常细节双窗",
+    "recipe": "detail-dual-window",
+    "keywords": [
+      "使用",
+      "通勤",
+      "办公",
+      "生活",
+      "咖啡",
+      "说明"
+    ],
+    "prompt": "上窗持续显示同一时刻的商品整体，下窗同步展示同一画面的焦点放大。先落整体，再展开细节窗；标明整体与细节视图。不是前后效果对比，不生成内部结构或测量结论，动作段保持完整单窗。",
+    "source": {
+      "repository": "alchaincyf/huashu-motion",
+      "commit": "3e927801e78b587878fb7dbb65d616326df00c21",
+      "license": "MIT",
+      "url": "https://github.com/alchaincyf/huashu-motion/blob/3e927801e78b587878fb7dbb65d616326df00c21/skills/huashu-motion/references/library/languages/photo-led.md",
+      "local_reference": "vendor/huashu-motion/skills/huashu-motion/references/library/languages/photo-led.md"
+    },
+    "adaptation": "本项目原创竖屏适配；引用镜头方法，不执行上游代码或生成商品事实",
+    "presentation": {
+      "zoom": 1.5,
+      "travel_frames": 16,
+      "shape": "circle"
+    },
+    "requirements": [
+      "有使用权的同款商品画面",
+      "短边至少720像素",
+      "人工核对焦点、裁切和动作保护区间"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "e319299c53f30e1e3ac6905970d843775509cbed7072c2ff9ad8516c25a553ff"
+  },
+  "quiet-portal-v1": {
+    "id": "quiet-portal-v1",
+    "name": "克制轮廓展开",
+    "recipe": "product-shape-reveal",
+    "keywords": [
+      "高级",
+      "克制",
+      "安静",
+      "精致",
+      "沉静",
+      "工艺"
+    ],
+    "prompt": "从商品焦点附近的可见窗口展开完整实拍，底层保留低亮度同帧画面，避免空白开场。展开后保持清楚留看，字幕独立稳定；不抠造轮廓、不生成新的商品角度。",
+    "source": {
+      "repository": "alchaincyf/huashu-motion",
+      "commit": "3e927801e78b587878fb7dbb65d616326df00c21",
+      "license": "MIT",
+      "url": "https://github.com/alchaincyf/huashu-motion/blob/3e927801e78b587878fb7dbb65d616326df00c21/skills/huashu-motion/references/library/languages/photo-led.md",
+      "local_reference": "vendor/huashu-motion/skills/huashu-motion/references/library/languages/photo-led.md"
+    },
+    "adaptation": "本项目原创竖屏适配；引用镜头方法，不执行上游代码或生成商品事实",
+    "presentation": {
+      "zoom": 1.0,
+      "travel_frames": 26,
+      "shape": "rounded"
+    },
+    "requirements": [
+      "有使用权的同款商品画面",
+      "短边至少720像素",
+      "人工核对焦点、裁切和动作保护区间"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "e06eea8325c4c5135b005dea91be0e5b8b5c1c8285f01f31f8195118ad157b4a"
+  },
+  "warm-portal-v1": {
+    "id": "warm-portal-v1",
+    "name": "温暖圆窗展开",
+    "recipe": "product-shape-reveal",
+    "keywords": [
+      "温暖",
+      "自然",
+      "温柔",
+      "家居",
+      "咖啡",
+      "生活"
+    ],
+    "prompt": "从商品焦点附近的可见窗口展开完整实拍，底层保留低亮度同帧画面，避免空白开场。展开后保持清楚留看，字幕独立稳定；不抠造轮廓、不生成新的商品角度。",
+    "source": {
+      "repository": "alchaincyf/huashu-motion",
+      "commit": "3e927801e78b587878fb7dbb65d616326df00c21",
+      "license": "MIT",
+      "url": "https://github.com/alchaincyf/huashu-motion/blob/3e927801e78b587878fb7dbb65d616326df00c21/skills/huashu-motion/references/library/languages/photo-led.md",
+      "local_reference": "vendor/huashu-motion/skills/huashu-motion/references/library/languages/photo-led.md"
+    },
+    "adaptation": "本项目原创竖屏适配；引用镜头方法，不执行上游代码或生成商品事实",
+    "presentation": {
+      "zoom": 1.0,
+      "travel_frames": 30,
+      "shape": "circle"
+    },
+    "requirements": [
+      "有使用权的同款商品画面",
+      "短边至少720像素",
+      "人工核对焦点、裁切和动作保护区间"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "96048b5901a3272de4263df57471b3bae278999e36afaa7b4ff2af64946f95d2"
+  },
+  "color-portal-v1": {
+    "id": "color-portal-v1",
+    "name": "活泼斜面展开",
+    "recipe": "product-shape-reveal",
+    "keywords": [
+      "活泼",
+      "年轻",
+      "撞色",
+      "潮流",
+      "玩具",
+      "运动"
+    ],
+    "prompt": "从商品焦点附近的可见窗口展开完整实拍，底层保留低亮度同帧画面，避免空白开场。展开后保持清楚留看，字幕独立稳定；不抠造轮廓、不生成新的商品角度。",
+    "source": {
+      "repository": "alchaincyf/huashu-motion",
+      "commit": "3e927801e78b587878fb7dbb65d616326df00c21",
+      "license": "MIT",
+      "url": "https://github.com/alchaincyf/huashu-motion/blob/3e927801e78b587878fb7dbb65d616326df00c21/skills/huashu-motion/references/library/languages/photo-led.md",
+      "local_reference": "vendor/huashu-motion/skills/huashu-motion/references/library/languages/photo-led.md"
+    },
+    "adaptation": "本项目原创竖屏适配；引用镜头方法，不执行上游代码或生成商品事实",
+    "presentation": {
+      "zoom": 1.0,
+      "travel_frames": 18,
+      "shape": "diagonal"
+    },
+    "requirements": [
+      "有使用权的同款商品画面",
+      "短边至少720像素",
+      "人工核对焦点、裁切和动作保护区间"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "dc9e2c077f97d8c9b5738b9dcce219fdcd0e9c3788f1adc3410cfc4df4729247"
+  }
+}

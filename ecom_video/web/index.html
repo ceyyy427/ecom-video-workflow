@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>剪序 · 完整分镜与任务</title>
+<link href="/static/style.css" rel="stylesheet"/>
+<script defer="" src="/static/app.js"></script>
+<script defer="" src="/static/products.js"></script>
+<script defer="" src="/static/storyboard.js"></script>
+<link href="/static/customer.css" rel="stylesheet"/><link href="/static/workspace-pages.css" rel="stylesheet"/><script defer="" src="/static/workbench-navigation.js"></script></head>
+<body class="customer-page workspace-page storyboard-page"><a class="skip-link" href="#workspaceMain">跳到当前工作区</a>
+<aside aria-label="工作台导航" class="customer-sidebar">
+<a class="brand" href="/"><span aria-hidden="true" class="brand-mark">剪</span><span class="brand-copy"><strong>剪序</strong><small>电商视频工作台</small></span></a>
+<p class="nav-caption">工作空间</p><nav aria-label="主导航"><a href="/create"><span aria-hidden="true">01</span>商品制作</a><a href="/samples"><span aria-hidden="true">02</span>样片参考</a><a href="/distribution"><span aria-hidden="true">03</span>数据复盘</a><a href="/experiments"><span aria-hidden="true">04</span>创意迭代</a></nav>
+<div class="sidebar-bottom"><p class="nav-caption">本机管理</p><nav aria-label="帮助与配置"><a href="/setup">首次配置</a><a href="/maintenance">数据与版本</a><a href="/guide">操作指南</a><a aria-current="page" href="/">完整分镜与任务</a><a data-task-studio-link="" href="/studio">口播与风格工作室</a></nav><p class="local-note"><span aria-hidden="true">◌</span> 本机工作台<br/><small>人工确认 · 旧版保留</small></p></div></aside>
+
+<div class="layout storyboard-layout">
+<aside aria-label="制作任务选择" class="task-sidebar" id="taskBrowser">
+<div class="aside-title">
+<h2>制作任务</h2>
+<button aria-label="新建任务" class="small" id="newJob">
+            ＋ 新建
+          </button>
+</div>
+<p class="muted aside-help">脚本、素材与每次复核，都保存在本机。</p>
+<nav aria-label="制作任务列表" id="jobs"></nav>
+<div class="aside-bottom">
+          先看清，再交付。
+          <p>审核规则只做文字预检。<br/>成片需逐项人工复核。</p>
+</div>
+</aside>
+<main class="workspace-main" id="workspaceMain" tabindex="-1"><div class="workspace-page-heading storyboard-intro"><div><p class="eyebrow">完整分镜与旧任务</p><p>选择已有任务继续，或从脚本创建草稿。客户商品的事实、文稿与风格确认请在商品制作页完成。</p></div><div class="page-heading-actions"><a href="/create">← 返回客户商品制作</a><a href="/guide#guideRoutes">操作与返回路径</a><a data-task-required="" data-task-studio-link="" hidden="" href="/studio">当前任务的口播工作室 →</a></div><div class="connection">
+<span id="healthDot"></span><span id="health">连接本地服务…</span>
+</div></div><div class="workspace-navigation"><div aria-live="polite" hidden="" id="notice" role="status"></div><nav aria-label="本页导航" class="workspace-page-index"><a href="#taskBrowser">选择任务</a><a href="#scriptWorkspace">脚本、素材与分镜</a><a href="#reviewWorkspace">预览与人工复核</a></nav></div>
+<div aria-label="输入方式" class="input-modes">
+<button aria-pressed="true" class="secondary" id="manualMode">
+            已有脚本 → 剪辑
+          </button>
+<button aria-pressed="false" class="secondary" id="productMode">
+            产品资料 → 脚本
+          </button>
+</div>
+<section aria-label="产品资料与脚本" class="product-panel" hidden="" id="productPanel">
+<div class="section-top">
+<div>
+<p class="eyebrow">从资料到脚本</p>
+<h2>每个卖点，都有出处</h2>
+</div>
+<span class="badge" id="productStatus">选择资料夹</span>
+</div>
+<p class="muted">
+            先核对产品事实，再确认分镜脚本。两次确认后，继续下方剪辑流程。
+          </p>
+<div class="product-picker">
+<label for="productSelect">产品资料夹</label><select id="productSelect">
+<option value="">新建资料夹</option></select><button class="text-button" id="reloadProduct">重新载入</button>
+</div>
+<form class="inline-form" id="createProduct">
+<input aria-label="新产品名称" id="productTitle" maxlength="120" placeholder="产品名称，例如：随行杯" required=""/><button class="secondary">新建资料夹</button>
+</form>
+<div hidden="" id="productContent">
+<div class="product-grid">
+<div>
+<h3>01 / 添加产品资料</h3>
+<label class="upload"><span>＋ 上传产品文档</span><small>TXT / MD / 文字 PDF / DOCX · ≤ 10 MiB</small><input accept=".txt,.md,.pdf,.docx" id="productFile" type="file"/></label>
+<form class="inline-form" id="linkProduct">
+<input aria-label="产品 HTTPS 链接" id="productUrl" maxlength="2048" placeholder="https:// 产品详情页" required="" type="url"/><button class="secondary">读取链接</button>
+</form>
+<p class="muted note">
+                  支持公开静态网页。需登录、验证码或动态加载的页面，请改为上传文档。
+                </p>
+<div id="sourceList"></div>
+<details class="quote-panel">
+<summary>查看完整原文 / 从长段落摘录事实</summary>
+<label for="quoteSource">来源</label><select id="quoteSource"></select><label for="quoteUnit">页码或段落</label><select id="quoteUnit"></select>
+<pre id="quoteContext"></pre>
+<form id="quoteForm">
+<label for="quoteText">连续原文摘录（最多 100 字）</label><textarea id="quoteText" maxlength="100" required="" rows="2"></textarea><button class="secondary">加入候选事实</button>
+</form>
+</details>
+</div>
+<div>
+<h3>02 / 核对并确认事实</h3>
+<p class="muted">
+                  候选是资料原文，不代表已验证真实。请检查型号、条件、时效和冲突，最多选择
+                  20 条。新增资料会使当前确认失效。
+                </p>
+<div class="facts-list" id="factsList"></div>
+<p aria-live="polite" class="muted" id="factSelectionHint"></p>
+<form id="factsForm">
+<div class="review-fields">
+<label>确认人<input id="factsReviewer" maxlength="80" required=""/></label><label>核对说明<input id="factsNote" maxlength="1000" placeholder="例如：与产品规格表逐项核对" required=""/></label>
+</div>
+<label class="check"><input id="factsChecked" required="" type="checkbox"/><span>已核对所选事实及原文语境，确认可以用于脚本。</span></label>
+<button class="primary" id="confirmFacts">
+                    确认所选事实
+                  </button>
+</form>
+</div>
+</div>
+<div class="script-stage">
+<div class="section-top">
+<h3>03 / 生成并确认分镜脚本</h3>
+<span class="muted" id="draftMeta">等待事实确认</span>
+</div>
+<form class="generate-form" id="generateProduct">
+<label for="generationMode">生成方式</label><select id="generationMode">
+<option value="extractive">本地事实编排 · 无需 API</option>
+<option value="model">
+                    模型选材与排序 · 使用已配置 API
+                  </option></select><button class="secondary" id="generateScript">
+                  生成脚本草稿</button><label class="check" hidden="" id="externalConsentLabel"><input id="externalConsent" type="checkbox"/><span>同意将已确认事实发送给配置的模型服务。</span></label>
+</form>
+<p class="muted" id="modelHint">
+                本地编排原文事实，并添加固定开场与结尾。
+              </p>
+<div id="scriptScenes"></div>
+<button class="secondary" hidden="" id="saveProductDraft">
+                保存修改为新版本
+              </button>
+<p class="muted" hidden="" id="scriptEditHint">
+                编辑后的产品描述必须保留事实引用。引用校验只检查关联；是否夸大或改变原意，仍由你逐镜确认。
+              </p>
+<form hidden="" id="scriptApproval">
+<div class="review-fields">
+<label>确认人<input id="scriptReviewer" maxlength="80" required=""/></label><label>核对说明<input id="scriptNote" maxlength="1000" placeholder="记录对改写、规格、适用条件的核验" required=""/></label>
+</div>
+<label class="check"><input id="scriptChecked" required="" type="checkbox"/><span>已逐镜对照事实来源，确认脚本表达准确，可以进入剪辑。</span></label>
+<button class="primary" id="approveScript">
+                  确认脚本 → 创建剪辑草稿
+                </button>
+</form>
+<div id="productApprovalResult"></div>
+</div>
+<details class="history">
+<summary>资料与确认记录</summary>
+<ol id="productEvents"></ol>
+</details>
+</div>
+</section>
+<div class="page-heading">
+<div>
+<p class="muted" id="jobMeta">新建视频</p>
+<h1 id="pageTitle">把脚本变成一条成片</h1>
+</div>
+<span class="badge" id="status">草稿</span>
+</div>
+<ol aria-label="制作流程" class="steps">
+<li id="step1">1 <span>脚本与素材</span></li>
+<li id="step2">2 <span>合成与预检</span></li>
+<li id="step3">3 <span>人工复核</span></li>
+</ol>
+<details class="job-provenance" hidden="" id="jobProvenance">
+<summary>产品脚本的事实来源与确认记录</summary>
+<div id="jobProvenanceBody"></div>
+</details>
+<div class="workspace">
+<section aria-label="脚本和素材" class="editor" id="scriptWorkspace">
+<div class="section-top">
+<h2>脚本</h2>
+<span class="muted" id="saveHint">先保存草稿，再添加素材</span>
+</div>
+<form id="scriptForm">
+<label for="title">视频名称</label><input id="title" maxlength="120" placeholder="例如：随行杯 · 外观与细节" required=""/>
+<div class="field-heading">
+<label for="script">分镜脚本</label><span class="muted" id="lineCount">0 镜</span>
+</div>
+<textarea id="script" maxlength="3000" placeholder="每行一个镜头，可在分镜区选择素材与运镜。
+
+展示杯身的整体外观
+近距离看看杯口细节
+放入随身包，展示收纳方式" required="" rows="7"></textarea>
+<div class="duration-row">
+<label for="seconds">每镜时长
+                  <input id="seconds" max="15" min="1" step="0.5" type="number" value="3"/>
+                  秒</label><span class="muted">分镜默认值，总长 ≤ 120 秒</span>
+</div>
+<button class="secondary" id="save" type="submit">
+                保存草稿
+              </button>
+</form>
+<div class="section-top media-heading">
+<h2>画面素材</h2>
+<span class="muted" id="assetCount">0 / 30</span>
+</div>
+<p class="muted">
+              默认按添加顺序匹配；下方分镜可指定素材、选段与运镜。原视频声音静音。
+            </p>
+<label class="upload" id="visualDrop"><span>＋ 添加图片或视频</span><small>JPG / PNG / WebP / MP4 / MOV / WebM · 单文件 ≤ 100 MiB</small><input accept=".jpg,.jpeg,.png,.webp,.mp4,.mov,.webm" disabled="" id="visualFiles" multiple="" type="file"/></label>
+<div class="asset-list" id="assets"></div>
+<div class="section-top audio-heading">
+<h2>配音 <span class="optional">可选</span></h2>
+</div>
+<label class="audio-upload"><span>添加配音或背景音乐（最多两条）</span><input accept=".wav,.mp3,.m4a" disabled="" id="audioFile" type="file"/></label>
+<div id="audioAssets"></div>
+<p class="muted note">
+              可上传配音或在分镜中选择本机中文合成。背景音乐自动压低让出人声；上传旁白需人工核对字幕时间。
+            </p>
+<section class="storyboard-panel" hidden="" id="storyboardPanel">
+<div class="section-top"><h2>分镜编辑</h2><span class="muted" id="storyboardHint"></span></div>
+<p class="muted">先保存脚本，再编辑分镜。修改脚本文案或默认时长会重置分镜。图片预览仅示意运镜，最终字幕与裁切以成片为准。</p>
+<fieldset id="storyboardFields"></fieldset>
+<button class="secondary" id="saveStoryboard" type="button">保存分镜方案</button>
+</section>
+<div class="submit-row">
+<button class="primary" disabled="" id="submit">
+                锁定脚本并生成</button><span class="muted" id="submitHint">至少添加一个画面素材</span>
+</div>
+<div class="secondary-actions">
+<button class="text-button" hidden="" id="cancel">取消任务</button><button class="secondary" hidden="" id="retry">重试</button><button class="secondary" hidden="" id="clone">复制为新草稿</button>
+</div>
+</section>
+<section aria-label="成片预览与审核" class="review-column" id="reviewWorkspace">
+<div class="section-top">
+<h2>成片预览</h2>
+<span class="muted">1080 × 1920</span>
+</div>
+<div class="preview">
+<video controls="" hidden="" id="video" playsinline=""></video>
+<div id="previewEmpty">
+<div class="film-mark">▤</div>
+<h3>下一条成片，从这里开始</h3>
+<p>保存脚本，添加画面素材，<br/>生成后在这里预览和复核。</p>
+</div>
+</div>
+<div class="downloads" id="downloads"></div>
+<div class="error" hidden="" id="error"></div>
+<div class="audit">
+<div class="section-top">
+<h2>内容预检</h2>
+<span class="muted" id="auditBadge">等待生成</span>
+</div>
+<div id="auditBody">
+<p class="muted">
+                  文字规则预检后，仍需检查卖点真实性、画面、口播、素材授权与平台要求。
+                </p>
+</div>
+</div>
+<form hidden="" id="reviewForm">
+<h2>人工复核</h2>
+<label for="reviewer">审核人</label><input id="reviewer" maxlength="120" placeholder="填写你的姓名" required=""/><label for="reviewNote">复核说明</label><textarea id="reviewNote" maxlength="2000" placeholder="记录核验依据，以及需要保留的说明" required="" rows="3"></textarea><label class="check"><input id="confirmed" required="" type="checkbox"/><span>已逐项检查上方清单，并完整观看成片。</span></label>
+<div class="review-actions">
+<button class="primary" name="decision" type="submit" value="ready">
+                  复核通过</button><button class="secondary" name="decision" type="submit" value="rejected">
+                  退回修改
+                </button>
+</div>
+<p class="muted">通过仅代表本地复核完成，不等于平台审核通过。</p>
+</form>
+<div id="reviewResult"></div>
+<details class="history">
+<summary>任务记录</summary>
+<ol id="events"></ol>
+</details>
+</section>
+</div>
+</main>
+</div>
+<footer>
+      资料、素材与产物保存在本机。选择模型模式时，仅将已确认事实发送给你配置的服务。
+    </footer>
+</body>
+</html>
+

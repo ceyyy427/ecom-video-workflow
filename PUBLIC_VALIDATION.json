@@ -1,0 +1,46 @@
+{
+  "date": "2026-10-20",
+  "scope": "Independent public-source snapshot on the existing macOS development host",
+  "python": {
+    "passed": 836,
+    "skipped": 4,
+    "deselected": 1,
+    "seconds": 196.81,
+    "excluded": "test_focus_frame_contains_requested_media_point_in_actual_browser_layout",
+    "skip_reasons": [
+      "non-distributed private customer evidence",
+      "native Windows DPAPI",
+      "native Windows Job Object",
+      "explicit opt-in OS keychain integration"
+    ]
+  },
+  "node_vm": {
+    "passed": 20,
+    "failed": 0
+  },
+  "ruff": "passed",
+  "remotion_typescript": "passed",
+  "runtime_and_render_sources_byte_identical_to_local_project": true,
+  "portable_test_fix": "Single-sentence voice tests use synthetic temporary model files with ASR transport stubs; production guards unchanged",
+  "secret_scan": {
+    "tool": "Yelp/detect-secrets",
+    "version": "1.5.0",
+    "mode": "offline; no credential verification",
+    "candidate_findings_reviewed": 893,
+    "confirmed_secrets": 0,
+    "false_positive_categories": {
+      "file_model_commit_and_cache_fingerprints": 876,
+      "synthetic_test_inputs": 16,
+      "credential_reference_identifier": 1
+    },
+    "gitleaks_executed": false
+  },
+  "customer_data_included": false,
+  "model_weights_included": false,
+  "credentials_included": false,
+  "browser_visual_or_interaction_tested": false,
+  "computer_use": false,
+  "platform_writes": 0,
+  "paid_requests": 0,
+  "new_human_approvals": 0
+}

@@ -1,0 +1,10 @@
+{
+  "version": "p0-2026-10-14.1",
+  "description": "工程示例规则集，仅预检脚本文字；并非完整广告法规或平台规则库。",
+  "rules": [
+    {"id":"medical-cure","severity":"block","terms":["根治","包治百病","治愈疾病"],"reason":"包含治疗或根治承诺","suggestion":"删除未经证实的治疗承诺，补充产品资质并人工核验。"},
+    {"id":"guaranteed-result","severity":"block","terms":["100%有效","百分百有效","绝对安全","零风险"],"reason":"包含绝对效果或安全承诺","suggestion":"重新审查事实依据，不得仅替换近义词规避审核。"},
+    {"id":"superlative","severity":"review","terms":["最好","第一","顶级","国家级","全网最低"],"reason":"可能包含绝对化或比较性宣传","suggestion":"核对上下文、依据与适用规则。"},
+    {"id":"proof-required","severity":"review","terms":["美白","祛斑","减肥","认证","销量","限时","折扣"],"reason":"卖点或促销信息需要证据","suggestion":"核对证明材料、实际价格与有效期。"}
+  ]
+}

@@ -1,0 +1,7 @@
+* { box-sizing: border-box; }
+body { font: 16px/1.7 system-ui,sans-serif; color:#263a30; background:#fffdf8; margin:0; padding:24px 16px; overflow-wrap:anywhere; }
+main { max-width:980px; margin:auto; min-width:0; }
+h1 { font-size:26px; line-height:1.4; }
+article,details { border:1px solid #d5ddd3; border-radius:8px; padding:12px; margin:12px 0; min-width:0; }
+summary { cursor:pointer; font-weight:600; }
+code { display:block; white-space:normal; overflow-wrap:anywhere; font-size:13px; padding:12px 0; }

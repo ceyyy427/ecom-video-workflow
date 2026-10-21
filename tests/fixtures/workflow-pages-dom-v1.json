@@ -1,0 +1,2596 @@
+{
+  "experiments.html": {
+    "ids": {
+      "expNotice": {
+        "tag": "p",
+        "attrs": {
+          "id": "expNotice",
+          "role": "status",
+          "aria-live": "polite"
+        },
+        "parents": [],
+        "options": null
+      },
+      "expWorkspace": {
+        "tag": "div",
+        "attrs": {
+          "id": "expWorkspace",
+          "hidden": ""
+        },
+        "parents": [],
+        "options": null
+      },
+      "expActor": {
+        "tag": "input",
+        "attrs": {
+          "id": "expActor",
+          "maxlength": "80",
+          "placeholder": "填写实际操作人"
+        },
+        "parents": [],
+        "options": null
+      },
+      "expHistory": {
+        "tag": "select",
+        "attrs": {
+          "id": "expHistory"
+        },
+        "parents": [],
+        "options": [
+          [
+            "",
+            "选择历史"
+          ]
+        ]
+      },
+      "expId": {
+        "tag": "input",
+        "attrs": {
+          "id": "expId",
+          "maxlength": "32",
+          "pattern": "[a-f0-9]{32}"
+        },
+        "parents": [],
+        "options": null
+      },
+      "openExperiment": {
+        "tag": "button",
+        "attrs": {
+          "id": "openExperiment",
+          "type": "button"
+        },
+        "parents": [],
+        "options": null
+      },
+      "contextForm": {
+        "tag": "form",
+        "attrs": {
+          "id": "contextForm"
+        },
+        "parents": [],
+        "options": null
+      },
+      "baseReview": {
+        "tag": "input",
+        "attrs": {
+          "id": "baseReview",
+          "maxlength": "32",
+          "required": "",
+          "pattern": "[a-f0-9]{32}"
+        },
+        "parents": [
+          [
+            "form",
+            "contextForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "baseMaterial": {
+        "tag": "input",
+        "attrs": {
+          "id": "baseMaterial",
+          "maxlength": "64",
+          "required": "",
+          "pattern": "[0-9]+"
+        },
+        "parents": [
+          [
+            "form",
+            "contextForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "basisSummary": {
+        "tag": "p",
+        "attrs": {
+          "id": "basisSummary"
+        },
+        "parents": [],
+        "options": null
+      },
+      "proposalForm": {
+        "tag": "form",
+        "attrs": {
+          "id": "proposalForm",
+          "hidden": ""
+        },
+        "parents": [],
+        "options": null
+      },
+      "hypothesis": {
+        "tag": "textarea",
+        "attrs": {
+          "id": "hypothesis",
+          "maxlength": "1000",
+          "required": "",
+          "placeholder": "例如：将第一镜改成杯口细节，观察下一轮素材点击率的描述性变化。"
+        },
+        "parents": [
+          [
+            "form",
+            "proposalForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "targetMetric": {
+        "tag": "select",
+        "attrs": {
+          "id": "targetMetric"
+        },
+        "parents": [
+          [
+            "form",
+            "proposalForm",
+            null
+          ]
+        ],
+        "options": [
+          [
+            "ctr",
+            "点击率（比例）"
+          ],
+          [
+            "payment_roi",
+            "支付 ROI"
+          ],
+          [
+            "completion_rate",
+            "完播率（比例）"
+          ],
+          [
+            "cpc",
+            "单次点击花费"
+          ],
+          [
+            "cpa",
+            "单笔订单花费"
+          ],
+          [
+            "orders",
+            "支付订单"
+          ],
+          [
+            "revenue",
+            "支付金额"
+          ],
+          [
+            "spend",
+            "花费"
+          ]
+        ]
+      },
+      "minDays": {
+        "tag": "input",
+        "attrs": {
+          "id": "minDays",
+          "type": "number",
+          "min": "1",
+          "max": "31",
+          "step": "1",
+          "value": "1",
+          "required": ""
+        },
+        "parents": [
+          [
+            "form",
+            "proposalForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "minImpressions": {
+        "tag": "input",
+        "attrs": {
+          "id": "minImpressions",
+          "type": "number",
+          "min": "0",
+          "max": "1000000000",
+          "step": "1",
+          "value": "100",
+          "required": ""
+        },
+        "parents": [
+          [
+            "form",
+            "proposalForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "changeKind": {
+        "tag": "select",
+        "attrs": {
+          "id": "changeKind"
+        },
+        "parents": [
+          [
+            "form",
+            "proposalForm",
+            null
+          ]
+        ],
+        "options": [
+          [
+            "visual",
+            "仅修改一个镜头"
+          ],
+          [
+            "script",
+            "修改文稿，重新走确认与制作"
+          ]
+        ]
+      },
+      "visualChanges": {
+        "tag": "div",
+        "attrs": {
+          "id": "visualChanges"
+        },
+        "parents": [
+          [
+            "form",
+            "proposalForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "shotId": {
+        "tag": "select",
+        "attrs": {
+          "id": "shotId"
+        },
+        "parents": [
+          [
+            "form",
+            "proposalForm",
+            null
+          ]
+        ],
+        "options": []
+      },
+      "shotChanges": {
+        "tag": "textarea",
+        "attrs": {
+          "id": "shotChanges",
+          "rows": "3"
+        },
+        "parents": [
+          [
+            "form",
+            "proposalForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "scriptChanges": {
+        "tag": "div",
+        "attrs": {
+          "id": "scriptChanges",
+          "hidden": ""
+        },
+        "parents": [
+          [
+            "form",
+            "proposalForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "scriptScenes": {
+        "tag": "textarea",
+        "attrs": {
+          "id": "scriptScenes",
+          "rows": "10"
+        },
+        "parents": [
+          [
+            "form",
+            "proposalForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "factHints": {
+        "tag": "p",
+        "attrs": {
+          "id": "factHints"
+        },
+        "parents": [
+          [
+            "form",
+            "proposalForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "experimentDetail": {
+        "tag": "section",
+        "attrs": {
+          "id": "experimentDetail",
+          "hidden": ""
+        },
+        "parents": [],
+        "options": null
+      },
+      "expTitle": {
+        "tag": "h3",
+        "attrs": {
+          "id": "expTitle"
+        },
+        "parents": [],
+        "options": null
+      },
+      "expMeta": {
+        "tag": "p",
+        "attrs": {
+          "id": "expMeta"
+        },
+        "parents": [],
+        "options": null
+      },
+      "expChange": {
+        "tag": "p",
+        "attrs": {
+          "id": "expChange"
+        },
+        "parents": [],
+        "options": null
+      },
+      "expExport": {
+        "tag": "a",
+        "attrs": {
+          "id": "expExport"
+        },
+        "parents": [],
+        "options": null
+      },
+      "selectionControls": {
+        "tag": "div",
+        "attrs": {
+          "id": "selectionControls"
+        },
+        "parents": [],
+        "options": null
+      },
+      "selectionNote": {
+        "tag": "input",
+        "attrs": {
+          "id": "selectionNote",
+          "maxlength": "1000",
+          "placeholder": "记录选择或拒绝原因"
+        },
+        "parents": [],
+        "options": null
+      },
+      "selectionCheck": {
+        "tag": "input",
+        "attrs": {
+          "id": "selectionCheck",
+          "type": "checkbox"
+        },
+        "parents": [],
+        "options": null
+      },
+      "selectProposal": {
+        "tag": "button",
+        "attrs": {
+          "id": "selectProposal",
+          "type": "button"
+        },
+        "parents": [],
+        "options": null
+      },
+      "rejectProposal": {
+        "tag": "button",
+        "attrs": {
+          "id": "rejectProposal",
+          "type": "button"
+        },
+        "parents": [],
+        "options": null
+      },
+      "applyProposal": {
+        "tag": "button",
+        "attrs": {
+          "id": "applyProposal",
+          "type": "button",
+          "hidden": ""
+        },
+        "parents": [],
+        "options": null
+      },
+      "productionControls": {
+        "tag": "div",
+        "attrs": {
+          "id": "productionControls",
+          "hidden": ""
+        },
+        "parents": [],
+        "options": null
+      },
+      "productionSummary": {
+        "tag": "p",
+        "attrs": {
+          "id": "productionSummary"
+        },
+        "parents": [],
+        "options": null
+      },
+      "customerProduction": {
+        "tag": "a",
+        "attrs": {
+          "id": "customerProduction"
+        },
+        "parents": [],
+        "options": null
+      },
+      "studioProduction": {
+        "tag": "a",
+        "attrs": {
+          "id": "studioProduction"
+        },
+        "parents": [],
+        "options": null
+      },
+      "attachControls": {
+        "tag": "div",
+        "attrs": {
+          "id": "attachControls",
+          "hidden": ""
+        },
+        "parents": [],
+        "options": null
+      },
+      "attachJob": {
+        "tag": "input",
+        "attrs": {
+          "id": "attachJob",
+          "maxlength": "32",
+          "pattern": "[a-f0-9]{32}"
+        },
+        "parents": [],
+        "options": null
+      },
+      "attachVersion": {
+        "tag": "button",
+        "attrs": {
+          "id": "attachVersion",
+          "type": "button"
+        },
+        "parents": [],
+        "options": null
+      },
+      "styleCheck": {
+        "tag": "input",
+        "attrs": {
+          "id": "styleCheck",
+          "type": "checkbox"
+        },
+        "parents": [],
+        "options": null
+      },
+      "confirmStyle": {
+        "tag": "button",
+        "attrs": {
+          "id": "confirmStyle",
+          "type": "button"
+        },
+        "parents": [],
+        "options": null
+      },
+      "awaitData": {
+        "tag": "button",
+        "attrs": {
+          "id": "awaitData",
+          "type": "button"
+        },
+        "parents": [],
+        "options": null
+      },
+      "evaluationPanel": {
+        "tag": "section",
+        "attrs": {
+          "id": "evaluationPanel",
+          "hidden": ""
+        },
+        "parents": [],
+        "options": null
+      },
+      "nextHistory": {
+        "tag": "select",
+        "attrs": {
+          "id": "nextHistory"
+        },
+        "parents": [],
+        "options": [
+          [
+            "",
+            "选择快照"
+          ]
+        ]
+      },
+      "nextReview": {
+        "tag": "input",
+        "attrs": {
+          "id": "nextReview",
+          "maxlength": "32",
+          "pattern": "[a-f0-9]{32}"
+        },
+        "parents": [],
+        "options": null
+      },
+      "readNextReview": {
+        "tag": "button",
+        "attrs": {
+          "id": "readNextReview",
+          "type": "button"
+        },
+        "parents": [],
+        "options": null
+      },
+      "nextBasis": {
+        "tag": "p",
+        "attrs": {
+          "id": "nextBasis"
+        },
+        "parents": [],
+        "options": null
+      },
+      "newMaterial": {
+        "tag": "select",
+        "attrs": {
+          "id": "newMaterial"
+        },
+        "parents": [],
+        "options": [
+          [
+            "",
+            "先读取快照"
+          ]
+        ]
+      },
+      "evaluateExperiment": {
+        "tag": "button",
+        "attrs": {
+          "id": "evaluateExperiment",
+          "type": "button"
+        },
+        "parents": [],
+        "options": null
+      },
+      "evaluations": {
+        "tag": "div",
+        "attrs": {
+          "id": "evaluations"
+        },
+        "parents": [],
+        "options": null
+      },
+      "eventsPanel": {
+        "tag": "section",
+        "attrs": {
+          "id": "eventsPanel",
+          "hidden": ""
+        },
+        "parents": [],
+        "options": null
+      },
+      "expEvents": {
+        "tag": "ol",
+        "attrs": {
+          "id": "expEvents"
+        },
+        "parents": [],
+        "options": null
+      }
+    },
+    "forms": [
+      {
+        "attrs": {
+          "id": "contextForm"
+        },
+        "controls": [
+          [
+            "input",
+            {
+              "id": "baseReview",
+              "maxlength": "32",
+              "required": "",
+              "pattern": "[a-f0-9]{32}"
+            },
+            ""
+          ],
+          [
+            "input",
+            {
+              "id": "baseMaterial",
+              "maxlength": "64",
+              "required": "",
+              "pattern": "[0-9]+"
+            },
+            ""
+          ],
+          [
+            "button",
+            {},
+            "读取冻结依据"
+          ]
+        ]
+      },
+      {
+        "attrs": {
+          "id": "proposalForm",
+          "hidden": ""
+        },
+        "controls": [
+          [
+            "textarea",
+            {
+              "id": "hypothesis",
+              "maxlength": "1000",
+              "required": "",
+              "placeholder": "例如：将第一镜改成杯口细节，观察下一轮素材点击率的描述性变化。"
+            },
+            ""
+          ],
+          [
+            "select",
+            {
+              "id": "targetMetric"
+            },
+            ""
+          ],
+          [
+            "input",
+            {
+              "id": "minDays",
+              "type": "number",
+              "min": "1",
+              "max": "31",
+              "step": "1",
+              "value": "1",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "input",
+            {
+              "id": "minImpressions",
+              "type": "number",
+              "min": "0",
+              "max": "1000000000",
+              "step": "1",
+              "value": "100",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "select",
+            {
+              "id": "changeKind"
+            },
+            ""
+          ],
+          [
+            "select",
+            {
+              "id": "shotId"
+            },
+            ""
+          ],
+          [
+            "textarea",
+            {
+              "id": "shotChanges",
+              "rows": "3"
+            },
+            ""
+          ],
+          [
+            "textarea",
+            {
+              "id": "scriptScenes",
+              "rows": "10"
+            },
+            ""
+          ],
+          [
+            "button",
+            {},
+            "保存待选择提案"
+          ]
+        ]
+      }
+    ],
+    "links": [
+      "/",
+      "/create",
+      "/distribution",
+      "/experiments",
+      "/guide"
+    ],
+    "scripts": [
+      "/static/experiments.js"
+    ]
+  },
+  "guide.html": {
+    "ids": {
+      "materialGuide": {
+        "tag": "section",
+        "attrs": {
+          "id": "materialGuide"
+        },
+        "parents": [],
+        "options": null
+      },
+      "promptGuide": {
+        "tag": "section",
+        "attrs": {
+          "id": "promptGuide"
+        },
+        "parents": [],
+        "options": null
+      },
+      "delivery": {
+        "tag": "details",
+        "attrs": {
+          "id": "delivery"
+        },
+        "parents": [],
+        "options": null
+      },
+      "system": {
+        "tag": "section",
+        "attrs": {
+          "id": "system"
+        },
+        "parents": [],
+        "options": null
+      },
+      "deliveryCheck": {
+        "tag": "button",
+        "attrs": {
+          "type": "button",
+          "id": "deliveryCheck"
+        },
+        "parents": [],
+        "options": null
+      },
+      "deliveryCheckStatus": {
+        "tag": "p",
+        "attrs": {
+          "id": "deliveryCheckStatus",
+          "role": "status",
+          "aria-live": "polite"
+        },
+        "parents": [],
+        "options": null
+      },
+      "deliveryCheckResults": {
+        "tag": "ul",
+        "attrs": {
+          "id": "deliveryCheckResults"
+        },
+        "parents": [],
+        "options": null
+      }
+    },
+    "forms": [],
+    "links": [
+      "/",
+      "/create",
+      "/distribution",
+      "/experiments",
+      "/guide",
+      "/setup",
+      "/maintenance",
+      "/create",
+      "#system",
+      "/samples#materialExamples",
+      "/prompts",
+      "/samples#semanticExamples",
+      "/samples#promptCategoryExamples",
+      "/samples#promptExamples",
+      "/distribution",
+      "/experiments",
+      "/",
+      "/studio",
+      "/samples",
+      "/qianchuan",
+      "/maintenance",
+      "/api/system/install-guide"
+    ],
+    "scripts": [
+      "/static/maintenance.js"
+    ]
+  },
+  "index.html": {
+    "ids": {
+      "healthDot": {
+        "tag": "span",
+        "attrs": {
+          "id": "healthDot"
+        },
+        "parents": [],
+        "options": null
+      },
+      "health": {
+        "tag": "span",
+        "attrs": {
+          "id": "health"
+        },
+        "parents": [],
+        "options": null
+      },
+      "notice": {
+        "tag": "div",
+        "attrs": {
+          "id": "notice",
+          "role": "status",
+          "aria-live": "polite",
+          "hidden": ""
+        },
+        "parents": [],
+        "options": null
+      },
+      "newJob": {
+        "tag": "button",
+        "attrs": {
+          "id": "newJob",
+          "aria-label": "新建任务"
+        },
+        "parents": [],
+        "options": null
+      },
+      "jobs": {
+        "tag": "nav",
+        "attrs": {
+          "id": "jobs",
+          "aria-label": "制作任务列表"
+        },
+        "parents": [],
+        "options": null
+      },
+      "manualMode": {
+        "tag": "button",
+        "attrs": {
+          "id": "manualMode",
+          "aria-pressed": "true"
+        },
+        "parents": [],
+        "options": null
+      },
+      "productMode": {
+        "tag": "button",
+        "attrs": {
+          "id": "productMode",
+          "aria-pressed": "false"
+        },
+        "parents": [],
+        "options": null
+      },
+      "productPanel": {
+        "tag": "section",
+        "attrs": {
+          "id": "productPanel",
+          "aria-label": "产品资料与脚本",
+          "hidden": ""
+        },
+        "parents": [],
+        "options": null
+      },
+      "productStatus": {
+        "tag": "span",
+        "attrs": {
+          "id": "productStatus"
+        },
+        "parents": [],
+        "options": null
+      },
+      "productSelect": {
+        "tag": "select",
+        "attrs": {
+          "id": "productSelect"
+        },
+        "parents": [],
+        "options": [
+          [
+            "",
+            "新建资料夹"
+          ]
+        ]
+      },
+      "reloadProduct": {
+        "tag": "button",
+        "attrs": {
+          "id": "reloadProduct"
+        },
+        "parents": [],
+        "options": null
+      },
+      "createProduct": {
+        "tag": "form",
+        "attrs": {
+          "id": "createProduct"
+        },
+        "parents": [],
+        "options": null
+      },
+      "productTitle": {
+        "tag": "input",
+        "attrs": {
+          "id": "productTitle",
+          "aria-label": "新产品名称",
+          "placeholder": "产品名称，例如：随行杯",
+          "maxlength": "120",
+          "required": ""
+        },
+        "parents": [
+          [
+            "form",
+            "createProduct",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "productContent": {
+        "tag": "div",
+        "attrs": {
+          "id": "productContent",
+          "hidden": ""
+        },
+        "parents": [],
+        "options": null
+      },
+      "productFile": {
+        "tag": "input",
+        "attrs": {
+          "id": "productFile",
+          "type": "file",
+          "accept": ".txt,.md,.pdf,.docx"
+        },
+        "parents": [],
+        "options": null
+      },
+      "linkProduct": {
+        "tag": "form",
+        "attrs": {
+          "id": "linkProduct"
+        },
+        "parents": [],
+        "options": null
+      },
+      "productUrl": {
+        "tag": "input",
+        "attrs": {
+          "id": "productUrl",
+          "type": "url",
+          "aria-label": "产品 HTTPS 链接",
+          "placeholder": "https:// 产品详情页",
+          "maxlength": "2048",
+          "required": ""
+        },
+        "parents": [
+          [
+            "form",
+            "linkProduct",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "sourceList": {
+        "tag": "div",
+        "attrs": {
+          "id": "sourceList"
+        },
+        "parents": [],
+        "options": null
+      },
+      "quoteSource": {
+        "tag": "select",
+        "attrs": {
+          "id": "quoteSource"
+        },
+        "parents": [],
+        "options": []
+      },
+      "quoteUnit": {
+        "tag": "select",
+        "attrs": {
+          "id": "quoteUnit"
+        },
+        "parents": [],
+        "options": []
+      },
+      "quoteContext": {
+        "tag": "pre",
+        "attrs": {
+          "id": "quoteContext"
+        },
+        "parents": [],
+        "options": null
+      },
+      "quoteForm": {
+        "tag": "form",
+        "attrs": {
+          "id": "quoteForm"
+        },
+        "parents": [],
+        "options": null
+      },
+      "quoteText": {
+        "tag": "textarea",
+        "attrs": {
+          "id": "quoteText",
+          "rows": "2",
+          "maxlength": "100",
+          "required": ""
+        },
+        "parents": [
+          [
+            "form",
+            "quoteForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "factsList": {
+        "tag": "div",
+        "attrs": {
+          "id": "factsList"
+        },
+        "parents": [],
+        "options": null
+      },
+      "factSelectionHint": {
+        "tag": "p",
+        "attrs": {
+          "id": "factSelectionHint",
+          "aria-live": "polite"
+        },
+        "parents": [],
+        "options": null
+      },
+      "factsForm": {
+        "tag": "form",
+        "attrs": {
+          "id": "factsForm"
+        },
+        "parents": [],
+        "options": null
+      },
+      "factsReviewer": {
+        "tag": "input",
+        "attrs": {
+          "id": "factsReviewer",
+          "required": "",
+          "maxlength": "80"
+        },
+        "parents": [
+          [
+            "form",
+            "factsForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "factsNote": {
+        "tag": "input",
+        "attrs": {
+          "id": "factsNote",
+          "required": "",
+          "maxlength": "1000",
+          "placeholder": "例如：与产品规格表逐项核对"
+        },
+        "parents": [
+          [
+            "form",
+            "factsForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "factsChecked": {
+        "tag": "input",
+        "attrs": {
+          "id": "factsChecked",
+          "type": "checkbox",
+          "required": ""
+        },
+        "parents": [
+          [
+            "form",
+            "factsForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "confirmFacts": {
+        "tag": "button",
+        "attrs": {
+          "id": "confirmFacts"
+        },
+        "parents": [
+          [
+            "form",
+            "factsForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "draftMeta": {
+        "tag": "span",
+        "attrs": {
+          "id": "draftMeta"
+        },
+        "parents": [],
+        "options": null
+      },
+      "generateProduct": {
+        "tag": "form",
+        "attrs": {
+          "id": "generateProduct"
+        },
+        "parents": [],
+        "options": null
+      },
+      "generationMode": {
+        "tag": "select",
+        "attrs": {
+          "id": "generationMode"
+        },
+        "parents": [
+          [
+            "form",
+            "generateProduct",
+            null
+          ]
+        ],
+        "options": [
+          [
+            "extractive",
+            "本地事实编排 · 无需 API"
+          ],
+          [
+            "model",
+            "\n                    模型选材与排序 · 使用已配置 API\n                  "
+          ]
+        ]
+      },
+      "generateScript": {
+        "tag": "button",
+        "attrs": {
+          "id": "generateScript"
+        },
+        "parents": [
+          [
+            "form",
+            "generateProduct",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "externalConsentLabel": {
+        "tag": "label",
+        "attrs": {
+          "id": "externalConsentLabel",
+          "hidden": ""
+        },
+        "parents": [
+          [
+            "form",
+            "generateProduct",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "externalConsent": {
+        "tag": "input",
+        "attrs": {
+          "id": "externalConsent",
+          "type": "checkbox"
+        },
+        "parents": [
+          [
+            "form",
+            "generateProduct",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "modelHint": {
+        "tag": "p",
+        "attrs": {
+          "id": "modelHint"
+        },
+        "parents": [],
+        "options": null
+      },
+      "scriptScenes": {
+        "tag": "div",
+        "attrs": {
+          "id": "scriptScenes"
+        },
+        "parents": [],
+        "options": null
+      },
+      "saveProductDraft": {
+        "tag": "button",
+        "attrs": {
+          "id": "saveProductDraft",
+          "hidden": ""
+        },
+        "parents": [],
+        "options": null
+      },
+      "scriptEditHint": {
+        "tag": "p",
+        "attrs": {
+          "id": "scriptEditHint",
+          "hidden": ""
+        },
+        "parents": [],
+        "options": null
+      },
+      "scriptApproval": {
+        "tag": "form",
+        "attrs": {
+          "id": "scriptApproval",
+          "hidden": ""
+        },
+        "parents": [],
+        "options": null
+      },
+      "scriptReviewer": {
+        "tag": "input",
+        "attrs": {
+          "id": "scriptReviewer",
+          "required": "",
+          "maxlength": "80"
+        },
+        "parents": [
+          [
+            "form",
+            "scriptApproval",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "scriptNote": {
+        "tag": "input",
+        "attrs": {
+          "id": "scriptNote",
+          "required": "",
+          "maxlength": "1000",
+          "placeholder": "记录对改写、规格、适用条件的核验"
+        },
+        "parents": [
+          [
+            "form",
+            "scriptApproval",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "scriptChecked": {
+        "tag": "input",
+        "attrs": {
+          "id": "scriptChecked",
+          "type": "checkbox",
+          "required": ""
+        },
+        "parents": [
+          [
+            "form",
+            "scriptApproval",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "approveScript": {
+        "tag": "button",
+        "attrs": {
+          "id": "approveScript"
+        },
+        "parents": [
+          [
+            "form",
+            "scriptApproval",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "productApprovalResult": {
+        "tag": "div",
+        "attrs": {
+          "id": "productApprovalResult"
+        },
+        "parents": [],
+        "options": null
+      },
+      "productEvents": {
+        "tag": "ol",
+        "attrs": {
+          "id": "productEvents"
+        },
+        "parents": [],
+        "options": null
+      },
+      "jobMeta": {
+        "tag": "p",
+        "attrs": {
+          "id": "jobMeta"
+        },
+        "parents": [],
+        "options": null
+      },
+      "pageTitle": {
+        "tag": "h1",
+        "attrs": {
+          "id": "pageTitle"
+        },
+        "parents": [],
+        "options": null
+      },
+      "status": {
+        "tag": "span",
+        "attrs": {
+          "id": "status"
+        },
+        "parents": [],
+        "options": null
+      },
+      "step1": {
+        "tag": "li",
+        "attrs": {
+          "id": "step1"
+        },
+        "parents": [],
+        "options": null
+      },
+      "step2": {
+        "tag": "li",
+        "attrs": {
+          "id": "step2"
+        },
+        "parents": [],
+        "options": null
+      },
+      "step3": {
+        "tag": "li",
+        "attrs": {
+          "id": "step3"
+        },
+        "parents": [],
+        "options": null
+      },
+      "jobProvenance": {
+        "tag": "details",
+        "attrs": {
+          "id": "jobProvenance",
+          "hidden": ""
+        },
+        "parents": [],
+        "options": null
+      },
+      "jobProvenanceBody": {
+        "tag": "div",
+        "attrs": {
+          "id": "jobProvenanceBody"
+        },
+        "parents": [],
+        "options": null
+      },
+      "saveHint": {
+        "tag": "span",
+        "attrs": {
+          "id": "saveHint"
+        },
+        "parents": [],
+        "options": null
+      },
+      "scriptForm": {
+        "tag": "form",
+        "attrs": {
+          "id": "scriptForm"
+        },
+        "parents": [],
+        "options": null
+      },
+      "title": {
+        "tag": "input",
+        "attrs": {
+          "id": "title",
+          "maxlength": "120",
+          "placeholder": "例如：随行杯 · 外观与细节",
+          "required": ""
+        },
+        "parents": [
+          [
+            "form",
+            "scriptForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "lineCount": {
+        "tag": "span",
+        "attrs": {
+          "id": "lineCount"
+        },
+        "parents": [
+          [
+            "form",
+            "scriptForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "script": {
+        "tag": "textarea",
+        "attrs": {
+          "id": "script",
+          "rows": "7",
+          "maxlength": "3000",
+          "placeholder": "每行一个镜头，可在分镜区选择素材与运镜。\n\n展示杯身的整体外观\n近距离看看杯口细节\n放入随身包，展示收纳方式",
+          "required": ""
+        },
+        "parents": [
+          [
+            "form",
+            "scriptForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "seconds": {
+        "tag": "input",
+        "attrs": {
+          "id": "seconds",
+          "type": "number",
+          "min": "1",
+          "max": "15",
+          "step": "0.5",
+          "value": "3"
+        },
+        "parents": [
+          [
+            "form",
+            "scriptForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "save": {
+        "tag": "button",
+        "attrs": {
+          "id": "save",
+          "type": "submit"
+        },
+        "parents": [
+          [
+            "form",
+            "scriptForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "assetCount": {
+        "tag": "span",
+        "attrs": {
+          "id": "assetCount"
+        },
+        "parents": [],
+        "options": null
+      },
+      "visualDrop": {
+        "tag": "label",
+        "attrs": {
+          "id": "visualDrop"
+        },
+        "parents": [],
+        "options": null
+      },
+      "visualFiles": {
+        "tag": "input",
+        "attrs": {
+          "id": "visualFiles",
+          "type": "file",
+          "accept": ".jpg,.jpeg,.png,.webp,.mp4,.mov,.webm",
+          "multiple": "",
+          "disabled": ""
+        },
+        "parents": [],
+        "options": null
+      },
+      "assets": {
+        "tag": "div",
+        "attrs": {
+          "id": "assets"
+        },
+        "parents": [],
+        "options": null
+      },
+      "audioFile": {
+        "tag": "input",
+        "attrs": {
+          "id": "audioFile",
+          "type": "file",
+          "accept": ".wav,.mp3,.m4a",
+          "disabled": ""
+        },
+        "parents": [],
+        "options": null
+      },
+      "audioAssets": {
+        "tag": "div",
+        "attrs": {
+          "id": "audioAssets"
+        },
+        "parents": [],
+        "options": null
+      },
+      "storyboardPanel": {
+        "tag": "section",
+        "attrs": {
+          "id": "storyboardPanel",
+          "hidden": ""
+        },
+        "parents": [],
+        "options": null
+      },
+      "storyboardHint": {
+        "tag": "span",
+        "attrs": {
+          "id": "storyboardHint"
+        },
+        "parents": [],
+        "options": null
+      },
+      "storyboardFields": {
+        "tag": "fieldset",
+        "attrs": {
+          "id": "storyboardFields"
+        },
+        "parents": [],
+        "options": null
+      },
+      "saveStoryboard": {
+        "tag": "button",
+        "attrs": {
+          "id": "saveStoryboard",
+          "type": "button"
+        },
+        "parents": [],
+        "options": null
+      },
+      "submit": {
+        "tag": "button",
+        "attrs": {
+          "id": "submit",
+          "disabled": ""
+        },
+        "parents": [],
+        "options": null
+      },
+      "submitHint": {
+        "tag": "span",
+        "attrs": {
+          "id": "submitHint"
+        },
+        "parents": [],
+        "options": null
+      },
+      "cancel": {
+        "tag": "button",
+        "attrs": {
+          "id": "cancel",
+          "hidden": ""
+        },
+        "parents": [],
+        "options": null
+      },
+      "retry": {
+        "tag": "button",
+        "attrs": {
+          "id": "retry",
+          "hidden": ""
+        },
+        "parents": [],
+        "options": null
+      },
+      "clone": {
+        "tag": "button",
+        "attrs": {
+          "id": "clone",
+          "hidden": ""
+        },
+        "parents": [],
+        "options": null
+      },
+      "video": {
+        "tag": "video",
+        "attrs": {
+          "id": "video",
+          "controls": "",
+          "playsinline": "",
+          "hidden": ""
+        },
+        "parents": [],
+        "options": null
+      },
+      "previewEmpty": {
+        "tag": "div",
+        "attrs": {
+          "id": "previewEmpty"
+        },
+        "parents": [],
+        "options": null
+      },
+      "downloads": {
+        "tag": "div",
+        "attrs": {
+          "id": "downloads"
+        },
+        "parents": [],
+        "options": null
+      },
+      "error": {
+        "tag": "div",
+        "attrs": {
+          "id": "error",
+          "hidden": ""
+        },
+        "parents": [],
+        "options": null
+      },
+      "auditBadge": {
+        "tag": "span",
+        "attrs": {
+          "id": "auditBadge"
+        },
+        "parents": [],
+        "options": null
+      },
+      "auditBody": {
+        "tag": "div",
+        "attrs": {
+          "id": "auditBody"
+        },
+        "parents": [],
+        "options": null
+      },
+      "reviewForm": {
+        "tag": "form",
+        "attrs": {
+          "id": "reviewForm",
+          "hidden": ""
+        },
+        "parents": [],
+        "options": null
+      },
+      "reviewer": {
+        "tag": "input",
+        "attrs": {
+          "id": "reviewer",
+          "maxlength": "120",
+          "required": "",
+          "placeholder": "填写你的姓名"
+        },
+        "parents": [
+          [
+            "form",
+            "reviewForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "reviewNote": {
+        "tag": "textarea",
+        "attrs": {
+          "id": "reviewNote",
+          "rows": "3",
+          "maxlength": "2000",
+          "required": "",
+          "placeholder": "记录核验依据，以及需要保留的说明"
+        },
+        "parents": [
+          [
+            "form",
+            "reviewForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "confirmed": {
+        "tag": "input",
+        "attrs": {
+          "id": "confirmed",
+          "type": "checkbox",
+          "required": ""
+        },
+        "parents": [
+          [
+            "form",
+            "reviewForm",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "reviewResult": {
+        "tag": "div",
+        "attrs": {
+          "id": "reviewResult"
+        },
+        "parents": [],
+        "options": null
+      },
+      "events": {
+        "tag": "ol",
+        "attrs": {
+          "id": "events"
+        },
+        "parents": [],
+        "options": null
+      }
+    },
+    "forms": [
+      {
+        "attrs": {
+          "id": "createProduct"
+        },
+        "controls": [
+          [
+            "input",
+            {
+              "id": "productTitle",
+              "aria-label": "新产品名称",
+              "placeholder": "产品名称，例如：随行杯",
+              "maxlength": "120",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "button",
+            {},
+            "新建资料夹"
+          ]
+        ]
+      },
+      {
+        "attrs": {
+          "id": "linkProduct"
+        },
+        "controls": [
+          [
+            "input",
+            {
+              "id": "productUrl",
+              "type": "url",
+              "aria-label": "产品 HTTPS 链接",
+              "placeholder": "https:// 产品详情页",
+              "maxlength": "2048",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "button",
+            {},
+            "读取链接"
+          ]
+        ]
+      },
+      {
+        "attrs": {
+          "id": "quoteForm"
+        },
+        "controls": [
+          [
+            "textarea",
+            {
+              "id": "quoteText",
+              "rows": "2",
+              "maxlength": "100",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "button",
+            {},
+            "加入候选事实"
+          ]
+        ]
+      },
+      {
+        "attrs": {
+          "id": "factsForm"
+        },
+        "controls": [
+          [
+            "input",
+            {
+              "id": "factsReviewer",
+              "required": "",
+              "maxlength": "80"
+            },
+            ""
+          ],
+          [
+            "input",
+            {
+              "id": "factsNote",
+              "required": "",
+              "maxlength": "1000",
+              "placeholder": "例如：与产品规格表逐项核对"
+            },
+            ""
+          ],
+          [
+            "input",
+            {
+              "id": "factsChecked",
+              "type": "checkbox",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "button",
+            {
+              "id": "confirmFacts"
+            },
+            "\n                    确认所选事实\n                  "
+          ]
+        ]
+      },
+      {
+        "attrs": {
+          "id": "generateProduct"
+        },
+        "controls": [
+          [
+            "select",
+            {
+              "id": "generationMode"
+            },
+            ""
+          ],
+          [
+            "button",
+            {
+              "id": "generateScript"
+            },
+            "\n                  生成脚本草稿"
+          ],
+          [
+            "input",
+            {
+              "id": "externalConsent",
+              "type": "checkbox"
+            },
+            ""
+          ]
+        ]
+      },
+      {
+        "attrs": {
+          "id": "scriptApproval",
+          "hidden": ""
+        },
+        "controls": [
+          [
+            "input",
+            {
+              "id": "scriptReviewer",
+              "required": "",
+              "maxlength": "80"
+            },
+            ""
+          ],
+          [
+            "input",
+            {
+              "id": "scriptNote",
+              "required": "",
+              "maxlength": "1000",
+              "placeholder": "记录对改写、规格、适用条件的核验"
+            },
+            ""
+          ],
+          [
+            "input",
+            {
+              "id": "scriptChecked",
+              "type": "checkbox",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "button",
+            {
+              "id": "approveScript"
+            },
+            "\n                  确认脚本 → 创建剪辑草稿\n                "
+          ]
+        ]
+      },
+      {
+        "attrs": {
+          "id": "scriptForm"
+        },
+        "controls": [
+          [
+            "input",
+            {
+              "id": "title",
+              "maxlength": "120",
+              "placeholder": "例如：随行杯 · 外观与细节",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "textarea",
+            {
+              "id": "script",
+              "rows": "7",
+              "maxlength": "3000",
+              "placeholder": "每行一个镜头，可在分镜区选择素材与运镜。\n\n展示杯身的整体外观\n近距离看看杯口细节\n放入随身包，展示收纳方式",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "input",
+            {
+              "id": "seconds",
+              "type": "number",
+              "min": "1",
+              "max": "15",
+              "step": "0.5",
+              "value": "3"
+            },
+            ""
+          ],
+          [
+            "button",
+            {
+              "id": "save",
+              "type": "submit"
+            },
+            "\n                保存草稿\n              "
+          ]
+        ]
+      },
+      {
+        "attrs": {
+          "id": "reviewForm",
+          "hidden": ""
+        },
+        "controls": [
+          [
+            "input",
+            {
+              "id": "reviewer",
+              "maxlength": "120",
+              "required": "",
+              "placeholder": "填写你的姓名"
+            },
+            ""
+          ],
+          [
+            "textarea",
+            {
+              "id": "reviewNote",
+              "rows": "3",
+              "maxlength": "2000",
+              "required": "",
+              "placeholder": "记录核验依据，以及需要保留的说明"
+            },
+            ""
+          ],
+          [
+            "input",
+            {
+              "id": "confirmed",
+              "type": "checkbox",
+              "required": ""
+            },
+            ""
+          ],
+          [
+            "button",
+            {
+              "type": "submit",
+              "name": "decision",
+              "value": "ready"
+            },
+            "\n                  复核通过"
+          ],
+          [
+            "button",
+            {
+              "type": "submit",
+              "name": "decision",
+              "value": "rejected"
+            },
+            "\n                  退回修改\n                "
+          ]
+        ]
+      }
+    ],
+    "links": [
+      "/",
+      "/distribution",
+      "/create",
+      "/experiments",
+      "/studio",
+      "/samples",
+      "/guide",
+      "/setup",
+      "/maintenance"
+    ],
+    "scripts": [
+      "/static/app.js",
+      "/static/products.js",
+      "/static/storyboard.js"
+    ]
+  },
+  "studio.html": {
+    "ids": {
+      "message": {
+        "tag": "div",
+        "attrs": {
+          "id": "message",
+          "role": "status"
+        },
+        "parents": [],
+        "options": null
+      },
+      "jobSelect": {
+        "tag": "select",
+        "attrs": {
+          "id": "jobSelect"
+        },
+        "parents": [],
+        "options": []
+      },
+      "jobLink": {
+        "tag": "a",
+        "attrs": {
+          "id": "jobLink",
+          "href": "/"
+        },
+        "parents": [],
+        "options": null
+      },
+      "locked": {
+        "tag": "div",
+        "attrs": {
+          "id": "locked"
+        },
+        "parents": [],
+        "options": null
+      },
+      "editor": {
+        "tag": "fieldset",
+        "attrs": {
+          "id": "editor",
+          "disabled": ""
+        },
+        "parents": [],
+        "options": null
+      },
+      "format": {
+        "tag": "select",
+        "attrs": {
+          "id": "format"
+        },
+        "parents": [
+          [
+            "fieldset",
+            "editor",
+            null
+          ]
+        ],
+        "options": [
+          [
+            "auto",
+            "保留旧版风格"
+          ],
+          [
+            "showcase",
+            "纯商品展示（无口播）"
+          ],
+          [
+            "recommendation",
+            "场景种草"
+          ],
+          [
+            "review",
+            "测评视频（须真实测试证据）"
+          ],
+          [
+            "narrated",
+            "商品展示＋配音"
+          ]
+        ]
+      },
+      "formatHint": {
+        "tag": "p",
+        "attrs": {
+          "id": "formatHint"
+        },
+        "parents": [
+          [
+            "fieldset",
+            "editor",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "category": {
+        "tag": "input",
+        "attrs": {
+          "id": "category",
+          "maxlength": "80",
+          "placeholder": "如家居、数码、美妆"
+        },
+        "parents": [
+          [
+            "fieldset",
+            "editor",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "audience": {
+        "tag": "input",
+        "attrs": {
+          "id": "audience",
+          "maxlength": "120",
+          "placeholder": "如办公桌上的日常"
+        },
+        "parents": [
+          [
+            "fieldset",
+            "editor",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "tone": {
+        "tag": "input",
+        "attrs": {
+          "id": "tone",
+          "maxlength": "120",
+          "placeholder": "如安静、精致、活泼"
+        },
+        "parents": [
+          [
+            "fieldset",
+            "editor",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "recommend": {
+        "tag": "button",
+        "attrs": {
+          "id": "recommend"
+        },
+        "parents": [
+          [
+            "fieldset",
+            "editor",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "method": {
+        "tag": "p",
+        "attrs": {
+          "id": "method"
+        },
+        "parents": [
+          [
+            "fieldset",
+            "editor",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "options": {
+        "tag": "div",
+        "attrs": {
+          "id": "options"
+        },
+        "parents": [
+          [
+            "fieldset",
+            "editor",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "brandName": {
+        "tag": "input",
+        "attrs": {
+          "id": "brandName",
+          "maxlength": "24"
+        },
+        "parents": [
+          [
+            "fieldset",
+            "editor",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "paper": {
+        "tag": "input",
+        "attrs": {
+          "id": "paper",
+          "type": "color",
+          "value": "#f3efe6"
+        },
+        "parents": [
+          [
+            "fieldset",
+            "editor",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "ink": {
+        "tag": "input",
+        "attrs": {
+          "id": "ink",
+          "type": "color",
+          "value": "#282721"
+        },
+        "parents": [
+          [
+            "fieldset",
+            "editor",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "accent": {
+        "tag": "input",
+        "attrs": {
+          "id": "accent",
+          "type": "color",
+          "value": "#876f50"
+        },
+        "parents": [
+          [
+            "fieldset",
+            "editor",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "subtitleSize": {
+        "tag": "input",
+        "attrs": {
+          "id": "subtitleSize",
+          "type": "number",
+          "min": "40",
+          "max": "64",
+          "value": "64"
+        },
+        "parents": [
+          [
+            "fieldset",
+            "editor",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "sfx": {
+        "tag": "input",
+        "attrs": {
+          "id": "sfx",
+          "type": "checkbox"
+        },
+        "parents": [
+          [
+            "fieldset",
+            "editor",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "reviewContext": {
+        "tag": "textarea",
+        "attrs": {
+          "id": "reviewContext",
+          "maxlength": "1000",
+          "placeholder": "测试对象、条件、方法、对应素材和结论来源"
+        },
+        "parents": [
+          [
+            "fieldset",
+            "editor",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "shots": {
+        "tag": "div",
+        "attrs": {
+          "id": "shots"
+        },
+        "parents": [
+          [
+            "fieldset",
+            "editor",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "voice": {
+        "tag": "select",
+        "attrs": {
+          "id": "voice"
+        },
+        "parents": [
+          [
+            "fieldset",
+            "editor",
+            null
+          ]
+        ],
+        "options": []
+      },
+      "audio": {
+        "tag": "audio",
+        "attrs": {
+          "id": "audio",
+          "controls": ""
+        },
+        "parents": [
+          [
+            "fieldset",
+            "editor",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "align": {
+        "tag": "button",
+        "attrs": {
+          "id": "align"
+        },
+        "parents": [
+          [
+            "fieldset",
+            "editor",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "stopAlign": {
+        "tag": "button",
+        "attrs": {
+          "id": "stopAlign",
+          "hidden": ""
+        },
+        "parents": [
+          [
+            "fieldset",
+            "editor",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "alignStatus": {
+        "tag": "p",
+        "attrs": {
+          "id": "alignStatus"
+        },
+        "parents": [
+          [
+            "fieldset",
+            "editor",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "words": {
+        "tag": "div",
+        "attrs": {
+          "id": "words"
+        },
+        "parents": [
+          [
+            "fieldset",
+            "editor",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "confirmation": {
+        "tag": "div",
+        "attrs": {
+          "id": "confirmation",
+          "hidden": ""
+        },
+        "parents": [
+          [
+            "fieldset",
+            "editor",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "reviewer": {
+        "tag": "input",
+        "attrs": {
+          "id": "reviewer",
+          "maxlength": "120"
+        },
+        "parents": [
+          [
+            "fieldset",
+            "editor",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "heard": {
+        "tag": "input",
+        "attrs": {
+          "id": "heard",
+          "type": "checkbox"
+        },
+        "parents": [
+          [
+            "fieldset",
+            "editor",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "confirm": {
+        "tag": "button",
+        "attrs": {
+          "id": "confirm"
+        },
+        "parents": [
+          [
+            "fieldset",
+            "editor",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "save": {
+        "tag": "button",
+        "attrs": {
+          "id": "save"
+        },
+        "parents": [
+          [
+            "fieldset",
+            "editor",
+            null
+          ]
+        ],
+        "options": null
+      },
+      "renderLink": {
+        "tag": "a",
+        "attrs": {
+          "id": "renderLink",
+          "href": "/"
+        },
+        "parents": [
+          [
+            "fieldset",
+            "editor",
+            null
+          ]
+        ],
+        "options": null
+      }
+    },
+    "forms": [],
+    "links": [
+      "/",
+      "/guide",
+      "/distribution",
+      "/",
+      "/"
+    ],
+    "scripts": [
+      "/static/studio.js"
+    ]
+  }
+}

@@ -1,0 +1,1017 @@
+{
+  "tech-punch-v1": {
+    "id": "tech-punch-v1",
+    "name": "科技定点急推",
+    "recipe": "media-punch-in",
+    "keywords": [
+      "数码",
+      "科技",
+      "通勤",
+      "耳机",
+      "专业",
+      "利落"
+    ],
+    "prompt": "先让观众看清商品整体，在对应口播摘句到来时向已核对焦点短促推近，落定留看，再回到整体。只处理真实画面，不震屏、不闪白、不改变源视频速度；动作保护区间内关闭。",
+    "source": {
+      "repository": "Vincentwei1021/video-shotcraft",
+      "commit": "43bd349a136651865ecfa6ea1cf012f6e957d304",
+      "license": "Apache-2.0",
+      "url": "https://vincentwei1021.github.io/video-shotcraft/source/crash-zoom-punch.md",
+      "local_reference": "vendor/video-shotcraft/2026-10-motion/references/shots/camera/crash-zoom-punch.md"
+    },
+    "adaptation": "本项目原创竖屏适配；引用镜头方法，不执行上游代码或生成商品事实",
+    "presentation": {
+      "zoom": 1.18,
+      "travel_frames": 10,
+      "shape": "rounded"
+    },
+    "requirements": [
+      "有使用权的同款商品画面",
+      "短边至少720像素",
+      "人工核对焦点、裁切和动作保护区间"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "78e81c1f1c012917ba26ec112be61070b6f71b5eef4eaffed8f73d0405e2c231"
+  },
+  "sport-punch-v1": {
+    "id": "sport-punch-v1",
+    "name": "活力商品重拍",
+    "recipe": "media-punch-in",
+    "keywords": [
+      "年轻",
+      "学生",
+      "运动",
+      "活泼",
+      "节奏",
+      "潮流"
+    ],
+    "prompt": "先让观众看清商品整体，在对应口播摘句到来时向已核对焦点短促推近，落定留看，再回到整体。只处理真实画面，不震屏、不闪白、不改变源视频速度；动作保护区间内关闭。",
+    "source": {
+      "repository": "Vincentwei1021/video-shotcraft",
+      "commit": "43bd349a136651865ecfa6ea1cf012f6e957d304",
+      "license": "Apache-2.0",
+      "url": "https://vincentwei1021.github.io/video-shotcraft/source/crash-zoom-punch.md",
+      "local_reference": "vendor/video-shotcraft/2026-10-motion/references/shots/camera/crash-zoom-punch.md"
+    },
+    "adaptation": "本项目原创竖屏适配；引用镜头方法，不执行上游代码或生成商品事实",
+    "presentation": {
+      "zoom": 1.23,
+      "travel_frames": 7,
+      "shape": "diagonal"
+    },
+    "requirements": [
+      "有使用权的同款商品画面",
+      "短边至少720像素",
+      "人工核对焦点、裁切和动作保护区间"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "0d2595c0347f290df0219eb1d25e6db75dbd18a872e0d8f8ef7db40d454cc3b9"
+  },
+  "daily-punch-v1": {
+    "id": "daily-punch-v1",
+    "name": "日常轻推点题",
+    "recipe": "media-punch-in",
+    "keywords": [
+      "生活",
+      "亲切",
+      "日常",
+      "家居",
+      "食品",
+      "自然"
+    ],
+    "prompt": "先让观众看清商品整体，在对应口播摘句到来时向已核对焦点短促推近，落定留看，再回到整体。只处理真实画面，不震屏、不闪白、不改变源视频速度；动作保护区间内关闭。",
+    "source": {
+      "repository": "Vincentwei1021/video-shotcraft",
+      "commit": "43bd349a136651865ecfa6ea1cf012f6e957d304",
+      "license": "Apache-2.0",
+      "url": "https://vincentwei1021.github.io/video-shotcraft/source/crash-zoom-punch.md",
+      "local_reference": "vendor/video-shotcraft/2026-10-motion/references/shots/camera/crash-zoom-punch.md"
+    },
+    "adaptation": "本项目原创竖屏适配；引用镜头方法，不执行上游代码或生成商品事实",
+    "presentation": {
+      "zoom": 1.12,
+      "travel_frames": 16,
+      "shape": "circle"
+    },
+    "requirements": [
+      "有使用权的同款商品画面",
+      "短边至少720像素",
+      "人工核对焦点、裁切和动作保护区间"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "0c1dac9852198fffa15cf28271a2f53aba14eb98e93533c14844e3f01a91418b"
+  },
+  "precision-dual-v1": {
+    "id": "precision-dual-v1",
+    "name": "理性结构双窗",
+    "recipe": "detail-dual-window",
+    "keywords": [
+      "测评",
+      "理性",
+      "参数",
+      "数码",
+      "工具",
+      "严谨",
+      "接口"
+    ],
+    "prompt": "上窗持续显示同一时刻的商品整体，下窗同步展示同一画面的焦点放大。先落整体，再展开细节窗；标明整体与细节视图。不是前后效果对比，不生成内部结构或测量结论，动作段保持完整单窗。",
+    "source": {
+      "repository": "alchaincyf/huashu-motion",
+      "commit": "3e927801e78b587878fb7dbb65d616326df00c21",
+      "license": "MIT",
+      "url": "https://github.com/alchaincyf/huashu-motion/blob/3e927801e78b587878fb7dbb65d616326df00c21/skills/huashu-motion/references/library/languages/photo-led.md",
+      "local_reference": "vendor/huashu-motion/skills/huashu-motion/references/library/languages/photo-led.md"
+    },
+    "adaptation": "本项目原创竖屏适配；引用镜头方法，不执行上游代码或生成商品事实",
+    "presentation": {
+      "zoom": 1.65,
+      "travel_frames": 14,
+      "shape": "rounded"
+    },
+    "requirements": [
+      "有使用权的同款商品画面",
+      "短边至少720像素",
+      "人工核对焦点、裁切和动作保护区间"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "7c3f8bc46a82439a38c0b8910f09b06be941138cfa0f411671c7bed3a4218f48"
+  },
+  "texture-dual-v1": {
+    "id": "texture-dual-v1",
+    "name": "材质纹理双窗",
+    "recipe": "detail-dual-window",
+    "keywords": [
+      "美妆",
+      "材质",
+      "纹理",
+      "精致",
+      "工艺",
+      "瓶身",
+      "珠宝"
+    ],
+    "prompt": "上窗持续显示同一时刻的商品整体，下窗同步展示同一画面的焦点放大。先落整体，再展开细节窗；标明整体与细节视图。不是前后效果对比，不生成内部结构或测量结论，动作段保持完整单窗。",
+    "source": {
+      "repository": "alchaincyf/huashu-motion",
+      "commit": "3e927801e78b587878fb7dbb65d616326df00c21",
+      "license": "MIT",
+      "url": "https://github.com/alchaincyf/huashu-motion/blob/3e927801e78b587878fb7dbb65d616326df00c21/skills/huashu-motion/references/library/languages/photo-led.md",
+      "local_reference": "vendor/huashu-motion/skills/huashu-motion/references/library/languages/photo-led.md"
+    },
+    "adaptation": "本项目原创竖屏适配；引用镜头方法，不执行上游代码或生成商品事实",
+    "presentation": {
+      "zoom": 1.45,
+      "travel_frames": 20,
+      "shape": "rounded"
+    },
+    "requirements": [
+      "有使用权的同款商品画面",
+      "短边至少720像素",
+      "人工核对焦点、裁切和动作保护区间"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "a6159b9e54d05a5cb131307df8011bc5580b79e1b5ec10a4bbb7a3386c33553d"
+  },
+  "usage-dual-v1": {
+    "id": "usage-dual-v1",
+    "name": "日常细节双窗",
+    "recipe": "detail-dual-window",
+    "keywords": [
+      "使用",
+      "通勤",
+      "办公",
+      "生活",
+      "咖啡",
+      "说明"
+    ],
+    "prompt": "上窗持续显示同一时刻的商品整体，下窗同步展示同一画面的焦点放大。先落整体，再展开细节窗；标明整体与细节视图。不是前后效果对比，不生成内部结构或测量结论，动作段保持完整单窗。",
+    "source": {
+      "repository": "alchaincyf/huashu-motion",
+      "commit": "3e927801e78b587878fb7dbb65d616326df00c21",
+      "license": "MIT",
+      "url": "https://github.com/alchaincyf/huashu-motion/blob/3e927801e78b587878fb7dbb65d616326df00c21/skills/huashu-motion/references/library/languages/photo-led.md",
+      "local_reference": "vendor/huashu-motion/skills/huashu-motion/references/library/languages/photo-led.md"
+    },
+    "adaptation": "本项目原创竖屏适配；引用镜头方法，不执行上游代码或生成商品事实",
+    "presentation": {
+      "zoom": 1.5,
+      "travel_frames": 16,
+      "shape": "circle"
+    },
+    "requirements": [
+      "有使用权的同款商品画面",
+      "短边至少720像素",
+      "人工核对焦点、裁切和动作保护区间"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "e319299c53f30e1e3ac6905970d843775509cbed7072c2ff9ad8516c25a553ff"
+  },
+  "quiet-portal-v1": {
+    "id": "quiet-portal-v1",
+    "name": "克制轮廓展开",
+    "recipe": "product-shape-reveal",
+    "keywords": [
+      "高级",
+      "克制",
+      "安静",
+      "精致",
+      "沉静",
+      "工艺"
+    ],
+    "prompt": "从商品焦点附近的可见窗口展开完整实拍，底层保留低亮度同帧画面，避免空白开场。展开后保持清楚留看，字幕独立稳定；不抠造轮廓、不生成新的商品角度。",
+    "source": {
+      "repository": "alchaincyf/huashu-motion",
+      "commit": "3e927801e78b587878fb7dbb65d616326df00c21",
+      "license": "MIT",
+      "url": "https://github.com/alchaincyf/huashu-motion/blob/3e927801e78b587878fb7dbb65d616326df00c21/skills/huashu-motion/references/library/languages/photo-led.md",
+      "local_reference": "vendor/huashu-motion/skills/huashu-motion/references/library/languages/photo-led.md"
+    },
+    "adaptation": "本项目原创竖屏适配；引用镜头方法，不执行上游代码或生成商品事实",
+    "presentation": {
+      "zoom": 1.0,
+      "travel_frames": 26,
+      "shape": "rounded"
+    },
+    "requirements": [
+      "有使用权的同款商品画面",
+      "短边至少720像素",
+      "人工核对焦点、裁切和动作保护区间"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "e06eea8325c4c5135b005dea91be0e5b8b5c1c8285f01f31f8195118ad157b4a"
+  },
+  "warm-portal-v1": {
+    "id": "warm-portal-v1",
+    "name": "温暖圆窗展开",
+    "recipe": "product-shape-reveal",
+    "keywords": [
+      "温暖",
+      "自然",
+      "温柔",
+      "家居",
+      "咖啡",
+      "生活"
+    ],
+    "prompt": "从商品焦点附近的可见窗口展开完整实拍，底层保留低亮度同帧画面，避免空白开场。展开后保持清楚留看，字幕独立稳定；不抠造轮廓、不生成新的商品角度。",
+    "source": {
+      "repository": "alchaincyf/huashu-motion",
+      "commit": "3e927801e78b587878fb7dbb65d616326df00c21",
+      "license": "MIT",
+      "url": "https://github.com/alchaincyf/huashu-motion/blob/3e927801e78b587878fb7dbb65d616326df00c21/skills/huashu-motion/references/library/languages/photo-led.md",
+      "local_reference": "vendor/huashu-motion/skills/huashu-motion/references/library/languages/photo-led.md"
+    },
+    "adaptation": "本项目原创竖屏适配；引用镜头方法，不执行上游代码或生成商品事实",
+    "presentation": {
+      "zoom": 1.0,
+      "travel_frames": 30,
+      "shape": "circle"
+    },
+    "requirements": [
+      "有使用权的同款商品画面",
+      "短边至少720像素",
+      "人工核对焦点、裁切和动作保护区间"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "96048b5901a3272de4263df57471b3bae278999e36afaa7b4ff2af64946f95d2"
+  },
+  "color-portal-v1": {
+    "id": "color-portal-v1",
+    "name": "活泼斜面展开",
+    "recipe": "product-shape-reveal",
+    "keywords": [
+      "活泼",
+      "年轻",
+      "撞色",
+      "潮流",
+      "玩具",
+      "运动"
+    ],
+    "prompt": "从商品焦点附近的可见窗口展开完整实拍，底层保留低亮度同帧画面，避免空白开场。展开后保持清楚留看，字幕独立稳定；不抠造轮廓、不生成新的商品角度。",
+    "source": {
+      "repository": "alchaincyf/huashu-motion",
+      "commit": "3e927801e78b587878fb7dbb65d616326df00c21",
+      "license": "MIT",
+      "url": "https://github.com/alchaincyf/huashu-motion/blob/3e927801e78b587878fb7dbb65d616326df00c21/skills/huashu-motion/references/library/languages/photo-led.md",
+      "local_reference": "vendor/huashu-motion/skills/huashu-motion/references/library/languages/photo-led.md"
+    },
+    "adaptation": "本项目原创竖屏适配；引用镜头方法，不执行上游代码或生成商品事实",
+    "presentation": {
+      "zoom": 1.0,
+      "travel_frames": 18,
+      "shape": "diagonal"
+    },
+    "requirements": [
+      "有使用权的同款商品画面",
+      "短边至少720像素",
+      "人工核对焦点、裁切和动作保护区间"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "dc9e2c077f97d8c9b5738b9dcce219fdcd0e9c3788f1adc3410cfc4df4729247"
+  },
+  "beauty-punch-v1": {
+    "id": "beauty-punch-v1",
+    "name": "瓶身点题轻推",
+    "recipe": "media-punch-in",
+    "keywords": [
+      "美妆",
+      "护肤",
+      "包装",
+      "滴管",
+      "瓶身",
+      "瓶盖",
+      "瓶口"
+    ],
+    "shot_goal": "让观众先辨认瓶身和盖体配色，再靠近外观焦点",
+    "voice_caption_rule": "画面变化跟随已确认口播字锚点，字幕保持稳定；动作句优先完整留看，数字/术语仍需听核。",
+    "prompt": "镜头目的：让观众先辨认瓶身和盖体配色，再靠近外观焦点。画面编排：在‘瓶身/瓶盖’对应字锚点后推进，先完整认物，再留看色泽。不要用放大暗示护肤效果。 听读配合：画面只在语义点做一次主变化，字幕保持独立稳定。 先让观众看清商品整体，在对应口播摘句到来时向已核对焦点短促推近，落定留看，再回到整体。只处理真实画面，不震屏、不闪白、不改变源视频速度；动作保护区间内关闭。",
+    "source": {
+      "repository": "Vincentwei1021/video-shotcraft",
+      "commit": "43bd349a136651865ecfa6ea1cf012f6e957d304",
+      "license": "Apache-2.0",
+      "url": "https://vincentwei1021.github.io/video-shotcraft/source/crash-zoom-punch.md",
+      "local_reference": "vendor/video-shotcraft/2026-10-motion/references/shots/camera/crash-zoom-punch.md"
+    },
+    "adaptation": "本项目原创品类适配；从既有参考方法编排，不复制商品资产或推断功效",
+    "presentation": {
+      "zoom": 1.16,
+      "travel_frames": 14,
+      "shape": "rounded"
+    },
+    "requirements": [
+      "有使用权的同款商品画面",
+      "短边至少720像素",
+      "人工核对焦点、裁切和动作保护区间",
+      "包装焦点只讲实拍可见内容；功能、规格与使用结论需另有依据"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "6f772c7945721189c7bd2ea77904edbd9cb84fc560adbc67ccf54b39f0dc6142"
+  },
+  "bottle-dual-v1": {
+    "id": "bottle-dual-v1",
+    "name": "瓶口整体与细节",
+    "recipe": "detail-dual-window",
+    "keywords": [
+      "美妆",
+      "护肤",
+      "包装",
+      "滴管",
+      "瓶身",
+      "瓶盖",
+      "瓶口"
+    ],
+    "shot_goal": "保留整瓶参照，让瓶口、盖体位置关系易懂",
+    "voice_caption_rule": "画面变化跟随已确认口播字锚点，字幕保持稳定；动作句优先完整留看，数字/术语仍需听核。",
+    "prompt": "镜头目的：保留整瓶参照，让瓶口、盖体位置关系易懂。画面编排：两个窗口只放同一时刻，局部窗口聚焦已核对瓶口。旋开、提起滴管时回到完整单窗，不能把仍闭合的盖体说成已打开。 听读配合：画面只在语义点做一次主变化，字幕保持独立稳定。 上窗持续显示同一时刻的商品整体，下窗同步展示同一画面的焦点放大。先落整体，再展开细节窗；标明整体与细节视图。不是前后效果对比，不生成内部结构或测量结论，动作段保持完整单窗。",
+    "source": {
+      "repository": "alchaincyf/huashu-motion",
+      "commit": "3e927801e78b587878fb7dbb65d616326df00c21",
+      "license": "MIT",
+      "url": "https://github.com/alchaincyf/huashu-motion/blob/3e927801e78b587878fb7dbb65d616326df00c21/skills/huashu-motion/references/library/languages/photo-led.md",
+      "local_reference": "vendor/huashu-motion/skills/huashu-motion/references/library/languages/photo-led.md"
+    },
+    "adaptation": "本项目原创品类适配；从既有参考方法编排，不复制商品资产或推断功效",
+    "presentation": {
+      "zoom": 1.55,
+      "travel_frames": 18,
+      "shape": "rounded"
+    },
+    "requirements": [
+      "有使用权的同款商品画面",
+      "短边至少720像素",
+      "人工核对焦点、裁切和动作保护区间",
+      "包装焦点只讲实拍可见内容；功能、规格与使用结论需另有依据"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "0f52e2c2bed2d35cece5d5ad78ed6287c4eb584d139f765d7a6d1cd995feb327"
+  },
+  "beauty-portal-v1": {
+    "id": "beauty-portal-v1",
+    "name": "包装轮廓柔展",
+    "recipe": "product-shape-reveal",
+    "keywords": [
+      "美妆",
+      "护肤",
+      "包装",
+      "滴管",
+      "瓶身",
+      "瓶盖",
+      "瓶口"
+    ],
+    "shot_goal": "先给包装一个可辨轮廓，再展开手持实拍",
+    "voice_caption_rule": "画面变化跟随已确认口播字锚点，字幕保持稳定；动作句优先完整留看，数字/术语仍需听核。",
+    "prompt": "镜头目的：先给包装一个可辨轮廓，再展开手持实拍。画面编排：窗口只在外观句展开，落定后让出阅读时间。开盖与提起滴管保持原速，字幕不跟着窗口缩放。 听读配合：画面只在语义点做一次主变化，字幕保持独立稳定。 从商品焦点附近的可见窗口展开完整实拍，底层保留低亮度同帧画面，避免空白开场。展开后保持清楚留看，字幕独立稳定；不抠造轮廓、不生成新的商品角度。",
+    "source": {
+      "repository": "alchaincyf/huashu-motion",
+      "commit": "3e927801e78b587878fb7dbb65d616326df00c21",
+      "license": "MIT",
+      "url": "https://github.com/alchaincyf/huashu-motion/blob/3e927801e78b587878fb7dbb65d616326df00c21/skills/huashu-motion/references/library/languages/photo-led.md",
+      "local_reference": "vendor/huashu-motion/skills/huashu-motion/references/library/languages/photo-led.md"
+    },
+    "adaptation": "本项目原创品类适配；从既有参考方法编排，不复制商品资产或推断功效",
+    "presentation": {
+      "zoom": 1.0,
+      "travel_frames": 26,
+      "shape": "rounded"
+    },
+    "requirements": [
+      "有使用权的同款商品画面",
+      "短边至少720像素",
+      "人工核对焦点、裁切和动作保护区间",
+      "包装焦点只讲实拍可见内容；功能、规格与使用结论需另有依据"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "2d10be692834d4b6c92f967d90e4800bdc626d1658e2fe9421a7e3d99540c506"
+  },
+  "food-punch-v1": {
+    "id": "food-punch-v1",
+    "name": "食品表面点题",
+    "recipe": "media-punch-in",
+    "keywords": [
+      "食品",
+      "零食",
+      "饼干",
+      "曲奇",
+      "面包",
+      "烘焙",
+      "下午茶"
+    ],
+    "shot_goal": "让真实表面纹理成为开场观看理由",
+    "voice_caption_rule": "画面变化跟随已确认口播字锚点，字幕保持稳定；动作句优先完整留看，数字/术语仍需听核。",
+    "prompt": "镜头目的：让真实表面纹理成为开场观看理由。画面编排：从完整食品轻快推进到实际纹理，留看后回位。咬开、掰开等动作不叠加急推；不凭外观宣称口感、配方或热量。 听读配合：画面只在语义点做一次主变化，字幕保持独立稳定。 先让观众看清商品整体，在对应口播摘句到来时向已核对焦点短促推近，落定留看，再回到整体。只处理真实画面，不震屏、不闪白、不改变源视频速度；动作保护区间内关闭。",
+    "source": {
+      "repository": "Vincentwei1021/video-shotcraft",
+      "commit": "43bd349a136651865ecfa6ea1cf012f6e957d304",
+      "license": "Apache-2.0",
+      "url": "https://vincentwei1021.github.io/video-shotcraft/source/crash-zoom-punch.md",
+      "local_reference": "vendor/video-shotcraft/2026-10-motion/references/shots/camera/crash-zoom-punch.md"
+    },
+    "adaptation": "本项目原创品类适配；从既有参考方法编排，不复制商品资产或推断功效",
+    "presentation": {
+      "zoom": 1.19,
+      "travel_frames": 10,
+      "shape": "circle"
+    },
+    "requirements": [
+      "有使用权的同款商品画面",
+      "短边至少720像素",
+      "人工核对焦点、裁切和动作保护区间",
+      "食品外观只讲实拍可见内容；功能、规格与使用结论需另有依据"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "a1f1beb3d59dc8885edae7856564c04fd8922aa731c1f6772ea1be255dd032d9"
+  },
+  "food-dual-v1": {
+    "id": "food-dual-v1",
+    "name": "整份与纹理同步",
+    "recipe": "detail-dual-window",
+    "keywords": [
+      "食品",
+      "零食",
+      "饼干",
+      "曲奇",
+      "面包",
+      "烘焙",
+      "下午茶"
+    ],
+    "shot_goal": "同时交代整份外观和真实表面细节",
+    "voice_caption_rule": "画面变化跟随已确认口播字锚点，字幕保持稳定；动作句优先完整留看，数字/术语仍需听核。",
+    "prompt": "镜头目的：同时交代整份外观和真实表面细节。画面编排：整体留上窗，下窗看同帧纹理；不是大小/成分检测。字幕讲到表面后才展开，不用图形补出夹心。 听读配合：画面只在语义点做一次主变化，字幕保持独立稳定。 上窗持续显示同一时刻的商品整体，下窗同步展示同一画面的焦点放大。先落整体，再展开细节窗；标明整体与细节视图。不是前后效果对比，不生成内部结构或测量结论，动作段保持完整单窗。",
+    "source": {
+      "repository": "alchaincyf/huashu-motion",
+      "commit": "3e927801e78b587878fb7dbb65d616326df00c21",
+      "license": "MIT",
+      "url": "https://github.com/alchaincyf/huashu-motion/blob/3e927801e78b587878fb7dbb65d616326df00c21/skills/huashu-motion/references/library/languages/photo-led.md",
+      "local_reference": "vendor/huashu-motion/skills/huashu-motion/references/library/languages/photo-led.md"
+    },
+    "adaptation": "本项目原创品类适配；从既有参考方法编排，不复制商品资产或推断功效",
+    "presentation": {
+      "zoom": 1.6,
+      "travel_frames": 16,
+      "shape": "rounded"
+    },
+    "requirements": [
+      "有使用权的同款商品画面",
+      "短边至少720像素",
+      "人工核对焦点、裁切和动作保护区间",
+      "食品外观只讲实拍可见内容；功能、规格与使用结论需另有依据"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "a868e0609ececdcc0ca19c60ba9b55c1a8306dbd95bb4a64c23cbdc42579ed26"
+  },
+  "food-portal-v1": {
+    "id": "food-portal-v1",
+    "name": "餐桌圆窗开场",
+    "recipe": "product-shape-reveal",
+    "keywords": [
+      "食品",
+      "零食",
+      "饼干",
+      "曲奇",
+      "面包",
+      "烘焙",
+      "下午茶"
+    ],
+    "shot_goal": "从一处真实食物细节展开餐桌关系",
+    "voice_caption_rule": "画面变化跟随已确认口播字锚点，字幕保持稳定；动作句优先完整留看，数字/术语仍需听核。",
+    "prompt": "镜头目的：从一处真实食物细节展开餐桌关系。画面编排：圆窗展开至清楚整幅实拍后停止，手部入镜时不遮住关键动作。字幕一条一条落定，不让食物和字卡同时抢读。 听读配合：画面只在语义点做一次主变化，字幕保持独立稳定。 从商品焦点附近的可见窗口展开完整实拍，底层保留低亮度同帧画面，避免空白开场。展开后保持清楚留看，字幕独立稳定；不抠造轮廓、不生成新的商品角度。",
+    "source": {
+      "repository": "alchaincyf/huashu-motion",
+      "commit": "3e927801e78b587878fb7dbb65d616326df00c21",
+      "license": "MIT",
+      "url": "https://github.com/alchaincyf/huashu-motion/blob/3e927801e78b587878fb7dbb65d616326df00c21/skills/huashu-motion/references/library/languages/photo-led.md",
+      "local_reference": "vendor/huashu-motion/skills/huashu-motion/references/library/languages/photo-led.md"
+    },
+    "adaptation": "本项目原创品类适配；从既有参考方法编排，不复制商品资产或推断功效",
+    "presentation": {
+      "zoom": 1.0,
+      "travel_frames": 22,
+      "shape": "circle"
+    },
+    "requirements": [
+      "有使用权的同款商品画面",
+      "短边至少720像素",
+      "人工核对焦点、裁切和动作保护区间",
+      "食品外观只讲实拍可见内容；功能、规格与使用结论需另有依据"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "29084bdc7f90fad614ef04ae8e0ca335610edbd71b3e1dce636739c3e93b534f"
+  },
+  "garment-punch-v1": {
+    "id": "garment-punch-v1",
+    "name": "衣领走线点题",
+    "recipe": "media-punch-in",
+    "keywords": [
+      "服装",
+      "衬衫",
+      "衣领",
+      "面料",
+      "走线",
+      "穿搭",
+      "衣服"
+    ],
+    "shot_goal": "从整件位置引导到可见衣领或走线",
+    "voice_caption_rule": "画面变化跟随已确认口播字锚点，字幕保持稳定；动作句优先完整留看，数字/术语仍需听核。",
+    "prompt": "镜头目的：从整件位置引导到可见衣领或走线。画面编排：先给整件定位，再推到已核对的衣领/走线焦点。换装、转身过程保持连贯，不以急推伪造垂感或显瘦效果。 听读配合：画面只在语义点做一次主变化，字幕保持独立稳定。 先让观众看清商品整体，在对应口播摘句到来时向已核对焦点短促推近，落定留看，再回到整体。只处理真实画面，不震屏、不闪白、不改变源视频速度；动作保护区间内关闭。",
+    "source": {
+      "repository": "Vincentwei1021/video-shotcraft",
+      "commit": "43bd349a136651865ecfa6ea1cf012f6e957d304",
+      "license": "Apache-2.0",
+      "url": "https://vincentwei1021.github.io/video-shotcraft/source/crash-zoom-punch.md",
+      "local_reference": "vendor/video-shotcraft/2026-10-motion/references/shots/camera/crash-zoom-punch.md"
+    },
+    "adaptation": "本项目原创品类适配；从既有参考方法编排，不复制商品资产或推断功效",
+    "presentation": {
+      "zoom": 1.2,
+      "travel_frames": 12,
+      "shape": "rounded"
+    },
+    "requirements": [
+      "有使用权的同款商品画面",
+      "短边至少720像素",
+      "人工核对焦点、裁切和动作保护区间",
+      "穿搭工艺只讲实拍可见内容；功能、规格与使用结论需另有依据"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "43cb4bbd10cdb884e96af9645053825a08a7b8c79bdcda9bd3769e78f1bce0cf"
+  },
+  "garment-dual-v1": {
+    "id": "garment-dual-v1",
+    "name": "整件与织纹同帧",
+    "recipe": "detail-dual-window",
+    "keywords": [
+      "服装",
+      "衬衫",
+      "衣领",
+      "面料",
+      "走线",
+      "穿搭",
+      "衣服"
+    ],
+    "shot_goal": "让整件廓形和面料细节有同时可认的参照",
+    "voice_caption_rule": "画面变化跟随已确认口播字锚点，字幕保持稳定；动作句优先完整留看，数字/术语仍需听核。",
+    "prompt": "镜头目的：让整件廓形和面料细节有同时可认的参照。画面编排：全貌与同帧细节分主次；高倍前检查原始清晰度。口播读到面料时留看，字幕不挤压衣领，不把纹理当成纤维成分证明。 听读配合：画面只在语义点做一次主变化，字幕保持独立稳定。 上窗持续显示同一时刻的商品整体，下窗同步展示同一画面的焦点放大。先落整体，再展开细节窗；标明整体与细节视图。不是前后效果对比，不生成内部结构或测量结论，动作段保持完整单窗。",
+    "source": {
+      "repository": "alchaincyf/huashu-motion",
+      "commit": "3e927801e78b587878fb7dbb65d616326df00c21",
+      "license": "MIT",
+      "url": "https://github.com/alchaincyf/huashu-motion/blob/3e927801e78b587878fb7dbb65d616326df00c21/skills/huashu-motion/references/library/languages/photo-led.md",
+      "local_reference": "vendor/huashu-motion/skills/huashu-motion/references/library/languages/photo-led.md"
+    },
+    "adaptation": "本项目原创品类适配；从既有参考方法编排，不复制商品资产或推断功效",
+    "presentation": {
+      "zoom": 1.7,
+      "travel_frames": 20,
+      "shape": "rounded"
+    },
+    "requirements": [
+      "有使用权的同款商品画面",
+      "短边至少720像素",
+      "人工核对焦点、裁切和动作保护区间",
+      "穿搭工艺只讲实拍可见内容；功能、规格与使用结论需另有依据"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "b4c690bfefa87ecd6bb7330d0cc26d3be6ccc1a9428a0cb27869a654794d2053"
+  },
+  "garment-portal-v1": {
+    "id": "garment-portal-v1",
+    "name": "衣物斜面陈列",
+    "recipe": "product-shape-reveal",
+    "keywords": [
+      "服装",
+      "衬衫",
+      "衣领",
+      "面料",
+      "走线",
+      "穿搭",
+      "衣服"
+    ],
+    "shot_goal": "用轮廓展开交代服装的整体形态",
+    "voice_caption_rule": "画面变化跟随已确认口播字锚点，字幕保持稳定；动作句优先完整留看，数字/术语仍需听核。",
+    "prompt": "镜头目的：用轮廓展开交代服装的整体形态。画面编排：斜面从已核对衣物焦点展开，完成后完整留看。穿着动作期不开遮罩，不合成未实拍的上身效果。 听读配合：画面只在语义点做一次主变化，字幕保持独立稳定。 从商品焦点附近的可见窗口展开完整实拍，底层保留低亮度同帧画面，避免空白开场。展开后保持清楚留看，字幕独立稳定；不抠造轮廓、不生成新的商品角度。",
+    "source": {
+      "repository": "alchaincyf/huashu-motion",
+      "commit": "3e927801e78b587878fb7dbb65d616326df00c21",
+      "license": "MIT",
+      "url": "https://github.com/alchaincyf/huashu-motion/blob/3e927801e78b587878fb7dbb65d616326df00c21/skills/huashu-motion/references/library/languages/photo-led.md",
+      "local_reference": "vendor/huashu-motion/skills/huashu-motion/references/library/languages/photo-led.md"
+    },
+    "adaptation": "本项目原创品类适配；从既有参考方法编排，不复制商品资产或推断功效",
+    "presentation": {
+      "zoom": 1.0,
+      "travel_frames": 24,
+      "shape": "diagonal"
+    },
+    "requirements": [
+      "有使用权的同款商品画面",
+      "短边至少720像素",
+      "人工核对焦点、裁切和动作保护区间",
+      "穿搭工艺只讲实拍可见内容；功能、规格与使用结论需另有依据"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "7526c9e0be990dd3ab55b2b6ba05b7e8dd06bd944887453e839a7fccd69295b5"
+  },
+  "home-punch-v1": {
+    "id": "home-punch-v1",
+    "name": "收纳焦点轻推",
+    "recipe": "media-punch-in",
+    "keywords": [
+      "家居",
+      "收纳",
+      "盒体",
+      "抽屉",
+      "分区",
+      "收纳盒",
+      "小户型"
+    ],
+    "shot_goal": "先认出家居物件，再引导到真实分区",
+    "voice_caption_rule": "画面变化跟随已确认口播字锚点，字幕保持稳定；动作句优先完整留看，数字/术语仍需听核。",
+    "prompt": "镜头目的：先认出家居物件，再引导到真实分区。画面编排：把推进落在文稿点名的盒体/分区；空间关系看清后回位。开合、放入过程完整展示，不补造容量或承重。 听读配合：画面只在语义点做一次主变化，字幕保持独立稳定。 先让观众看清商品整体，在对应口播摘句到来时向已核对焦点短促推近，落定留看，再回到整体。只处理真实画面，不震屏、不闪白、不改变源视频速度；动作保护区间内关闭。",
+    "source": {
+      "repository": "Vincentwei1021/video-shotcraft",
+      "commit": "43bd349a136651865ecfa6ea1cf012f6e957d304",
+      "license": "Apache-2.0",
+      "url": "https://vincentwei1021.github.io/video-shotcraft/source/crash-zoom-punch.md",
+      "local_reference": "vendor/video-shotcraft/2026-10-motion/references/shots/camera/crash-zoom-punch.md"
+    },
+    "adaptation": "本项目原创品类适配；从既有参考方法编排，不复制商品资产或推断功效",
+    "presentation": {
+      "zoom": 1.15,
+      "travel_frames": 18,
+      "shape": "rounded"
+    },
+    "requirements": [
+      "有使用权的同款商品画面",
+      "短边至少720像素",
+      "人工核对焦点、裁切和动作保护区间",
+      "家居布局只讲实拍可见内容；功能、规格与使用结论需另有依据"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "4021a62ea7dddf8cdaff02c5ae5ef068a5cc4b1edc6076a7d7239d10fe3685c9"
+  },
+  "home-dual-v1": {
+    "id": "home-dual-v1",
+    "name": "整体与分区同步",
+    "recipe": "detail-dual-window",
+    "keywords": [
+      "家居",
+      "收纳",
+      "盒体",
+      "抽屉",
+      "分区",
+      "收纳盒",
+      "小户型"
+    ],
+    "shot_goal": "整体帮助定位，细节说明分区在哪里",
+    "voice_caption_rule": "画面变化跟随已确认口播字锚点，字幕保持稳定；动作句优先完整留看，数字/术语仍需听核。",
+    "prompt": "镜头目的：整体帮助定位，细节说明分区在哪里。画面编排：两个窗口同步播放，整体始终可识别；下窗不做假尺寸刻度。开抽屉与物品放入时恢复完整单窗，配音说完再接下一镜。 听读配合：画面只在语义点做一次主变化，字幕保持独立稳定。 上窗持续显示同一时刻的商品整体，下窗同步展示同一画面的焦点放大。先落整体，再展开细节窗；标明整体与细节视图。不是前后效果对比，不生成内部结构或测量结论，动作段保持完整单窗。",
+    "source": {
+      "repository": "alchaincyf/huashu-motion",
+      "commit": "3e927801e78b587878fb7dbb65d616326df00c21",
+      "license": "MIT",
+      "url": "https://github.com/alchaincyf/huashu-motion/blob/3e927801e78b587878fb7dbb65d616326df00c21/skills/huashu-motion/references/library/languages/photo-led.md",
+      "local_reference": "vendor/huashu-motion/skills/huashu-motion/references/library/languages/photo-led.md"
+    },
+    "adaptation": "本项目原创品类适配；从既有参考方法编排，不复制商品资产或推断功效",
+    "presentation": {
+      "zoom": 1.5,
+      "travel_frames": 22,
+      "shape": "rounded"
+    },
+    "requirements": [
+      "有使用权的同款商品画面",
+      "短边至少720像素",
+      "人工核对焦点、裁切和动作保护区间",
+      "家居布局只讲实拍可见内容；功能、规格与使用结论需另有依据"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "1101631f966077752f2b7c5f6eba28d27eedba7da574bf12849064124dd19146"
+  },
+  "home-portal-v1": {
+    "id": "home-portal-v1",
+    "name": "家居空间柔展",
+    "recipe": "product-shape-reveal",
+    "keywords": [
+      "家居",
+      "收纳",
+      "盒体",
+      "抽屉",
+      "分区",
+      "收纳盒",
+      "小户型"
+    ],
+    "shot_goal": "从商品局部展开到所在空间",
+    "voice_caption_rule": "画面变化跟随已确认口播字锚点，字幕保持稳定；动作句优先完整留看，数字/术语仍需听核。",
+    "prompt": "镜头目的：从商品局部展开到所在空间。画面编排：慢于活力展示的展开只做一次落定，随后保留空间关系。稳定素排字幕，避免每句都推镜；不造清洁或收纳前后对比。 听读配合：画面只在语义点做一次主变化，字幕保持独立稳定。 从商品焦点附近的可见窗口展开完整实拍，底层保留低亮度同帧画面，避免空白开场。展开后保持清楚留看，字幕独立稳定；不抠造轮廓、不生成新的商品角度。",
+    "source": {
+      "repository": "alchaincyf/huashu-motion",
+      "commit": "3e927801e78b587878fb7dbb65d616326df00c21",
+      "license": "MIT",
+      "url": "https://github.com/alchaincyf/huashu-motion/blob/3e927801e78b587878fb7dbb65d616326df00c21/skills/huashu-motion/references/library/languages/photo-led.md",
+      "local_reference": "vendor/huashu-motion/skills/huashu-motion/references/library/languages/photo-led.md"
+    },
+    "adaptation": "本项目原创品类适配；从既有参考方法编排，不复制商品资产或推断功效",
+    "presentation": {
+      "zoom": 1.0,
+      "travel_frames": 30,
+      "shape": "rounded"
+    },
+    "requirements": [
+      "有使用权的同款商品画面",
+      "短边至少720像素",
+      "人工核对焦点、裁切和动作保护区间",
+      "家居布局只讲实拍可见内容；功能、规格与使用结论需另有依据"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "5f0e317bfcae66a53129332f04fc4b42e92827771ccf8d59c8ab2e8f9c236560"
+  },
+  "tool-punch-v1": {
+    "id": "tool-punch-v1",
+    "name": "工具接口定点",
+    "recipe": "media-punch-in",
+    "keywords": [
+      "工具",
+      "五金",
+      "螺丝刀",
+      "刀头",
+      "握柄",
+      "维修",
+      "工装"
+    ],
+    "shot_goal": "把注意力一次引到真实工具接口",
+    "voice_caption_rule": "画面变化跟随已确认口播字锚点，字幕保持稳定；动作句优先完整留看，数字/术语仍需听核。",
+    "prompt": "镜头目的：把注意力一次引到真实工具接口。画面编排：完整认出工具后再快速推到已核对接口，落定留看，不震屏。装卸、旋转、通电过程不开动效，不宣称未实测的效率。 听读配合：画面只在语义点做一次主变化，字幕保持独立稳定。 先让观众看清商品整体，在对应口播摘句到来时向已核对焦点短促推近，落定留看，再回到整体。只处理真实画面，不震屏、不闪白、不改变源视频速度；动作保护区间内关闭。",
+    "source": {
+      "repository": "Vincentwei1021/video-shotcraft",
+      "commit": "43bd349a136651865ecfa6ea1cf012f6e957d304",
+      "license": "Apache-2.0",
+      "url": "https://vincentwei1021.github.io/video-shotcraft/source/crash-zoom-punch.md",
+      "local_reference": "vendor/video-shotcraft/2026-10-motion/references/shots/camera/crash-zoom-punch.md"
+    },
+    "adaptation": "本项目原创品类适配；从既有参考方法编排，不复制商品资产或推断功效",
+    "presentation": {
+      "zoom": 1.22,
+      "travel_frames": 9,
+      "shape": "rounded"
+    },
+    "requirements": [
+      "有使用权的同款商品画面",
+      "短边至少720像素",
+      "人工核对焦点、裁切和动作保护区间",
+      "工具观察只讲实拍可见内容；功能、规格与使用结论需另有依据"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "ef16fbda00afbed150172307124c1faa5fd7b8fd95a4e6e8dad6d4abafc5a81f"
+  },
+  "tool-dual-v1": {
+    "id": "tool-dual-v1",
+    "name": "工具整体与刀头",
+    "recipe": "detail-dual-window",
+    "keywords": [
+      "工具",
+      "五金",
+      "螺丝刀",
+      "刀头",
+      "握柄",
+      "维修",
+      "工装"
+    ],
+    "shot_goal": "整体保留方向，局部说明刀头与握柄关系",
+    "voice_caption_rule": "画面变化跟随已确认口播字锚点，字幕保持稳定；动作句优先完整留看，数字/术语仍需听核。",
+    "prompt": "镜头目的：整体保留方向，局部说明刀头与握柄关系。画面编排：局部只是同帧放大，不画虚假结构或数值。字幕读到刀头再展开；操作中单窗留看，不能用两帧拼成性能比较。 听读配合：画面只在语义点做一次主变化，字幕保持独立稳定。 上窗持续显示同一时刻的商品整体，下窗同步展示同一画面的焦点放大。先落整体，再展开细节窗；标明整体与细节视图。不是前后效果对比，不生成内部结构或测量结论，动作段保持完整单窗。",
+    "source": {
+      "repository": "alchaincyf/huashu-motion",
+      "commit": "3e927801e78b587878fb7dbb65d616326df00c21",
+      "license": "MIT",
+      "url": "https://github.com/alchaincyf/huashu-motion/blob/3e927801e78b587878fb7dbb65d616326df00c21/skills/huashu-motion/references/library/languages/photo-led.md",
+      "local_reference": "vendor/huashu-motion/skills/huashu-motion/references/library/languages/photo-led.md"
+    },
+    "adaptation": "本项目原创品类适配；从既有参考方法编排，不复制商品资产或推断功效",
+    "presentation": {
+      "zoom": 1.75,
+      "travel_frames": 14,
+      "shape": "rounded"
+    },
+    "requirements": [
+      "有使用权的同款商品画面",
+      "短边至少720像素",
+      "人工核对焦点、裁切和动作保护区间",
+      "工具观察只讲实拍可见内容；功能、规格与使用结论需另有依据"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "45fd971ef0f9e66a98d848ee520dd8ab1654c595678cd67617c711234071bb59"
+  },
+  "tool-portal-v1": {
+    "id": "tool-portal-v1",
+    "name": "工具轮廓展开",
+    "recipe": "product-shape-reveal",
+    "keywords": [
+      "工具",
+      "五金",
+      "螺丝刀",
+      "刀头",
+      "握柄",
+      "维修",
+      "工装"
+    ],
+    "shot_goal": "以明确轮廓快速介绍工具外观",
+    "voice_caption_rule": "画面变化跟随已确认口播字锚点，字幕保持稳定；动作句优先完整留看，数字/术语仍需听核。",
+    "prompt": "镜头目的：以明确轮廓快速介绍工具外观。画面编排：斜面展开后稳定展示全貌，标题短促落定。实拍没有的机械结构不补绘；规格和安全说明须另外有来源。 听读配合：画面只在语义点做一次主变化，字幕保持独立稳定。 从商品焦点附近的可见窗口展开完整实拍，底层保留低亮度同帧画面，避免空白开场。展开后保持清楚留看，字幕独立稳定；不抠造轮廓、不生成新的商品角度。",
+    "source": {
+      "repository": "alchaincyf/huashu-motion",
+      "commit": "3e927801e78b587878fb7dbb65d616326df00c21",
+      "license": "MIT",
+      "url": "https://github.com/alchaincyf/huashu-motion/blob/3e927801e78b587878fb7dbb65d616326df00c21/skills/huashu-motion/references/library/languages/photo-led.md",
+      "local_reference": "vendor/huashu-motion/skills/huashu-motion/references/library/languages/photo-led.md"
+    },
+    "adaptation": "本项目原创品类适配；从既有参考方法编排，不复制商品资产或推断功效",
+    "presentation": {
+      "zoom": 1.0,
+      "travel_frames": 20,
+      "shape": "diagonal"
+    },
+    "requirements": [
+      "有使用权的同款商品画面",
+      "短边至少720像素",
+      "人工核对焦点、裁切和动作保护区间",
+      "工具观察只讲实拍可见内容；功能、规格与使用结论需另有依据"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "38d4d32a823368c2fb11eac6257b19487c7d32a61ec5d4ee63dd857e172eac6b"
+  },
+  "type-mask-clean-v1": {
+    "id": "type-mask-clean-v1",
+    "name": "字形商品开场 · 精致",
+    "recipe": "product-type-mask",
+    "keywords": [
+      "字形",
+      "精致",
+      "克制",
+      "冲击"
+    ],
+    "prompt": "已确认摘句成为画面字形窗口，真实商品在字形内继续播放，随后展开至清楚全画幅。底层保留同帧，避免空白或丢失商品；字幕独立稳定。不是换产品，也不把文字做成商品图案。",
+    "shot_goal": "借观看结构解释真实商品，不新增事实",
+    "voice_caption_rule": "已确认摘句入场，字幕保持稳定；动作保护时不叠加",
+    "source": {
+      "repository": "Vincentwei1021/video-shotcraft",
+      "commit": "43bd349a136651865ecfa6ea1cf012f6e957d304",
+      "license": "Apache-2.0",
+      "url": "https://raw.githubusercontent.com/Vincentwei1021/video-shotcraft/43bd349a136651865ecfa6ea1cf012f6e957d304/references/shots/opening/text-as-mask.md",
+      "local_reference": "vendor/video-shotcraft/2026-10-full/references/shots/opening/text-as-mask.md"
+    },
+    "adaptation": "本项目原创竖屏实拍适配，区别于上游UI样例",
+    "presentation": {
+      "zoom": 28,
+      "travel_frames": 30,
+      "shape": "rounded"
+    },
+    "requirements": [
+      "有使用权的同款高清实拍",
+      "短边至少720像素",
+      "人工核对焦点、字形与动作完整性"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "23d2c236c57524c53e4f41245836dd1ace47800c4a5199a65f95d0ad550f2cc4"
+  },
+  "type-mask-bold-v1": {
+    "id": "type-mask-bold-v1",
+    "name": "字形商品开场 · 鲜明",
+    "recipe": "product-type-mask",
+    "keywords": [
+      "字形",
+      "大胆",
+      "运动",
+      "活力",
+      "冲击"
+    ],
+    "prompt": "已确认摘句成为画面字形窗口，真实商品在字形内继续播放，随后展开至清楚全画幅。底层保留同帧，避免空白或丢失商品；字幕独立稳定。不是换产品，也不把文字做成商品图案。",
+    "shot_goal": "借观看结构解释真实商品，不新增事实",
+    "voice_caption_rule": "已确认摘句入场，字幕保持稳定；动作保护时不叠加",
+    "source": {
+      "repository": "Vincentwei1021/video-shotcraft",
+      "commit": "43bd349a136651865ecfa6ea1cf012f6e957d304",
+      "license": "Apache-2.0",
+      "url": "https://raw.githubusercontent.com/Vincentwei1021/video-shotcraft/43bd349a136651865ecfa6ea1cf012f6e957d304/references/shots/opening/text-as-mask.md",
+      "local_reference": "vendor/video-shotcraft/2026-10-full/references/shots/opening/text-as-mask.md"
+    },
+    "adaptation": "本项目原创竖屏实拍适配，区别于上游UI样例",
+    "presentation": {
+      "zoom": 36,
+      "travel_frames": 24,
+      "shape": "rounded"
+    },
+    "requirements": [
+      "有使用权的同款高清实拍",
+      "短边至少720像素",
+      "人工核对焦点、字形与动作完整性"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "0e1eeddbe88ae40ae1101576a576b11e767c1da8c9341b827ebcc1c9b28799b0"
+  },
+  "comic-panels-soft-v1": {
+    "id": "comic-panels-soft-v1",
+    "name": "同帧分区解释 · 柔和",
+    "recipe": "same-frame-panels",
+    "keywords": [
+      "分屏",
+      "细节",
+      "解释",
+      "日常"
+    ],
+    "prompt": "同一实拍同一时刻，先保留整体，再用两侧斜分区展示同帧局部并合拢。标明同帧取景，不冒充三个机位或效果对比；动作段完整单窗。",
+    "shot_goal": "借观看结构解释真实商品，不新增事实",
+    "voice_caption_rule": "已确认摘句入场，字幕保持稳定；动作保护时不叠加",
+    "source": {
+      "repository": "Vincentwei1021/video-shotcraft",
+      "commit": "43bd349a136651865ecfa6ea1cf012f6e957d304",
+      "license": "Apache-2.0",
+      "url": "https://raw.githubusercontent.com/Vincentwei1021/video-shotcraft/43bd349a136651865ecfa6ea1cf012f6e957d304/references/shots/rhythm/panel-grid-moves.md",
+      "local_reference": "vendor/video-shotcraft/2026-10-full/references/shots/rhythm/panel-grid-moves.md"
+    },
+    "adaptation": "本项目原创竖屏实拍适配，区别于上游UI样例",
+    "presentation": {
+      "zoom": 1.15,
+      "travel_frames": 16,
+      "shape": "rounded"
+    },
+    "requirements": [
+      "有使用权的同款高清实拍",
+      "短边至少720像素",
+      "人工核对焦点、字形与动作完整性"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "f04fb16272015e1ed1701f51542baffa8d667e06ab75a1e7d2920ecebcabfbf2"
+  },
+  "comic-panels-bold-v1": {
+    "id": "comic-panels-bold-v1",
+    "name": "同帧分区解释 · 利落",
+    "recipe": "same-frame-panels",
+    "keywords": [
+      "分屏",
+      "运动",
+      "年轻",
+      "活力"
+    ],
+    "prompt": "同一实拍同一时刻，先保留整体，再用两侧斜分区展示同帧局部并合拢。标明同帧取景，不冒充三个机位或效果对比；动作段完整单窗。",
+    "shot_goal": "借观看结构解释真实商品，不新增事实",
+    "voice_caption_rule": "已确认摘句入场，字幕保持稳定；动作保护时不叠加",
+    "source": {
+      "repository": "Vincentwei1021/video-shotcraft",
+      "commit": "43bd349a136651865ecfa6ea1cf012f6e957d304",
+      "license": "Apache-2.0",
+      "url": "https://raw.githubusercontent.com/Vincentwei1021/video-shotcraft/43bd349a136651865ecfa6ea1cf012f6e957d304/references/shots/rhythm/panel-grid-moves.md",
+      "local_reference": "vendor/video-shotcraft/2026-10-full/references/shots/rhythm/panel-grid-moves.md"
+    },
+    "adaptation": "本项目原创竖屏实拍适配，区别于上游UI样例",
+    "presentation": {
+      "zoom": 1.28,
+      "travel_frames": 10,
+      "shape": "rounded"
+    },
+    "requirements": [
+      "有使用权的同款高清实拍",
+      "短边至少720像素",
+      "人工核对焦点、字形与动作完整性"
+    ],
+    "version": "product-prompts-v1",
+    "digest": "9be9774f782027d2468b16e0295132fec74532ba1e8c2f7064e48ad223c01285"
+  }
+}

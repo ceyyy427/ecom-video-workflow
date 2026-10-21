@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>剪序 · 创意迭代</title><link href="/static/style.css" rel="stylesheet"/><link href="/static/distribution.css" rel="stylesheet"/><script defer="" src="/static/experiments.js"></script><link href="/static/customer.css" rel="stylesheet"/><link href="/static/workspace-pages.css" rel="stylesheet"/></head>
+<body class="distribution-page customer-page workspace-page experiments-page"><a class="skip-link" href="#workspaceMain">跳到当前工作区</a>
+<aside aria-label="工作台导航" class="customer-sidebar">
+<a class="brand" href="/"><span aria-hidden="true" class="brand-mark">剪</span><span class="brand-copy"><strong>剪序</strong><small>电商视频工作台</small></span></a>
+<p class="nav-caption">工作空间</p><nav aria-label="主导航"><a href="/create"><span aria-hidden="true">01</span>商品制作</a><a href="/samples"><span aria-hidden="true">02</span>样片参考</a><a href="/distribution"><span aria-hidden="true">03</span>数据复盘</a><a aria-current="page" href="/experiments"><span aria-hidden="true">04</span>创意迭代</a></nav>
+<div class="sidebar-bottom"><p class="nav-caption">本机管理</p><nav aria-label="帮助与配置"><a href="/setup">首次配置</a><a href="/maintenance">数据与版本</a><a href="/guide">操作指南</a><a href="/">完整分镜与任务</a><a href="/studio">口播与风格工作室</a></nav><p class="local-note"><span aria-hidden="true">◌</span> 本机工作台<br/><small>人工确认 · 旧版保留</small></p></div></aside>
+<main class="distribution-main workspace-main" id="workspaceMain" tabindex="-1">
+<div class="page-heading workspace-page-heading"><div><p class="eyebrow">从反馈到下一版</p><h1>创意假设与迭代</h1><p class="muted">假设是待验证的创意建议。人工选择后才建草稿；客户自行投放，再导入下一轮数据。</p></div><div class="page-heading-actions"><a href="/distribution#review">← 返回数据复盘</a><a href="/guide#guideIterations">查看创意迭代操作说明</a></div></div>
+<section aria-label="创意迭代的确认边界" class="workspace-safety-note" id="iterationFlow"><strong>冻结证据 → 人工选择 → 新版制作 → 下一轮对比</strong><p>先从复盘的冻结素材卡进入，或在下方填写完整复盘与素材 ID。保存假设不会改片；选择后才建立新版草稿。事实、文稿、风格、听核和成片审核继续人工确认，不作因果归因，不自动投放。</p></section><p aria-live="polite" class="capability" id="expNotice" role="status">正在检查本机能力…</p>
+<div hidden="" id="expWorkspace"><nav aria-label="本页导航" class="workspace-page-index"><a href="#iterationHistory">记录人与历史</a><a href="#iterationBasis">冻结依据与提案</a></nav>
+<section class="panel" id="iterationHistory"><h2>记录人与历史</h2><label>操作记录人<input id="expActor" maxlength="80" placeholder="填写实际操作人"/></label><div class="form-grid"><label>最近 50 条提案<select id="expHistory"><option value="">选择历史</option></select></label><label>按提案 ID 打开<input id="expId" maxlength="32" pattern="[a-f0-9]{32}"/></label><button id="openExperiment" type="button">打开 / 刷新</button></div></section>
+<section class="panel" id="iterationBasis"><h2>01 / 基于冻结证据提出假设</h2>
+<form class="form-grid" id="contextForm"><label>基准复盘 ID<input id="baseReview" maxlength="32" pattern="[a-f0-9]{32}" required=""/></label><label>基准平台素材 ID<input id="baseMaterial" maxlength="64" pattern="[0-9]+" required=""/></label><button>读取冻结依据</button></form><p class="hash" id="basisSummary"></p>
+<form hidden="" id="proposalForm">
+<label>创意假设（待验证，不能宣称效果原因）<textarea id="hypothesis" maxlength="1000" placeholder="例如：将第一镜改成杯口细节，观察下一轮素材点击率的描述性变化。" required=""></textarea></label>
+<div class="form-grid"><label>观察指标<select id="targetMetric"><option value="ctr">点击率（比例）</option><option value="payment_roi">支付 ROI</option><option value="completion_rate">完播率（比例）</option><option value="cpc">单次点击花费</option><option value="cpa">单笔订单花费</option><option value="orders">支付订单</option><option value="revenue">支付金额</option><option value="spend">花费</option></select></label><label>最少上报天数<input id="minDays" max="31" min="1" required="" step="1" type="number" value="1"/></label><label>每版最少曝光<input id="minImpressions" max="1000000000" min="0" required="" step="1" type="number" value="100"/></label></div>
+<label>修改范围<select id="changeKind"><option value="visual">仅修改一个镜头</option><option value="script">修改文稿，重新走确认与制作</option></select></label>
+<div id="visualChanges"><label>父片镜头<select id="shotId"></select></label><label>镜头修改 JSON<textarea id="shotChanges" rows="3">{"focus_x":0.7}</textarea></label><p class="muted">支持 headline、source_in、focus_x/y、motion、fit、treatment、media_id；素材必须属于同一商品。保存的是建议，不会立即改片。</p></div>
+<div hidden="" id="scriptChanges"><label>分镜文稿 JSON（每行 text 与已确认 fact_ids）<textarea id="scriptScenes" rows="10"></textarea></label><p class="muted" id="factHints"></p><p class="muted">只保存待确认新文稿。产品事实不能在这里新增；有新事实请先回客户制作页核实，并重新提出假设。</p></div>
+<button>保存待选择提案</button>
+</form>
+</section>
+<section class="panel" hidden="" id="experimentDetail"><h2>02 / 人工选择与新版制作</h2><h3 id="expTitle"></h3><p class="hash" id="expMeta"></p><p id="expChange"></p><p><a id="expExport">下载当前完整迭代证据 JSON</a></p>
+<div id="selectionControls"><label>选择说明<input id="selectionNote" maxlength="1000" placeholder="记录选择或拒绝原因"/></label><label class="check"><input id="selectionCheck" type="checkbox"/>我已核对冻结依据与修改范围；该假设尚未验证</label><div class="form-grid"><button id="selectProposal" type="button">人工选择此提案</button><button class="secondary" id="rejectProposal" type="button">拒绝提案</button></div></div>
+<button hidden="" id="applyProposal" type="button">将已选择提案应用为新版草稿</button>
+<div hidden="" id="productionControls"><p id="productionSummary"></p><p><a id="customerProduction">打开客户制作页：核对事实 / 文稿 / 配音 / 分镜</a> · <a id="studioProduction">打开此版创意工作室</a></p>
+<div hidden="" id="attachControls"><p>新稿件尚未关联制作版本。请先在客户制作页确认这份稿件、更新配音并准备版本，再刷新本页关联草稿。</p><label>该新稿件的当前草稿 ID<input id="attachJob" maxlength="32" pattern="[a-f0-9]{32}"/></label><button id="attachVersion" type="button">关联该新稿件的草稿</button></div>
+<label class="check"><input id="styleCheck" type="checkbox"/>我已打开并核对当前新版分镜，确认使用显示的风格</label><button id="confirmStyle" type="button">确认新版当前风格</button><p class="muted">风格确认绑定当前分镜版本。之后改分镜须重新确认；口播仍须在原流程完成听核。此处不会提交、渲染或放行成片。</p>
+<button id="awaitData" type="button">已完成成片审核，等待客户下一轮数据</button>
+</div>
+</section>
+<section class="panel" hidden="" id="evaluationPanel"><h2>03 / 下一轮冻结数据的描述性对比</h2><p class="muted">先在复盘页人工关联新版平台素材并冻结数据，再选择下一轮快照。同账户/商品、已知一致口径、完整等长且不重叠窗口和自选数据门槛均满足时才计算差值；仍不代表创意导致变化。</p>
+<div class="form-grid"><label>本账户最近冻结快照<select id="nextHistory"><option value="">选择快照</option></select></label><label>下一轮复盘完整 ID<input id="nextReview" maxlength="32" pattern="[a-f0-9]{32}"/></label><button id="readNextReview" type="button">读取该快照素材</button></div><p class="hash" id="nextBasis"></p>
+<label>下一轮平台素材 ID<select id="newMaterial"><option value="">先读取快照</option></select></label><button id="evaluateExperiment" type="button">保存一份新的描述性评估</button><div id="evaluations"></div>
+</section>
+<section class="panel" hidden="" id="eventsPanel"><h2>操作记录</h2><ol id="expEvents"></ol></section>
+</div>
+<section class="workspace-route-note" id="iterationHelp"><h2>继续制作或返回复盘</h2><p>已有提案请从“最近 50 条提案”或完整提案 ID 打开。新版入口随提案出现，带入原商品与新版任务；不要另建无关联版本。等待下一轮数据时，由客户投放后回到复盘页导入并冻结。</p><p><a href="/distribution#review">返回数据复盘与冻结记录 →</a> · <a href="/create">商品制作入口</a> · <a href="/guide#guideIterations">查看完整步骤</a></p></section></main></body></html>
+

@@ -1,0 +1,22 @@
+{
+  "vendor/video-shotcraft/2026-10-motion/references/shots/camera/crash-zoom-punch.md": {
+    "sha256": "5086b762de6fb7fa7af45944c488b27117f7667ef29af20c07569eac13fe8a37",
+    "source": {
+      "repository": "Vincentwei1021/video-shotcraft",
+      "commit": "43bd349a136651865ecfa6ea1cf012f6e957d304",
+      "license": "Apache-2.0",
+      "url": "https://vincentwei1021.github.io/video-shotcraft/source/crash-zoom-punch.md",
+      "local_reference": "vendor/video-shotcraft/2026-10-motion/references/shots/camera/crash-zoom-punch.md"
+    }
+  },
+  "vendor/huashu-motion/skills/huashu-motion/references/library/languages/photo-led.md": {
+    "sha256": "7b451709626a6da081a5ed2055705855c10a98bec1cd453e169abb9512d8db5a",
+    "source": {
+      "repository": "alchaincyf/huashu-motion",
+      "commit": "3e927801e78b587878fb7dbb65d616326df00c21",
+      "license": "MIT",
+      "url": "https://github.com/alchaincyf/huashu-motion/blob/3e927801e78b587878fb7dbb65d616326df00c21/skills/huashu-motion/references/library/languages/photo-led.md",
+      "local_reference": "vendor/huashu-motion/skills/huashu-motion/references/library/languages/photo-led.md"
+    }
+  }
+}

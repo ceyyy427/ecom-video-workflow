@@ -1,0 +1,2 @@
+ALTER TABLE jobs ADD COLUMN storyboard TEXT;
+ALTER TABLE jobs ADD COLUMN storyboard_revision INTEGER NOT NULL DEFAULT 0;

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>剪序 · 投放后数据复盘</title>
+<link href="/static/style.css" rel="stylesheet"/>
+<link href="/static/distribution.css" rel="stylesheet"/>
+<script defer="" src="/static/distribution.js"></script>
+<script defer="" src="/static/reviews.js"></script>
+<link href="/static/customer.css" rel="stylesheet"/><link href="/static/workspace-pages.css" rel="stylesheet"/></head>
+<body class="distribution-page customer-page workspace-page reports-page"><a class="skip-link" href="#workspaceMain">跳到当前工作区</a>
+<aside aria-label="工作台导航" class="customer-sidebar">
+<a class="brand" href="/"><span aria-hidden="true" class="brand-mark">剪</span><span class="brand-copy"><strong>剪序</strong><small>电商视频工作台</small></span></a>
+<p class="nav-caption">工作空间</p><nav aria-label="主导航"><a href="/create"><span aria-hidden="true">01</span>商品制作</a><a href="/samples"><span aria-hidden="true">02</span>样片参考</a><a aria-current="page" href="/distribution"><span aria-hidden="true">03</span>数据复盘</a><a href="/experiments"><span aria-hidden="true">04</span>创意迭代</a></nav>
+<div class="sidebar-bottom"><p class="nav-caption">本机管理</p><nav aria-label="帮助与配置"><a href="/setup">首次配置</a><a href="/maintenance">数据与版本</a><a href="/guide">操作指南</a><a href="/">完整分镜与任务</a><a href="/studio">口播与风格工作室</a></nav><p class="local-note"><span aria-hidden="true">◌</span> 本机工作台<br/><small>人工确认 · 旧版保留</small></p></div></aside>
+
+<main class="distribution-main workspace-main" id="workspaceMain" tabindex="-1">
+<div class="page-heading workspace-page-heading">
+<div>
+<p class="eyebrow">从成片到反馈</p>
+<h1>投放后数据复盘</h1>
+<p class="muted">客户自行投放；在这里导入素材日报、关联成片，复盘创意表现。</p>
+</div>
+</div><div class="workspace-navigation"><div aria-live="polite" hidden="" id="notice" role="status"></div><nav aria-label="本页导航" class="workspace-page-index"><a href="#accountSetup">01 选择账户</a><a href="#review">02 数据与来源</a><a href="#publish">03 可选交付包</a></nav></div><p class="workspace-safety-note">先查看数据并核对缺失与口径，再人工冻结可追溯版本。平台由客户自行操作；这里不做因果归因或自动投放。</p>
+<p class="capability" id="capabilities" role="status">
+        正在检查平台接口…
+      </p>
+<section aria-label="平台账户" class="panel" id="accountSetup">
+<div class="section-top">
+<h2>01 / 选择平台账户</h2>
+<span class="badge">CNY · Asia/Shanghai</span>
+</div>
+<label for="account">广告主账户</label><select id="account">
+<option value="">请先添加账户</option>
+</select>
+<details>
+<summary>添加账户</summary>
+<form class="form-grid" id="accountForm">
+<label>账户名称<input id="accountName" maxlength="120" placeholder="例如：品牌千川账户" required=""/></label><label>平台<select id="platform">
+<option value="qianchuan">巨量千川</option>
+<option value="oceanengine">巨量引擎（CSV 复盘）</option>
+</select></label><label>广告主 ID<input id="advertiser" inputmode="numeric" pattern="[1-9][0-9]{0,29}" required=""/></label><label>Ocean Watch 授权别名（可选）<input id="authAlias" pattern="[A-Za-z0-9_-]{1,100}" placeholder="本地授权记录别名，不是密钥"/></label><button>保存账户</button>
+</form>
+<p class="muted">
+            仅登记账户信息，不代表平台已授权。原生千川凭据由本机系统安全凭据库管理；Ocean
+            Watch 使用独立授权。
+          </p>
+</details>
+</section>
+<section class="panel" id="review">
+<div class="section-top">
+<div>
+<h2>02 / 数据复盘</h2>
+<p class="muted">
+              按广告主与素材聚合，素材重复用于多条任务时只统计一次。
+            </p>
+</div>
+<a id="exportReview">下载复盘 JSON</a>
+</div>
+<form class="filter-form" id="filterForm">
+<label>开始日期<input id="startDate" required="" type="date"/></label><label>结束日期<input id="endDate" required="" type="date"/></label><button>查看复盘</button>
+</form>
+<div class="report-actions">
+<details>
+<summary>导入平台 CSV 报表</summary>
+<p>
+              使用<a href="/api/reports/template">标准 CSV 模板</a>，将平台导出的字段映射为花费、展示、点击、支付订单、支付金额、播放、完播次数。未知项留空，保留实际零值。
+            </p>
+<form id="importForm">
+<label>报表文件<input accept=".csv" id="reportFile" required="" type="file"/></label><label>导入人<input id="importActor" maxlength="120" required=""/></label><label>归因窗口（可选；未知留空）<input id="importWindow" maxlength="80" placeholder="照抄平台导出设置，例如 7d_click"/></label><label class="check"><input id="importWindowCheck" type="checkbox"/>若填写窗口，我已核对它与本次平台导出设置一致；这是人工声明，非平台核验</label><label class="check"><input id="importCheck" required="" type="checkbox"/>我确认这是当前广告主、所选日期范围内的完整素材日报快照，采用支付口径；将覆盖这段日期的旧快照。</label><button>校验并导入</button>
+</form>
+</details>
+<details>
+<summary>同步千川平台日报</summary>
+<p class="muted">
+              只读查询，最多连续 7 天。可使用千川原生授权；使用 Ocean Watch
+              时请按 P2 使用文档配置独立授权；失败或截断时不会应用部分数据。
+            </p>
+<form id="syncForm">
+<label>操作人<input id="syncActor" maxlength="120" required=""/></label><button>排队同步只读报表</button>
+</form>
+<div id="syncs"></div>
+</details>
+</div>
+<div hidden="" id="dashboard">
+<p class="capability" id="coverage"></p>
+<div class="kpis" id="kpis"></div>
+<p class="muted" id="basis"></p>
+<div class="chart-heading">
+<h3>每日花费与支付金额</h3>
+<span><b class="spend-key">■</b> 花费
+              <b class="revenue-key">■</b> 支付金额（元）</span>
+</div>
+<div aria-label="每日花费与支付金额图表" class="chart" id="chart"></div>
+<div aria-label="每日数据（未知值显示 —）" class="table-wrap" role="region" tabindex="0">
+<table>
+<caption>
+                每日数据（未知值显示 —）
+              </caption>
+<thead>
+<tr>
+<th>日期</th>
+<th>覆盖</th>
+<th>花费</th>
+<th>支付金额</th>
+<th>点击</th>
+<th>支付订单</th>
+</tr>
+</thead>
+<tbody id="dailyRows"></tbody>
+</table>
+</div>
+<div aria-label="素材表现 · 已观测数据合计" class="table-wrap" role="region" tabindex="0">
+<table>
+<caption>
+                素材表现 · 已观测数据合计
+              </caption>
+<thead>
+<tr>
+<th>平台素材 ID</th>
+<th>本地成片</th>
+<th>花费</th>
+<th>支付金额</th>
+<th>支付 ROI</th>
+<th>报告天数</th>
+</tr>
+</thead>
+<tbody id="materialRows"></tbody>
+</table>
+</div>
+<details>
+<summary>关联平台素材与本地成片</summary>
+<p class="muted">
+              平台素材 ID 与抖音作品 ID、计划 ID 可能不同，请使用报表中的素材
+              ID。
+            </p>
+<form class="form-grid" id="bindingForm">
+<label>素材 ID<input id="materialId" inputmode="numeric" required=""/></label><label>本地成片<select id="bindingJob" required=""></select></label><label>核验人<input id="bindingActor" maxlength="120" required=""/></label><label class="check"><input id="bindingCheck" required="" type="checkbox"/>已确认平台素材内容与成片一致</label><button>保存关联</button>
+</form>
+</details>
+<h3>本次复盘使用的数据来源</h3>
+<div id="batches"></div>
+<ul id="insights"></ul>
+</div>
+</section>
+<section class="panel" hidden="" id="frozenPanel">
+<div class="section-top"><h2>冻结复盘 · 可追溯版本</h2><span class="badge">账户 × 素材 × 日</span></div>
+<p class="muted">保存当前账户与上方日期范围的不可变证据。后续重导报表、增加标签或修改筛选都不会改写旧复盘；只作描述性观察。</p>
+<form class="form-grid" id="freezeForm"><label>复盘记录人<input id="reviewActor" maxlength="120" required=""/></label><label class="check"><input id="freezeCheck" required="" type="checkbox"/>已核对账户、日期与数据口径；允许保留缺失项</label><button id="freezeButton">冻结当前复盘</button></form>
+<p aria-live="polite" id="reviewNotice" role="status"></p>
+<label>已冻结历史<select id="frozenHistory"><option value="">选择已冻结复盘</option></select></label>
+<div class="form-grid"><label>按完整 ID 打开历史<input id="frozenId" maxlength="32" pattern="[a-f0-9]{32}"/></label><button class="secondary" id="openFrozenId" type="button">打开冻结版本</button></div>
+<div hidden="" id="frozenView"><h3 id="frozenTitle"></h3><p id="frozenMeta"></p><p class="hash" id="frozenHash"></p><p class="muted" id="frozenBasis"></p><p class="capability" id="frozenIssues"></p><div class="kpis" id="frozenKpis"></div><p><a id="frozenDownload">下载冻结 JSON</a> · <button class="secondary" id="verifyFrozen" type="button">核对当前证据文件</button></p>
+<div aria-label="冻结素材日报：未知不补零；以下数据不会随实时看板改变" class="table-wrap" role="region" tabindex="0"><table><caption>冻结素材日报：未知不补零；以下数据不会随实时看板改变</caption><thead><tr><th>日期</th><th>素材</th><th>数据状态</th><th>花费</th><th>支付金额</th><th>订单</th><th>支付 ROI</th><th>来源批次</th></tr></thead><tbody id="frozenRows"></tbody></table></div>
+<p><button class="secondary" id="frozenPrev" type="button">上一页</button> <span id="frozenRowCount"></span> <button class="secondary" id="frozenNext" type="button">下一页</button></p>
+<h3>成片版本与创意特征</h3><div id="frozenFeatures"></div><p><button class="secondary" id="frozenMaterialPrev" type="button">上一组素材</button> <span id="frozenMaterialCount"></span> <button class="secondary" id="frozenMaterialNext" type="button">下一组素材</button></p>
+<h3>冻结的数据来源</h3><div id="frozenSources"></div>
+</div>
+</section>
+<section class="panel" id="publish">
+<div class="section-top">
+<h2>03 / 客户交付包（可选）</h2>
+<button class="secondary" id="refreshTasks">刷新任务</button>
+</div>
+<p class="muted">
+          客户自行在平台上传素材、创建计划和设置预算。此处仅导出本地交付包，
+          不执行平台投放；报表导入与复盘不要求先创建此交付任务。
+        </p>
+<form class="form-grid" id="taskForm">
+<label class="wide">已审核成片<select id="job" required=""></select></label><label>计划名称<input id="planName" maxlength="100" required=""/></label><label>意向预算（元）<input id="budget" inputmode="decimal" placeholder="请填写预算" required=""/></label><label>目标 ROI<input id="targetRoi" inputmode="decimal" placeholder="例如 1.5" required=""/></label><button>生成待确认任务</button>
+</form>
+<p class="muted">
+          预算周期、商品选择、排期和平台竞价设置，需在平台创建计划时再次核对。
+        </p>
+<div class="task-list" id="tasks"></div>
+<dialog id="taskDialog">
+<form method="dialog">
+<button aria-label="关闭任务详情" class="close secondary">
+              关闭
+            </button>
+</form>
+<h2 id="taskTitle"></h2>
+<div id="taskSummary"></div>
+<a id="videoLink" rel="noopener" target="_blank">查看已审核成片 ↗</a>
+<p><a hidden="" id="packageLink">下载投放包 ZIP</a></p>
+<form id="approvalForm">
+<label>确认人<input id="approver" maxlength="120" required=""/></label><label>核对说明<textarea id="approvalNote" maxlength="2000" required=""></textarea></label><label class="check"><input id="approvalCheck" required="" type="checkbox"/>我已核对当前账户、成片、预算及目标
+              ROI；此操作生成本地投放包。</label><button>确认并生成投放包</button>
+</form>
+<form hidden="" id="receiptForm">
+<h3>登记平台回执</h3>
+<p class="muted">此处记录人工核验结果，不会修改平台计划。</p>
+<label>平台计划 ID<input id="adId" inputmode="numeric" pattern="[1-9][0-9]{0,29}" required=""/></label><label>平台状态<select id="receiptStatus"></select></label><label>核验人<input id="receiptActor" maxlength="120" required=""/></label><label>核验说明 / 证据位置<textarea id="receiptNote" maxlength="2000" required=""></textarea></label><label class="check"><input id="receiptCheck" required="" type="checkbox"/>我已在正确广告主账户中核验该计划 ID 及状态。</label><button>保存人工回执</button>
+</form>
+<button class="secondary" hidden="" id="cancelTask">
+            取消未导出任务
+          </button>
+<details>
+<summary>状态与确认记录</summary>
+<pre id="taskEvents"></pre>
+</details>
+</dialog>
+</section>
+</main>
+</body>
+</html>
+

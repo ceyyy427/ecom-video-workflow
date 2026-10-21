@@ -1,0 +1,39 @@
+# Runtime and credentials
+.env
+.env.*
+!.env.example
+var/
+*-maintenance/
+client-projects/
+.customer-install.json
+.customer-launch.lock
+*.db
+*.db-*
+*.sqlite*
+*.pem
+*.key
+# Large/private assets and generated output
+examples/
+dist/
+docs/evidence/
+docs/superpowers/
+*.mp4
+*.mov
+*.wav
+*.mp3
+*.onnx
+*.gguf
+*.safetensors
+*.zip
+# Dependencies and caches
+.venv/
+node_modules/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.remotion/
+render/remotion/build/
+.DS_Store
+references/
+.superpowers/
