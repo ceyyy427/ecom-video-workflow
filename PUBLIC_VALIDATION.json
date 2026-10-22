@@ -61,9 +61,33 @@
   "new_customer_approvals": 0,
   "computer_use": false,
   "browser_visual_tested": false,
-  "readme_interface_images": "original labelled illustrations, not screenshots",
-  "readme_motion_media": "actual local Remotion rendering of original illustrative prop",
+  "readme_interface_images": "original labelled page illustrations with licensed real footage; not browser screenshots",
+  "readme_motion_media": "muted excerpts of existing Remotion films using licensed Pexels orange footage",
   "customer_data_included": false,
   "credentials_included": false,
-  "models_included": false
+  "models_included": false,
+  "readme_update": {
+    "date": "2026-10-22",
+    "scope": "documentation and display assets only; runtime unchanged",
+    "layout_references": [
+      "NarratoAI",
+      "MoneyPrinterTurbo"
+    ],
+    "private_reference_videos_published": false,
+    "customer_footage_published": false,
+    "source": "Maksim Semashko / Pexels 13107467",
+    "checks": {
+      "github_gfm_rendered": true,
+      "images": 5,
+      "local_links": 18,
+      "toc_titles_matched": 4,
+      "derived_source_sha_verified": true,
+      "gif_frames": 29,
+      "gif_duration_ms": 4840,
+      "private_or_customer_media_published": false,
+      "computer_use": false,
+      "runtime_code_changed": false
+    },
+    "production_tests": "existing 0.17.0 results above; not rerun for this documentation-only update"
+  }
 }

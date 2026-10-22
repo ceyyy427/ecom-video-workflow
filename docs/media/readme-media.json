@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "checked_on": "2026-10-22",
+  "source": {
+    "title": "Cutting Orange with Knife",
+    "creator": "Maksim Semashko",
+    "page": "https://www.pexels.com/video/cutting-orange-with-knife-13107467/",
+    "license": "Pexels License",
+    "license_url": "https://www.pexels.com/license/",
+    "source_sha256": "60298358830713740127118ff7bb7a893cbd0a82f006b1127fbb5f506aeb1779"
+  },
+  "derived_from": [
+    {
+      "style": "cinema",
+      "duration": 20.2,
+      "source_frame_seconds": 1.2,
+      "rendered_film_sha256": "2e0ca027f1042c85f6989e664a78d6e1f72755ad52145bc8a53849cf7cfd8881"
+    },
+    {
+      "style": "collage",
+      "duration": 20.2,
+      "source_frame_seconds": 16,
+      "rendered_film_sha256": "44416497fa5b48f3faa11bf5a13bd803e19c1898b9c5df59b9d932215457fd2e"
+    },
+    {
+      "style": "evidence",
+      "duration": 20.2,
+      "source_frame_seconds": 10.8,
+      "rendered_film_sha256": "816ee34f770b3cca82131f0bb8bb8a94879c0426f131714eba96ba677c295054"
+    }
+  ],
+  "assets": [
+    {
+      "path": "docs/media/readme-real-showcase.jpg",
+      "kind": "actual_rendered_frames",
+      "sha256": "25788bab4e10eef2d0f69a6619c31b7296e419c60a9a100d86fd334bfdbaf00f",
+      "width": 1400,
+      "height": 910
+    },
+    {
+      "path": "docs/media/readme-editor.png",
+      "kind": "illustrated_page_with_licensed_frame",
+      "sha256": "302770931281cc49d72ff9a7ba787a51663ff1b0e2ae4bb08a2a4021d901f7de",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "path": "docs/media/readme-prompts.png",
+      "kind": "illustrated_page_with_licensed_frame",
+      "sha256": "279b33888f7c344be7d884c23f7054c84c033c4d0f51d1ab0df6d38eaaad6625",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "path": "docs/media/readme-review.png",
+      "kind": "illustrated_pending_review_with_actual_rendered_frame",
+      "sha256": "cb3de00b93e5502a57f9d4d4a664d7eb6228317ce61dd247a76945692257123a",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "path": "docs/media/readme-real-demo.gif",
+      "kind": "muted_excerpt_from_actual_rendered_films",
+      "duration": 4.8,
+      "sha256": "00c35112b3d2be31349d67d81bf081cfd8b23a0cefe38c499df8385175f642b2"
+    }
+  ],
+  "page_images_are_browser_screenshots": false,
+  "page_images": "Original illustrations of implemented controls, with licensed real footage; audio waveforms and control state are illustrative",
+  "motion_preview": "4.8-second muted excerpts of existing rendered films; not full-action or human listening approval evidence",
+  "private_reference_videos_published": false,
+  "customer_media_published": false,
+  "original_mp4_published": false,
+  "audio_or_music_published": false,
+  "new_cloud_calls": 0,
+  "computer_use": false
+}
