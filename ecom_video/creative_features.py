@@ -21,6 +21,10 @@ FIELDS = (
     "duration_s",
     "storyboard_revision",
     "music_present",
+    "shot_recipes",
+    "transitions",
+    "creative_plan_id",
+    "voice_recommendation",
 )
 
 
@@ -45,6 +49,10 @@ def extract(job, video_sha256):
         board = snapshot.get("storyboard")
         if isinstance(board, dict):
             creative = board.get("creative") or {}
+            plan = (snapshot.get("provenance") or {}).get("creative_plan") or {}
+            fields["creative_plan_id"] = plan.get("id")
+            fields["voice_recommendation"] = plan.get("voice")
+            sources.update(creative_plan_id="/provenance/creative_plan/id", voice_recommendation="/provenance/creative_plan/voice")
             for key, value, path in [
                 (
                     "format",
@@ -70,6 +78,9 @@ def extract(job, video_sha256):
                 sources["music_present"] = "/storyboard/music_id"
             shots = board.get("shots")
             if isinstance(shots, list) and shots:
+                fields["shot_recipes"] = [s.get("shot_recipe") for s in shots]
+                fields["transitions"] = [s.get("transition") for s in shots]
+                sources.update(shot_recipes="/storyboard/shots/shot_recipe", transitions="/storyboard/shots/transition")
                 fields["shot_count"] = len(shots)
                 sources["shot_count"] = "/storyboard/shots"
                 kinds = {
@@ -127,6 +138,8 @@ class Features:
         if not video or video["sha256"] != binding["video_sha256"]:
             return None, "video_hash_mismatch"
         data = extract(dict(job), binding["video_sha256"])
+        from .delivery_revision import review_state
+        data["production_review"] = review_state(c, dict(job))
         old = c.execute(
             "SELECT * FROM creative_features WHERE job_id=? AND video_sha256=? AND input_snapshot_hash=? AND feature_version=?",
             (job["id"], binding["video_sha256"], data["input_snapshot_hash"], FEATURE_VERSION),

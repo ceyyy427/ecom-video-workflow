@@ -259,6 +259,7 @@ class Experiments:
                 "shots": board["shots"],
                 "style_id": board["creative"]["style_id"],
                 "submitted_script": job["script"],
+                "production_review": feature.get("production_review"),
                 "facts": snapshot["provenance"]["facts"],
                 "scenes": snapshot["provenance"]["scenes"],
             }

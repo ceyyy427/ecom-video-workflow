@@ -1,46 +1,76 @@
 {
-  "date": "2026-10-20",
-  "scope": "Independent public-source snapshot on the existing macOS development host",
-  "python": {
-    "passed": 836,
+  "date": "2026-10-22",
+  "version": "0.16.0",
+  "scope": "Apple Silicon Mac; existing M2/8GiB host; fresh installation directories; no Computer Use",
+  "python_local_full": {
+    "passed": 932,
+    "skipped": 3,
+    "deselected": 1,
+    "seconds": 383.08
+  },
+  "public_python_verification": {
+    "full_run_passed": 930,
+    "full_run_failed": 1,
     "skipped": 4,
     "deselected": 1,
-    "seconds": 196.81,
-    "excluded": "test_focus_frame_contains_requested_media_point_in_actual_browser_layout",
-    "skip_reasons": [
-      "non-distributed private customer evidence",
-      "native Windows DPAPI",
-      "native Windows Job Object",
-      "explicit opt-in OS keychain integration"
-    ]
+    "seconds": 305.08,
+    "resolved_failure": "Removed obsolete render/remotion/cleanup.mjs; current renderer uses src/cleanup.mjs",
+    "cleanup_recheck_passed": 5,
+    "last_failed_recheck_passed": 1,
+    "remaining_known_failures": 0,
+    "private_evidence_skipped_when_absent": true
   },
-  "node_vm": {
-    "passed": 20,
+  "node": {
+    "passed": 35,
     "failed": 0
   },
+  "dom_events": "passed; not browser layout or screenshot",
   "ruff": "passed",
   "remotion_typescript": "passed",
+  "mac_package": {
+    "files": 249,
+    "upgrade_sha256": "ba6659b9ee90ace4d308f8560abeaac4cdce6749cae77db38a497dba65722844",
+    "installer_sha256": "8d7bf7b4b5aee0440817e8bc5cfe2a58178abc0c28c5e283fd1d8d76508cc8af",
+    "fresh_install_start": true,
+    "manifest_matches": true,
+    "old_0131_validator_accepts": true
+  },
+  "real_media_engineering": {
+    "seconds": 27.8,
+    "cache_hits": 5,
+    "rerendered": 1,
+    "other_five_scenes_identical": true,
+    "pcm_and_srt_identical": true,
+    "version_restore_and_export": true,
+    "backup_restore": true,
+    "approvals": "AUTOMATED FIXTURE, not customer approvals"
+  },
+  "existing_customer_project": {
+    "backup_to_new_directory": true,
+    "fact_script_listening_shot_film_records_preserved": true,
+    "old_directory_preserved": true
+  },
   "runtime_and_render_sources_byte_identical_to_local_project": true,
-  "portable_test_fix": "Single-sentence voice tests use synthetic temporary model files with ASR transport stubs; production guards unchanged",
   "secret_scan": {
     "tool": "Yelp/detect-secrets",
     "version": "1.5.0",
-    "mode": "offline; no credential verification",
-    "candidate_findings_reviewed": 893,
-    "confirmed_secrets": 0,
-    "false_positive_categories": {
-      "file_model_commit_and_cache_fingerprints": 876,
-      "synthetic_test_inputs": 16,
-      "credential_reference_identifier": 1
+    "license": "Apache-2.0",
+    "mode": "relative-directory --all-files --no-verify; no credential verification",
+    "initial_candidates": 893,
+    "reviewed_false_positive_categories": {
+      "fingerprints": 874,
+      "manifest_paths": 2,
+      "synthetic_tests": 16,
+      "credential_reference_expression": 1
     },
-    "gitleaks_executed": false
+    "confirmed_credentials": 0
   },
   "customer_data_included": false,
-  "model_weights_included": false,
+  "models_included": false,
   "credentials_included": false,
-  "browser_visual_or_interaction_tested": false,
   "computer_use": false,
+  "browser_visual_tested": false,
   "platform_writes": 0,
-  "paid_requests": 0,
-  "new_human_approvals": 0
+  "new_paid_requests": 0,
+  "new_customer_approvals": 0
 }

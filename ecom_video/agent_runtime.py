@@ -301,6 +301,9 @@ class Runtime:
                 "human_style_selected",
                 {"style_id": cmd.style_id, "direction_basis": cmd.direction_basis},
             )
+            from .delivery_reviews import record_agent_direction
+
+            record_agent_direction(c, self.store, p, cmd.style_id, cmd.reviewer)
         return self.get(rid)
 
     def cancel_children(self, c, rid):
@@ -720,6 +723,8 @@ class Runtime:
             return self.finish(e, "running")
         if job["storyboard"]["creative"]["style_id"] != choice["style_id"]:
             raise Problem("STALE_INPUT")
+        if p["delivery_reviews"]["enabled"] and not p["delivery_reviews"]["storyboard"]:
+            return self.finish(e, "waiting_human", "storyboard")
         if not self.effect(rid, "submit") and self.begin(e, "submit"):
             self.customers.submit(
                 p["id"],

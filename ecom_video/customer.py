@@ -64,8 +64,11 @@ class Customers:
 
     @staticmethod
     def fingerprint(p):
+        from .delivery_plan import identity_state
+
         return signature(
             {
+                **({"delivery_identity": identity_state(p["media"])} if p["settings"].get("delivery_version") else {}),
                 "settings": p["settings"],
                 **(
                     {"material_checks_version": MATERIAL_VERSION}
@@ -92,8 +95,11 @@ class Customers:
 
     @staticmethod
     def basis(p):
+        from .delivery_plan import identity_state
+
         return signature(
             {
+                **({"delivery_identity": identity_state(p["media"])} if p["settings"].get("delivery_version") else {}),
                 "settings": p["settings"],
                 "review": p["product"]["current_review_id"],
                 "draft": p["product"]["current_draft_id"],
@@ -169,6 +175,9 @@ class Customers:
                     ).fetchone()
                 )
         p["product"] = self.products.get(pid)
+        from .creative_proposals import current_plan
+
+        p["creative_plan"] = current_plan(p["product"])
         p["job"] = self.store.get(p["active_job_id"]) if active else None
         p["inputs_changed"] = bool(active and active["input_fingerprint"] != self.fingerprint(p))
         p["visual_revision_allowed"] = bool(active and active["basis_fingerprint"] == self.basis(p))
@@ -177,6 +186,10 @@ class Customers:
 
         p["recommendations"], p["direction_basis"] = directions(p)
         p["preparation_blockers"] = preparation_blockers(p)
+        from .material_suitability import material_inputs
+        from .production_proposals import material_inventory
+
+        p["intake_preflight"] = material_inventory(material_inputs(p)[0])
         p["alignment"] = None
         if p["job"]:
             voice = next(
@@ -217,6 +230,15 @@ class Customers:
                 diagnostic["diagnostic"]["transcript"],
                 set(review["fact_ids"] if review else []),
             )
+        from .delivery_reviews import review_state
+
+        with self.store.connect() as c:
+            p["delivery_reviews"] = review_state(c, p)
+        from .customer_handoff import status
+        from .delivery_revision import review_state as shot_review_state
+        with self.store.connect() as c:
+            p["shot_reviews"] = shot_review_state(c, p["job"])
+        p["handoff_status"] = status(p)
         return p
 
     def settings(self, pid, revision, settings):
@@ -295,7 +317,7 @@ class Customers:
             self.touch(c, pid)
         return self.get(pid)
 
-    def edit_media(self, pid, aid, revision, role, source_in, note):
+    def edit_media(self, pid, aid, revision, role, source_in, note, *, identity=None):
         with self.store.transaction() as c:
             self.row(c, pid, revision)
             a = c.execute(
@@ -322,6 +344,12 @@ class Customers:
                 "UPDATE customer_media SET role=?,source_in=?,note=? WHERE id=?",
                 (role, source_in, note, aid),
             )
+            if identity is not None:
+                if a["kind"] == "audio" or not identity.get("reviewer", "").strip():
+                    raise ValueError("请人工填写画面款式/配色核对人")
+                meta = json.loads(a["metadata"])
+                meta["identity"] = {**identity, "source_sha256": a["sha256"]}
+                c.execute("UPDATE customer_media SET metadata=? WHERE id=?", (encoded(meta), aid))
             self.touch(c, pid)
         return self.get(pid)
 
@@ -329,7 +357,7 @@ class Customers:
         with self.store.transaction() as c:
             self.row(c, pid, revision)
             a = c.execute(
-                "SELECT path FROM customer_media WHERE id=? AND product_id=?", (aid, pid)
+                "SELECT path,metadata FROM customer_media WHERE id=? AND product_id=?", (aid, pid)
             ).fetchone()
             if not a:
                 raise KeyError(aid)
@@ -342,9 +370,19 @@ class Customers:
                     "SELECT 1 FROM voice_takes WHERE product_id=? AND path=?", (pid, a["path"])
                 ).fetchone()
             )
+            original = (json.loads(a["metadata"]).get("intake") or {}).get("original_path")
+            keep_original = (
+                original
+                and c.execute(
+                    "SELECT 1 FROM assets WHERE json_extract(metadata,'$.intake.original_path')=? LIMIT 1",
+                    (original,),
+                ).fetchone()
+            )
             self.touch(c, pid)
         if not retained:
             safe_path(self.root, a["path"]).unlink(missing_ok=True)
+        if original and not keep_original and original.startswith(f"customers/{pid}/originals/"):
+            safe_path(self.root, original).unlink(missing_ok=True)
         from .media_analysis import cleanup_removed
 
         for analysis_id in analyses:
@@ -517,6 +555,10 @@ class Customers:
             raise Conflict("风格推荐已过期，请重新推荐")
         if job["storyboard"]:
             raise Conflict("已有分镜，请直接编辑；如需重新选择风格可打开创意工作室")
+        if p["settings"].get("delivery_version"):
+            choice = p["delivery_reviews"]["direction"]
+            if not choice or choice["style_id"] != style_id:
+                raise Conflict("请先人工确认本次创意方向，再准备分镜")
         alignment = (
             p["alignment"] if p["alignment"] and p["alignment"]["id"] == alignment_id else None
         )
@@ -615,36 +657,20 @@ class Customers:
                     extra, _ = self.copy_assets(jid, [selected], library=True)
                     assets += extra
                     existing = extra[0]
-                shot["asset_id"] = existing["id"]
-                shot["role"] = selected["role"]
-                shot["evidence_note"] = selected["note"]
-                shot["source_in"] = selected["source_in"]
-                shot["motion"] = "static" if selected["kind"] == "video" else "push"
-                if selected["kind"] != "video" and "source_framing" not in changes:
-                    shot["source_framing"] = "original"
             for s in board["shots"]:
                 s["asset_id"] = mapping.get(s["asset_id"], s["asset_id"])
+            from .delivery_plan import remap_cuts
+
+            remap_cuts(board, mapping)
+            if changes.get("source_cuts"):
+                for cut in changes["source_cuts"]:
+                    cut["asset_id"] = mapping.get(cut["asset_id"], cut["asset_id"])
+                shot["asset_id"] = changes["source_cuts"][0]["asset_id"]
             for obj, key in ((board, "music_id"), (board["narration"], "asset_id")):
                 if obj[key]:
                     obj[key] = mapping[obj[key]]
-            if isinstance(changes.get("motion_plan"), dict):
-                from .shotcraft import MotionPlan
-
-                changes["motion_plan"] = MotionPlan.model_validate(
-                    {**(shot.get("motion_plan") or {}), **changes["motion_plan"]}
-                ).model_dump()
-            manual_windows_submitted = (
-                isinstance(data["changes"].get("motion_plan"), dict)
-                and "windows" in data["changes"]["motion_plan"]
-            )
-            shot.update(changes)
-            if (selected or "source_in" in changes) and shot.get("motion_plan"):
-                shot["motion_plan"]["windows"] = [
-                    w
-                    for w in shot["motion_plan"]["windows"]
-                    if w.get("basis") == "voice_hint"
-                    or (manual_windows_submitted and w.get("basis") == "manual")
-                ]
+            from .shot_changes import apply_changes
+            apply_changes(shot, changes, selected, existing["id"] if selected else None)
             from .shotcraft import effective_transitions
 
             def boundaries(value):
@@ -652,15 +678,15 @@ class Customers:
                     [{**s, "frames": round(s["duration"] * 30)} for s in value["shots"]]
                 )
 
-            if boundaries(board) != boundaries(original["storyboard"]):
-                raise ValueError(
-                    "此动作保护区间会改变相邻转场；单镜修订保留原转场。请保留边界区间，或在新草稿中整体调整转场。"
-                )
             candidate = {**original, "id": jid, "assets": assets}
             board["creative"]["fingerprint"] = rebase_fingerprint(
                 original, candidate, board["creative"]
             )
             board = validate_board(candidate, board)
+            if boundaries(board) != boundaries(original["storyboard"]):
+                raise ValueError(
+                    "此动作保护区间会改变相邻转场；单镜修订保留原转场。请保留边界区间，或在新草稿中整体调整转场。"
+                )
             from .production import validate_production
 
             validate_production(board, assets)
@@ -765,3 +791,21 @@ def validate_customer_submission(c, job):
         raise Conflict("分镜片种或制作要求与客户项目不一致，请重新准备")
     if settings["brief"]["format"] != "showcase" and board["narration"]["mode"] != "uploaded":
         raise Conflict("客户口播须使用上传的成品配音并完成听核")
+    if settings.get("delivery_version") or board.get("delivery"):
+        from .delivery_reviews import review_state
+
+        if not board.get("delivery"):
+            raise Conflict("新版交付分镜不能移除版本约束，请重新准备")
+        if board["delivery"].get("identity_lock") != settings.get("identity_lock"):
+            raise Conflict("分镜款式/配色限制与项目不符，请重新准备")
+        current["id"] = version["product_id"]
+        current["job"] = {**job, "storyboard": board}
+        state = review_state(c, current)
+        if (
+            not state["storyboard"]
+            or not state["direction"]
+            or state["direction"]["style_id"] != board["creative"]["style_id"]
+            or state["storyboard"]["style_id"] != board["creative"]["style_id"]
+        ):
+            raise Conflict("请人工核对并确认当前最终分镜风格；生成分镜不等于确认")
+        return {"direction": state["direction"], "storyboard": state["storyboard"]}

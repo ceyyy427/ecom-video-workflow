@@ -189,7 +189,7 @@ wheels = [
 
 [[package]]
 name = "ecom-video-workflow"
-version = "0.13.1"
+version = "0.16.0"
 source = { virtual = "." }
 dependencies = [
     { name = "beautifulsoup4" },

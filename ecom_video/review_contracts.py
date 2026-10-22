@@ -14,7 +14,7 @@ MAX_CELLS = 15500
 MAX_PAYLOAD = 8 * 1024**2
 MAX_SOURCE_BYTES = 128 * 1024**2
 ALGORITHM_VERSION = "material-daily-freeze-v1"
-FEATURE_VERSION = "submitted-creative-v1"
+FEATURE_VERSION = "submitted-creative-v2"
 RequestId = Annotated[str, Field(pattern=r"^[A-Za-z0-9][A-Za-z0-9_-]{0,79}$")]
 
 

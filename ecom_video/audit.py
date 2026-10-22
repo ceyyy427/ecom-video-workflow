@@ -2,6 +2,7 @@
 
 import hashlib
 import json
+import re
 import unicodedata
 from pathlib import Path
 
@@ -12,9 +13,13 @@ def audit_script(script):
     offset = 0
     for line_no, line in enumerate(script.splitlines(), 1):
         normalized = unicodedata.normalize("NFKC", line)
+        observation = re.match(r"\s*(第一)[,、:]\s*(?:看|观察|检查)", normalized)
         for rule in rules["rules"]:
             for term in rule["terms"]:
                 start = normalized.find(unicodedata.normalize("NFKC", term))
+                if term == "第一" and observation and start == observation.start(1):
+                    # Exempt only this explicit instruction number; keep later claims.
+                    start = normalized.find(term, start + len(term))
                 if start >= 0:
                     findings.append(
                         {

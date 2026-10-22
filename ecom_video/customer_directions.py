@@ -59,34 +59,38 @@ def preparation_blockers(p):
     return reasons
 
 
+def editorial_basis(p):
+    from .delivery_plan import identity_state
+
+    return signature({"draft": p["product"]["current_draft_id"], "title": p["product"]["title"],
+                      "brief": p["settings"]["brief"],
+                      "visuals": sorted((a["sha256"], a["kind"]) for a in p["media"] if a["kind"] != "audio"),
+                      **({"delivery": p["settings"].get("delivery_version"),
+                          "identity_lock": p["settings"].get("identity_lock"),
+                          "identity": identity_state(p["media"]),
+                          "review": p["product"]["current_review_id"]}
+                         if p["settings"].get("delivery_version") else {})})
+
+
 def directions(p):
     try:
         source = direction_input(p)
     except ValueError:
         return None, None
     # Audio and analysis completion do not invalidate an editorial style choice.
-    basis = signature(
-        {
-            "draft": p["product"]["current_draft_id"],
-            "title": source["title"],
-            "brief": p["settings"]["brief"],
-            "visuals": sorted((a["sha256"], a["kind"]) for a in p["media"] if a["kind"] != "audio"),
-        }
-    )
+    basis = editorial_basis(p)
     ready = bool(p["job"] and not p["inputs_changed"])
     job = p["job"] if ready else source
     rec = recommend_saved(job, p["settings"]["brief"])
-    if p["settings"].get("material_checks"):
-        from .material_suitability import check_materials, fit_summary, material_inputs
+    from .material_suitability import material_inputs
+    from .production_proposals import production_readiness
 
-        assets, constraints = material_inputs(p)
-        report = check_materials(source["script"].splitlines(), assets, constraints=constraints)
-        for option in rec["options"]:
-            option["material_fit"] = fit_summary(
-                report,
-                option["id"],
-                assets=assets,
-                constraints=constraints,
-                format=p["settings"]["brief"]["format"],
-            )
+    assets, constraints = material_inputs(p)
+    for option in rec["options"]:
+        plan = production_readiness(
+            source["script"].splitlines(), assets, constraints, option["id"], p["settings"]["brief"]
+        )
+        option["production_readiness"] = plan
+        if p["settings"].get("material_checks"):
+            option["material_fit"] = plan["fit"]
     return {**rec, "scope": "job" if ready else "project"}, basis

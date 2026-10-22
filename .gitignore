@@ -1,39 +1,46 @@
-# Runtime and credentials
-.env
-.env.*
-!.env.example
-var/
-*-maintenance/
-client-projects/
-.customer-install.json
-.customer-launch.lock
-*.db
-*.db-*
-*.sqlite*
-*.pem
-*.key
-# Large/private assets and generated output
-examples/
-dist/
-docs/evidence/
-docs/superpowers/
-*.mp4
-*.mov
-*.wav
-*.mp3
-*.onnx
-*.gguf
-*.safetensors
-*.zip
-# Dependencies and caches
 .venv/
-node_modules/
 __pycache__/
-*.pyc
 .pytest_cache/
 .ruff_cache/
-.remotion/
-render/remotion/build/
-.DS_Store
-references/
+.env
+var/
 .superpowers/
+*.pyc
+.DS_Store
+references/ocean-watch/
+references/oceanengine-contracts/
+
+render/remotion/node_modules/
+render/remotion/build/
+references/mg-styles-15/
+
+.remotion/
+
+# Licensed originals and reproducible local render intermediates are not a stock library.
+examples/client-demo/sources/
+examples/client-demo/work/
+
+# Category validation originals stay local; only edited samples are published.
+examples/category-demo/sources/
+
+# Local customer handoff archives are generated artifacts.
+dist/
+
+.customer-launch.lock
+
+.customer-install.json
+
+# Managed backups and prepared customer versions contain private business data.
+/*-maintenance/
+
+# Local production materials and acceptance evidence are never public source.
+client-projects/
+output/
+tmp/
+examples/
+docs/evidence/
+.taste-skill/
+.env.*
+!.env.example
+# Full upstream checkouts are local references; existing tracked license notices stay.
+vendor/*

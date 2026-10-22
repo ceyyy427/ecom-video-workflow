@@ -9,6 +9,7 @@ from pathlib import Path
 from PIL import Image, ImageOps
 
 from .creative import CATALOG, signature
+from .delivery_plan import meta as asset_metadata
 from .media import digest, font_path, input_options, inspect_media, probe, run_checked, safe_path
 from .motion_treatment import review_sheet
 from .renderer import stamp, write_json
@@ -34,7 +35,8 @@ def engine_hash():
             for p in [
                 *sorted((ENGINE / "src").glob("*.tsx")),
                 ENGINE / "render.mjs",
-                ENGINE / "cleanup.mjs",
+                ENGINE / "src/cleanup.mjs",
+                ENGINE / "src/pause-pages.cjs",
                 ENGINE / "package-lock.json",
                 font_path(),
                 PROJECT / "ecom_video/captions.py",
@@ -45,6 +47,8 @@ def engine_hash():
                 PROJECT / "ecom_video/source_framing.py",
                 PROJECT / "ecom_video/prompt_catalog.py",
                 PROJECT / "ecom_video/semantic_mix.py",
+                PROJECT / "ecom_video/delivery_plan.py",
+                PROJECT / "ecom_video/delivery_timeline.py",
                 Path(__file__),
             ]
         }
@@ -79,11 +83,43 @@ def prepare_source_video(source, target, scene, check):
     )
 
 
+def prepare_cut_video(root, target, scene, assets, check):
+    """Use FFmpeg's trim/setpts/concat; bounded, silent footage, no source looping."""
+    parts = []
+    for i, cut in enumerate(scene["source_cuts"]):
+        check()
+        asset = assets[cut["asset_id"]]
+        source = safe_path(root, asset["path"])
+        if digest(source) != asset["sha256"]:
+            raise ValueError("分段素材内容变化，请重新准备")
+        part = target.with_name(target.stem + f"-part-{i}.mp4")
+        frames = round(cut["duration"] * 30)
+        speed = cut["source_duration"] / cut["duration"]
+        vf = (f"trim=duration={cut['source_duration']},setpts=(PTS-STARTPTS)/{speed},"
+              + crop_filter(scene)
+              + "scale=1080:1920:force_original_aspect_ratio=decrease:force_divisible_by=2,"
+              + "pad=1080:1920:(ow-iw)/2:(oh-ih)/2,setsar=1,fps=30,")
+        # Up to one final frame for sample/frame-grid rounding, never action-length padding.
+        vf += "tpad=stop_mode=clone:stop_duration=0.034"
+        run_checked(["ffmpeg", "-v", "error", "-y", "-ss", str(cut["source_in"]),
+                     *input_options(source), "-i", str(source), "-an", "-vf", vf,
+                     "-frames:v", str(frames), "-c:v", "libx264", "-preset", "veryfast",
+                     "-threads", "2", "-pix_fmt", "yuv420p", str(part)], check)
+        stream = next(s for s in probe(part)["streams"] if s["codec_type"] == "video")
+        if int(stream.get("nb_frames", 0)) != frames:
+            raise ValueError("实拍分段解码帧数不足；未循环或长冻结填充")
+        parts.append(part)
+    listing = target.with_suffix(".txt")
+    listing.write_text("".join(f"file '{p.name}'\n" for p in parts))
+    run_checked(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "1", "-i",
+                 str(listing), "-c", "copy", str(target)], check)
+
+
 def render_remotion(job, root, directory, check):
     root, directory = Path(root), Path(directory)
     snap = job["snapshot"]
     assets = {
-        a["id"]: {**a, "metadata": inspect_media(safe_path(root, a["path"]), a["kind"])}
+        a["id"]: {**a, "metadata": {**asset_metadata(a), **inspect_media(safe_path(root, a["path"]), a["kind"])}}
         for a in snap["assets"]
     }
     board = validate_board({**snap, "assets": list(assets.values())}, snap["storyboard"])
@@ -138,6 +174,12 @@ def render_remotion(job, root, directory, check):
             if asset["kind"] == "image"
             else f"-{scene['source_in']}-{scene['frames']}{media_suffix(scene)}.mp4"
         )
+        if scene.get("source_cuts"):
+            from .delivery_timeline import cut_records
+
+            record = cut_records(scene, assets)
+            src = signature({"cuts": [{k: v for k, v in c.items() if k not in ("asset_id", "source_name", "reason")}
+                                      for c in record], "framing": media_suffix(scene)}) + ".mp4"
         props = {
             k: scene[k]
             for k in [
@@ -169,6 +211,10 @@ def render_remotion(job, root, directory, check):
             transition=transitions[i],
             exitTransition=transitions[i + 1] if i + 1 < len(scenes) else "cut",
         )
+        if scene.get("caption_note"):
+            props["captionNote"] = scene["caption_note"]
+        if board.get("delivery"):
+            props["captionPolicy"] = board["delivery"]["caption_policy"]
         if scene.get("shot_recipe") is not None:
             props["shotRecipe"] = scene["shot_recipe"]
         decision = resolve_motion(scene, words)
@@ -252,7 +298,10 @@ def render_remotion(job, root, directory, check):
                     with Image.open(source) as im:
                         ImageOps.exif_transpose(im).convert("RGB").save(target)
                 else:
-                    prepare_source_video(source, target, scene, check)
+                    if scene.get("source_cuts"):
+                        prepare_cut_video(root, target, scene, assets, check)
+                    else:
+                        prepare_source_video(source, target, scene, check)
             pending.append({"key": key, "props": props})
         scene["cache_hit"] = valid
     # Unique keys: a repeated shot should only render once.
@@ -451,10 +500,17 @@ def render_remotion(job, root, directory, check):
     loudness = mux(mixed, directory / "output.mp4")
     if board["music_id"]:
         mux(directory / "clean.wav", directory / "voice-only.mp4")
+    subtitle_rows = [
+        {"text": c["text"], "start": s["start"] + c["start"], "end": s["start"] + c["end"]}
+        for s in scenes for c in s.get("caption_layout", [])
+    ] if board.get("delivery") else [
+        {"text": s["text"], "start": s.get("voice_start", s["start"]),
+         "end": s.get("voice_end", s["end"])} for s in scenes
+    ]
     (directory / "subtitles.srt").write_text(
         "\n\n".join(
-            f"{i + 1}\n{stamp(s.get('voice_start', s['start']))} --> {stamp(s.get('voice_end', s['end']))}\n{s['text']}"
-            for i, s in enumerate(scenes)
+            f"{i + 1}\n{stamp(s['start'])} --> {stamp(s['end'])}\n{s['text']}"
+            for i, s in enumerate(subtitle_rows)
         )
         + "\n"
     )
@@ -486,10 +542,16 @@ def render_remotion(job, root, directory, check):
         "style_source": style,
         "assets": snap["assets"],
     }
+    if board.get("delivery"):
+        from .delivery_timeline import timeline_record
+
+        manifest["delivery_timeline"] = timeline_record(snap, board, scenes, alignment)
     write_json(directory / "manifest.json", manifest)
     write_json(
         directory / "shotbook.json",
         {
+            **({"clock": manifest["delivery_timeline"], "delivery_reviews": snap.get("delivery_reviews")}
+               if board.get("delivery") else {}),
             "style": style,
             "motion_treatment": manifest["motion_treatment"],
             "brand": creative["brand"],

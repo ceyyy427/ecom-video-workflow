@@ -6,9 +6,9 @@ from collections import Counter
 
 VERSION = "semantic-mix-v1"
 ACTION = re.compile(
-    "倒入|倒水|倒出|开盖|打开|旋开|合上|折叠|转动|戴上|佩戴|拿起|放下|放回|倒一杯|提起|切片|切下|切开|挤出|剥开|放入|放进|滴入|取出|收起|靠拢|戴到|戴在|合拢"
+    "倒入|倒水|倒出|开盖|打开|旋开|合上|折叠|转动|戴上|佩戴|拿起|放下|放回|倒一杯|提起|切片|切下|切开|挤出|剥开|放入|放进|滴入|取出|收起|靠拢|戴到|戴在|合拢|走动|背上包|泼水|水花|水滴"
 )
-DETAIL = re.compile("细节|纹理|果皮|切面|瓶口|杯口|耳罩|头梁|接口|结构|边缘")
+DETAIL = re.compile("细节|纹理|果皮|切面|瓶口|杯口|耳罩|头梁|接口|结构|边缘|连帽|领口|袖口|衣面")
 SCENE = re.compile("场景|回到|换到|通勤|厨房|办公室|桌边|家里")
 SALE = re.compile("优惠|折扣|到手价|限时|仅售|促销|下单|选购|购买|包邮")
 DATA = re.compile(
@@ -99,8 +99,22 @@ def apply_mix(rows, lines, durations, assets, direction, job):
     counts = Counter()
     transitions = 0
     primary = direction["cards"][0]
+    from .creative_proposals import execution_plan, line_plan
+
+    joint = execution_plan(job)
     for i, row in enumerate(result):
         spec = strategy(job, i, assets[i])
+        joint_line = (
+            line_plan(job, i, {"prompt_direction": direction}, joint.get("category", ""))
+            if joint
+            else None
+        )
+        if joint_line:
+            row["reason"] += "；语义编导：" + joint_line["reason"]
+            spec["requires_quotation"] = joint_line["requires_quotation"]
+            if joint_line["kind"] == "action":
+                spec["kind"] = "action"
+                row["motion_plan"]["intent"] = "action"
         row.update(shot_recipe="none", transition="cut")
         row["motion_plan"]["prompt_card"] = None
         row["reason"] += "；" + spec["kind"] + "：" + spec["explanation"]
@@ -126,6 +140,10 @@ def apply_mix(rows, lines, durations, assets, direction, job):
             if spec["kind"] == "text"
             else primary["id"]
         )
+        if joint_line:
+            if not joint_line["card"]:
+                continue
+            key = joint_line["card"]["id"]
         card = card_record(key)
         if not usable_media(assets[i]) or durations[i] < 2.8:
             row["reason"] += "；清晰度/时长不足，保留实拍与字幕"
@@ -145,7 +163,7 @@ def apply_mix(rows, lines, durations, assets, direction, job):
             and transitions < 1
             and durations[i - 1] >= 2.8
             and not ACTION.search(lines[i - 1])
-            and rows[i - 1]["motion_plan"].get("intent") != "action"
+            and result[i - 1]["motion_plan"].get("intent") != "action"
         ):
             row["transition"] = "media-pass"
             transitions += 1
@@ -157,6 +175,11 @@ def guard_decision(job, index, decision):
     """Repeat evidence checks for every emphasized data/sales recipe at render."""
     result = copy.deepcopy(decision)
     spec = strategy(job, index, {"kind": "video"})
+    from .creative_proposals import execution_plan
+    from .spoken_copy import PROTECTED
+
+    if execution_plan(job) and PROTECTED.search(job["script"].splitlines()[index]):
+        spec["requires_quotation"] = True
     if spec["kind"] == "action" and result.get("protect_action", True):
         result.update(recipe="none", guard_outcome="action_full_frame")
     if spec["requires_quotation"] or result.get("recipe") == "product-fact-row":

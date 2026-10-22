@@ -7,6 +7,12 @@ from .creative import signature
 from .production_direction import closing_reminder, folding_action, supports_action
 
 VERSION = "material-readiness-v1"
+# Editorial actions outside the measured local model vocabulary remain unverified.
+EDITORIAL_ACTIONS = {
+    "walk": "走动",
+    "shoulder_bag": "背上(?:背)?包",
+    "splash": "泼水|水花|水滴",
+}
 
 
 def required_actions(line):
@@ -22,6 +28,7 @@ def required_actions(line):
             ("close_lid", "合上.*盖|盖上|关盖"),
             ("wear", "戴上|佩戴|戴在"),
             ("lift", "拿起|提起|取出"),
+            *EDITORIAL_ACTIONS.items(),
         ):
             if re.search(pattern, clause):
                 found.append(kind)
@@ -38,6 +45,7 @@ def action_occurrences(line):
         "fold": r"折叠|收拢|合拢|靠拢",
         "wear": r"戴上|佩戴|戴在",
         "lift": r"拿起|提起|取出",
+        **EDITORIAL_ACTIONS,
     }
     patterns["open_lid"] += r"|(?:打开|拧开|旋开|揭开)[^，。；！？,;.!?]*?盖|旋开"
     patterns["close_lid"] += r"|合上[^，。；！？,;.!?]*?盖|盖上|关盖"
@@ -67,6 +75,8 @@ def action_observed(candidate, action, line):
         return True
     if candidate["kind"] != "video":
         return False
+    if action in EDITORIAL_ACTIONS:
+        return False  # Requires manual selection; neither tags nor prose prove a complete action.
     if action == "fold":
         return supports_action(candidate, line)
     events = candidate.get("motion_check", {}).get("events", [])

@@ -25,18 +25,16 @@ PROFILES = {
 
 def alternatives(product, facts, brief, *, assets=None, constraints=None):
     brief = Brief.model_validate(brief or {}).model_dump()
+    assets, constraints = assets or [], constraints or {}
     basis = signature(
         {
-            "version": 1,
+            "version": 2,
             "revision": product["revision"],
             "review": product["current_review_id"],
             "facts": facts,
             "brief": brief,
-            **(
-                {"material_assets": assets, "constraints": constraints}
-                if constraints and constraints.get("material_checks")
-                else {}
-            ),
+            "material_assets": assets,
+            "constraints": constraints,
         }
     )
     classified = []
@@ -44,8 +42,24 @@ def alternatives(product, facts, brief, *, assets=None, constraints=None):
         job = {"script": fact["text"]}
         classified.append((i, fact, strategy(job, 0, {"kind": "video"})["kind"]))
     result = []
+    from .generation import compose_directed
+    from .readiness import check_materials
+
+    availability = check_materials([f["text"] for f in facts], assets, constraints=constraints)
+    availability_rank = {"suggestion": 0, "unknown": 1, "gap": 2}
     for key, (name, hook, order) in PROFILES.items():
-        ordered = sorted(classified, key=lambda f: (order.index(f[2]), f[0]))[:6]
+        if key == "overview":
+            hook = compose_directed(facts, brief)[0]["text"]
+        if key == "scene" and not any(a["kind"] == "video" for a in assets):
+            hook = "别急着下结论，先把产品看清。"
+        ordered = sorted(
+            classified,
+            key=lambda f: (
+                availability_rank[availability["lines"][f[0]]["status"]],
+                order.index(f[2]),
+                f[0],
+            ),
+        )[:6]
         rows = [{"text": hook, "fact_ids": [], "intent": "hook", "brief": brief}]
         rows += [{"text": f["text"], "fact_ids": [f["id"]]} for _, f, _ in ordered]
         rows += [{"text": "请结合自己的使用需求选择。", "fact_ids": [], "intent": "closing"}]
@@ -67,14 +81,11 @@ def alternatives(product, facts, brief, *, assets=None, constraints=None):
                 "human_confirmation_required": True,
             }
         )
-        if constraints and constraints.get("material_checks"):
-            from .material_suitability import check_materials, fit_summary
+    from .production_proposals import enrich_candidates
 
-            result[-1]["material_fit"] = fit_summary(
-                check_materials(job["script"].splitlines(), assets or [], constraints=constraints)
-            )
+    enrich_candidates(result, product, brief, assets, constraints, facts)
     return {
-        "version": 1,
+        "version": 2,
         "basis": basis,
         "revision": product["revision"],
         "brief": brief,

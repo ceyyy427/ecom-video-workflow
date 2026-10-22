@@ -81,12 +81,12 @@ def probe(path):
         raise ValueError("媒体无法解析或处理超时，请重新导出标准媒体文件") from exc
 
 
-def inspect_media(path, kind):
+def inspect_media(path, kind, *, max_bytes=MAX_UPLOAD):
     path = Path(path)
     if kind not in EXTENSIONS or path.suffix.lower() not in EXTENSIONS[kind]:
         raise ValueError("不支持的文件格式")
-    if not 0 < path.stat().st_size <= MAX_UPLOAD:
-        raise ValueError("单文件须大于 0 且不超过 100 MiB")
+    if not 0 < path.stat().st_size <= max_bytes:
+        raise ValueError(f"单文件须大于 0 且不超过 {max_bytes // 1024**2} MiB")
     if kind == "image":
         try:
             with Image.open(path) as img:

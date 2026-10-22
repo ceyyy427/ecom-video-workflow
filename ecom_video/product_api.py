@@ -231,16 +231,30 @@ def router(root, store):
             customer = c.execute(
                 "SELECT 1 FROM customer_projects WHERE product_id=?", (pid,)
             ).fetchone()
-        assets, constraints = (
-            material_inputs(Customers(root, store).get(pid)) if customer else ([], {})
-        )
-        return alternatives(
+        project = Customers(root, store).get(pid) if customer else None
+        assets, constraints = material_inputs(project) if project else ([], {})
+        bundle = alternatives(
             p,
             products.confirmed_facts(p),
             data.brief.model_dump(),
             assets=assets,
             constraints=constraints,
         )
+        if project:
+            from .creative import signature
+            from .production_proposals import analysis_basis
+
+            bundle["customer_revision"] = project["revision"]
+            bundle["material_analysis"] = analysis_basis(project["media"])
+            bundle["basis"] = signature(
+                {
+                    "proposal": bundle["basis"],
+                    "customer_revision": project["revision"],
+                    "settings": project["settings"],
+                    "material_analysis": bundle["material_analysis"],
+                }
+            )
+        return bundle
 
     @routes.post("/{pid}/scripts/alternatives/adopt", status_code=201)
     def adopt_alternative(pid: str, data: AdoptAlternative):
@@ -248,8 +262,15 @@ def router(root, store):
         if bundle["basis"] != data.basis:
             raise Conflict("备选稿依据已变化，请重新生成比较后采用")
         chosen = next(c for c in bundle["candidates"] if c["id"] == data.candidate_id)
+        from .production_proposals import ProposalGuard
+
+        guard = (
+            ProposalGuard(pid, bundle["customer_revision"], bundle["material_analysis"])
+            if "customer_revision" in bundle
+            else None
+        )
         return products.save_draft(
-            pid, data.revision, chosen["payload"], "alternative-" + data.candidate_id
+            pid, data.revision, chosen["payload"], "alternative-" + data.candidate_id, receipt=guard
         )
 
     @routes.post("/{pid}/scripts", status_code=201)

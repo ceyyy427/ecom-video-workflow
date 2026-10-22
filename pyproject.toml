@@ -1,6 +1,6 @@
 [project]
 name = "ecom-video-workflow"
-version = "0.13.1"
+version = "0.16.0"
 description = "Local, reviewable ecommerce video production workflow"
 requires-python = ">=3.11"
 dependencies = [

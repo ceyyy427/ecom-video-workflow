@@ -18,7 +18,7 @@
     const facts=!!product.current_review_id;
     const script=(product.script_approvals || []).some(a=>a.draft_id === product.current_draft_id);
     const selected=p.recommendations?.options?.find(o=>o.id === state.selected);
-    const savedStyle=!!job?.storyboard && !changed && !p.iteration?.style_confirm_needed;
+    const savedStyle=!!job?.storyboard && !changed && !p.iteration?.style_confirm_needed && (!p.delivery_reviews?.enabled || !!p.delivery_reviews.storyboard);
     const heard=p.alignment?.status === 'confirmed' && !changed;
     const reviewed=job?.status === 'ready' && !changed;
     const checks=[check(facts?'已确认事实':'待确认事实',facts?'done':'pending'),

@@ -86,6 +86,9 @@ class BodyLimit:
             if scope["path"] == "/api/maintenance/import"
             else 32 * 1024**2
             if scope["path"] == "/api/maintenance/packages"
+            else 513 * 1024**2
+            if scope["path"].startswith("/api/customer-projects/")
+            and scope["path"].endswith("/assets")
             else MAX_UPLOAD + 1024**2
             if scope["path"].endswith("/assets")
             else (
@@ -142,7 +145,7 @@ def create_app(root):
     root = Path(root).resolve()
     root.mkdir(parents=True, exist_ok=True)
     store = Store(root / "workflow.db")
-    app = FastAPI(title="电商视频工作台 P10", version="0.13.1", docs_url=None, redoc_url=None)
+    app = FastAPI(title="剪序 · 电商视频工作台", version="0.16.0", docs_url=None, redoc_url=None)
     app.state.store = store
     app.state.qianchuan = QianchuanTasks(root, store)
     token = secrets.token_urlsafe(32)

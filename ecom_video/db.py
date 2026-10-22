@@ -287,6 +287,7 @@ class Store:
                     b["music_id"],
                     b["narration"]["asset_id"],
                 ]
+                used += [cut["asset_id"] for shot in b["shots"] for cut in shot.get("source_cuts") or []]
                 if aid in used:
                     raise Conflict("素材已被分镜引用，请先修改并保存分镜")
             row = c.execute(
@@ -310,7 +311,7 @@ class Store:
                 raise Conflict("当前任务不可提交")
             from .customer import validate_customer_submission
 
-            validate_customer_submission(c, j)
+            delivery_reviews = validate_customer_submission(c, j)
             from .experiments import validate_experiment_submission
 
             validate_experiment_submission(c, j)
@@ -348,6 +349,7 @@ class Store:
             if provenance and provenance["script_approval"]["script_hash"] != digest:
                 raise Conflict("脚本与确认记录不一致")
             snapshot = {
+                **({"delivery_reviews": delivery_reviews} if delivery_reviews else {}),
                 "storyboard": board,
                 "alignment": alignment,
                 "storyboard_revision": j["storyboard_revision"],
@@ -514,6 +516,10 @@ class Store:
                 "SELECT 1 FROM artifacts WHERE job_id=? AND kind='video'", (jid,)
             ).fetchone():
                 raise Conflict("缺少可复核成片")
+            from .delivery_revision import review_state as shot_review_state
+            shot_reviews = shot_review_state(c, dict(j))
+            if decision == "ready" and shot_reviews["enabled"] and not shot_reviews["all_passed"]:
+                raise Conflict("逐镜审核尚有待核对或需修改的镜头，请完成后再审核成片")
             now = time.time()
             c.execute(
                 "INSERT INTO reviews(job_id,decision,reviewer,note,checklist_confirmed,script_hash,created_at) VALUES(?,?,?,?,?,?,?)",

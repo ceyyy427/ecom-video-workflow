@@ -548,6 +548,9 @@ class ShotVoice:
                 mapping[asset["id"]] = new_voice["id"]
                 for shot in b["shots"]:
                     shot["asset_id"] = mapping[shot["asset_id"]]
+                from .delivery_plan import remap_cuts
+
+                remap_cuts(b, mapping)
                 if b["music_id"]:
                     b["music_id"] = mapping[b["music_id"]]
                 b["narration"]["asset_id"] = new_voice["id"]

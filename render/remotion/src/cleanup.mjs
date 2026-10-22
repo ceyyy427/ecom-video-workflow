@@ -25,6 +25,11 @@ export async function closeRenderBrowser(browser, timeoutMs=5000) {
    throw new AggregateError([error,stopError],'渲染器关闭失败，结束自有进程失败',{cause:error});
   } finally {browser.disconnect();}
   throw error;
+ } finally {
+  // Pinned runner releases only its own process/stdio/transport references.
+  // Chrome's detached crashpad/updater can inherit stderr after Chrome exits.
+  // Do this after shutdown, never force exit(0) or touch other app processes.
+  browser.runner?.forgetEventLoop?.();
  }
 }
 export async function withRenderBrowser(browser, render) {

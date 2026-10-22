@@ -11,6 +11,11 @@ from .storyboard import default_board, validate_board
 
 
 def plan_board(job, settings, style_id, alignment=None):
+    from .creative_proposals import execution_plan
+    from .semantic_mix import DETAIL
+    from .spoken_copy import PREFIXES
+
+    joint = execution_plan(job)
     rec = recommend_saved(job, settings["brief"])
     style = next((s for s in rec["options"] if s["id"] == style_id), None)
     if not style:
@@ -42,8 +47,13 @@ def plan_board(job, settings, style_id, alignment=None):
     if any(not 1 <= t <= 15 for t in durations) or sum(durations) > 120:
         raise ValueError("每镜须为1–15秒、总长不超过120秒，请按语义拆分或合并文稿后重新确认")
     visuals = [a for a in job["assets"] if a["kind"] != "audio"]
+    if settings.get("delivery_version"):
+        from .delivery_plan import identity_matches
+
+        board["delivery"] = {"version": 1, "caption_policy": "pause-v1", "identity_lock": settings.get("identity_lock")}
+        visuals = [a for a in visuals if identity_matches(a, settings.get("identity_lock"))]
     if not visuals:
-        raise ValueError("请至少上传一份商品画面")
+        raise ValueError("请至少上传一份符合款式/配色限制并人工核对的商品画面")
     evidence = [
         a
         for a in visuals
@@ -83,7 +93,8 @@ def plan_board(job, settings, style_id, alignment=None):
                 raise ValueError("动作词对齐需要配音；纯展示请关闭动作对齐，仍可保留同款核对")
             constraints["anchors"] = voice_anchors(lines, durations, alignment)
         decisions, matching_model = select(
-            {**job, "matching_constraints": constraints}, durations, mode
+            {**job, "assets": visuals + [a for a in job["assets"] if a["kind"] == "audio"],
+             "matching_constraints": constraints}, durations, mode
         )
     counts = {a["id"]: 0 for a in visuals}
     notes = (
@@ -185,9 +196,22 @@ def plan_board(job, settings, style_id, alignment=None):
         # Preserve the complete real video frame; do not replace filmed action with a graphic crop.
         if asset["kind"] == "video":
             treatment = "footage"
-        headline = next((s.strip() for s in re.split("[，。！？；：]", line) if s.strip()), line)[
-            :8
-        ]
+        headline_line = line
+        if joint:
+            for prefix in PREFIXES:
+                if line.startswith(prefix):
+                    headline_line = line[len(prefix) :]
+                    break
+        headline = next(
+            (s.strip() for s in re.split("[，。！？；：]", headline_line) if s.strip()),
+            headline_line,
+        )
+        if joint and len(headline) > 8:
+            # Existing semantic labels are complete source substrings; never cut a noun.
+            detail = DETAIL.search(headline)
+            headline = detail.group() if detail else ""
+        else:
+            headline = headline[:8]
         shot.update(
             shot_id=f"shot-{i + 1:03d}",
             asset_id=asset["id"],

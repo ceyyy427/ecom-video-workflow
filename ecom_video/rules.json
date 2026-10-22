@@ -1,5 +1,5 @@
 {
-  "version": "p0-2026-10-14.1",
+  "version": "p0-2026-10-20.2",
   "description": "工程示例规则集，仅预检脚本文字；并非完整广告法规或平台规则库。",
   "rules": [
     {"id":"medical-cure","severity":"block","terms":["根治","包治百病","治愈疾病"],"reason":"包含治疗或根治承诺","suggestion":"删除未经证实的治疗承诺，补充产品资质并人工核验。"},

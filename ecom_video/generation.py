@@ -114,6 +114,8 @@ def compose(facts, selection=None, hook="intro"):
 
 
 def validate_scenes(scenes, facts):
+    from .spoken_copy import NEUTRAL as SPOKEN_NEUTRAL
+    from .spoken_copy import bounded
     if not isinstance(scenes, list) or not 1 <= len(scenes) <= 30:
         raise ValueError("脚本须为 1–30 镜")
     by_id = {f["id"]: f for f in facts}
@@ -139,13 +141,15 @@ def validate_scenes(scenes, facts):
             or any(i not in by_id for i in ids)
         ):
             raise ValueError("脚本引用了未确认事实")
-        if not ids and text not in NEUTRAL | DIRECTED_NEUTRAL:
+        if not ids and text not in NEUTRAL | DIRECTED_NEUTRAL | SPOKEN_NEUTRAL:
             raise ValueError("产品描述必须选择已确认事实作为来源")
         attribution = (
             "neutral"
             if not ids
             else "exact_quote"
             if len(ids) == 1 and text == by_id[ids[0]]["text"]
+            else "bounded_spoken"
+            if len(ids) == 1 and bounded(text, by_id[ids[0]]["text"])
             else "human_rewrite"
         )
         saved = {"text": text, "fact_ids": ids, "attribution": attribution}

@@ -125,7 +125,9 @@ def layout_captions(captions, font_size, color, max_width=912, *, font=None):
 
 def prepare_captions(props):
     """Shared film/preview entry point; upstream does not change phrase timing."""
-    from .captions import phrases
+    from .captions import pause_phrases, phrases
+
+    paging = pause_phrases if props.get("captionPolicy") == "pause-v1" else phrases
 
     color = (
         props["brand"]["paper"]
@@ -145,7 +147,7 @@ def prepare_captions(props):
         else props["brand"]["ink"]
     )
     return layout_captions(
-        phrases(props["text"], props["words"], props["voiceStart"], props["voiceEnd"]),
+        paging(props["text"], props["words"], props["voiceStart"], props["voiceEnd"]),
         props["brand"]["subtitle_size"],
         color,
     )

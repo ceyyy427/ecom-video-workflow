@@ -18,6 +18,16 @@ function project() {
     settings:{brief:{format:'narrated'}}, recommendations:null, job:null, alignment:null};
 }
 
+test('planned delivery board stays pending until final human style confirmation',()=>{
+ const p=project();p.job={id:'new',status:'draft',storyboard:{shots:[],creative:{style_id:'cinema'}},artifacts:[]};
+ p.delivery_reviews={enabled:true,direction:{reviewer:'editor'},storyboard:null};
+ let result=summarize({project:p,selected:'cinema'});
+ assert.equal(result.checks[2].state,'pending');
+ p.delivery_reviews.storyboard={reviewer:'editor'};
+ result=summarize({project:p,selected:'cinema'});
+ assert.equal(result.checks[2].state,'done');
+});
+
 test('empty state does not invent a saved project or media', () => {
   const r = summarize({});
   assert.equal(r.title, '新建商品项目');
@@ -149,7 +159,7 @@ test('actual three-direction renderer keeps warnings visible and details outside
   const functionSource=source.slice(source.indexOf('function paintDirections()'),source.indexOf('async function showPreviews()'));
   const context={p,selected:'',previews:{},settingsDirty:false,$:id=>d.getElementById(id),
     node:(tag,text,cls)=>{const e=new Element();e.tagName=tag;e.textContent=text;e.className=cls;return e;},
-    active:()=>false,paintPromptMatches:()=>{},paintWorkspace:()=>{},paintVolcVoice:()=>{},localStorage:{setItem:()=>{}}};
+    active:()=>false,paintPromptMatches:()=>{},paintWorkspace:()=>{},paintVolcVoice:()=>{},paintDeliveryReviews:()=>{},localStorage:{setItem:()=>{}}};
   vm.runInNewContext(functionSource,context);context.paintDirections();
   assert.equal(d.getElementById('directions').children.length,3);
   for(const option of d.getElementById('directions').children){

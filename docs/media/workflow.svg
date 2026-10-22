@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="240" viewBox="0 0 1200 240" role="img" aria-label="剪序工作流程示意：商品与素材、确认文稿、风格与听核、逐镜制作、审核导出、冻结复盘">
+<rect width="1200" height="240" fill="#f0f3ef"/>
+<g font-family="sans-serif" fill="#20382b"><text x="40" y="50" font-size="24" font-weight="600">让商品讲清楚，也让每次修改有据可查。</text><text x="40" y="80" font-size="14">剪序 · 工作流程示意</text></g>
+<path d="M40 141H1160" stroke="#afc0b2" stroke-width="2"/>
+<g fill="#20382b" font-family="sans-serif" font-size="18">
+<text x="40" y="131">商品与素材</text><text x="235" y="131">确认文稿</text><text x="425" y="131">风格与听核</text><text x="630" y="131">逐镜制作</text><text x="825" y="131">审核导出</text><text x="1020" y="131">冻结复盘</text>
+</g><g fill="#54665a" font-family="sans-serif" font-size="13"><text x="40" y="173">资料 / 实拍 / 同款配色</text><text x="235" y="173">来源 / 口语稿 / 人工确认</text><text x="425" y="173">三套方向 / 试听</text><text x="630" y="173">选段 / 字幕 / 版本</text><text x="825" y="173">完整看听 / 成果包</text><text x="1020" y="173">投后数据 / 下一版假设</text></g>
+<text x="40" y="211" font-family="sans-serif" font-size="13" fill="#54665a">本机模型优先 · 人工确认保留 · 客户自行投放</text></svg>

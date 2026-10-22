@@ -23,8 +23,8 @@ const productBase = () => '/products/' + p.id;
 const version = () => ({ revision: p.revision, job_id: p.job.id, board_revision: p.job.storyboard_revision });
 const active = () => p?.job && ['queued', 'validating', 'rendering', 'auditing'].includes(p.job.status);
 function dirty() { return settingsDirty || scriptDirty || shotEdits.size > 0 || mediaEdits.size > 0; }
-function paintWorkspace() { window.CustomerWorkspace?.update({project:p,selected,previews,dirty:dirty(),busy,editStep:scriptDirty?'step2':settingsDirty||mediaEdits.size?'step1':'step4'}); }
-function controls() { $('projectControls').disabled = busy; $('work').disabled = busy || !p; paintVolcVoice(); paintWorkspace(); }
+function paintWorkspace() { const state={project:p,selected,previews,pendingShots:Object.fromEntries(shotEdits),dirty:dirty(),busy,editStep:scriptDirty?'step2':settingsDirty||mediaEdits.size?'step1':'step4'}; window.CustomerWorkspace?.update(state); window.CustomerEditor?.update(state); }
+function controls() { paintDeliveryReviews(); $('projectControls').disabled = busy; $('work').disabled = busy || !p; paintVolcVoice(); paintWorkspace(); }
 async function run(fn) { if (busy)
     return; busy = true; controls(); try {
     await fn();
@@ -37,12 +37,12 @@ finally {
     controls();
     schedule();
 } }
-function setSettings() { const s = p.settings;
+function setSettings() { const s = p.settings; paintDeliverySettings();
     $('motionRepeatLimit').value = s.motion_repeat_limit || 2;
     $('productReference').replaceChildren(option('', '选择一张清楚的商品参照图'), ...p.media.filter(a=>a.kind==='image').map(a=>option(a.id,a.name)));
     $('materialChecks').checked=!!s.material_checks; $('productReference').value=s.product_reference_id||''; $('referenceOnly').checked=!!s.reference_only; $('strictProduct').checked=!!s.strict_product; $('actionTiming').checked=!!s.action_timing; $('autoSelect').checked=!!s.auto_select; $('format').value = s.brief.format; $('brandName').value = s.brand_name; for (const k of ['category', 'audience', 'tone'])
     $(k).value = s.brief[k]; $('reviewContext').value = s.review_context; }
-function settings() { return { ...p.settings, motion_repeat_limit:Number($('motionRepeatLimit').value), auto_select:$('autoSelect').checked, material_checks:$('materialChecks').checked, reference_only:$('referenceOnly').checked, strict_product:$('strictProduct').checked, action_timing:$('actionTiming').checked, product_reference_id:$('productReference').value||null, brief: { format: $('format').value, category: $('category').value, audience: $('audience').value, tone: $('tone').value }, brand_name: $('brandName').value, review_context: $('reviewContext').value }; }
+function settings() { return { ...p.settings, ...deliverySettings(), motion_repeat_limit:Number($('motionRepeatLimit').value), auto_select:$('autoSelect').checked, material_checks:$('materialChecks').checked, reference_only:$('referenceOnly').checked, strict_product:$('strictProduct').checked, action_timing:$('actionTiming').checked, product_reference_id:$('productReference').value||null, brief: { format: $('format').value, category: $('category').value, audience: $('audience').value, tone: $('tone').value }, brand_name: $('brandName').value, review_context: $('reviewContext').value }; }
 function adopt(next, { reset = false } = {}) {
     const changedProject = reset || p?.id !== next.id, changedProduct = changedProject || p?.product.revision !== next.product.revision;
     if (changedProject) {
@@ -102,6 +102,8 @@ async function loadProject(id) { clearTimeout(timer); adopt(await api('/customer
 }
 function sourceLink(source, locator) { const a = node('a', `${source?.file_name || '资料'} / ${locator}`); a.href = `/api/products/${p.id}/sources/${source.id}`; a.target = '_blank'; a.rel = 'noopener'; return a; }
 function paintMedia() {
+    const preflight=$('intakePreflight');
+    if(preflight)preflight.replaceChildren(...(window.CustomerProduction?.intakeLines(p.intake_preflight)||[]).map(t=>node('p',t)));
     $('sourceList').replaceChildren();
     for (const s of p.product.sources) {
         const row = node('p');
@@ -120,6 +122,7 @@ function paintMedia() {
             media.preload = 'metadata';
         }
         card.append(media, node('strong', a.name));
+        if(a.metadata.intake){const original=node('a','下载保留的原件');original.href=`/api/customer-projects/${p.id}/assets/${a.id}/original`;card.append(original);}
         const role = node('select');
         for (const [value, title] of Object.entries(roles))
             if ((a.kind === 'audio') === (value === 'voice' || value === 'music'))
@@ -144,15 +147,15 @@ function paintMedia() {
         note.maxLength = 500;
         note.placeholder = '内容或测试来源说明';
         note.setAttribute('aria-label', a.name + ' 来源说明');
-        card.append(note);
+        card.append(note); identityEditor(card,a);
         for (const input of [role, start, note])
-            input.oninput = () => mediaEdits.set(a.id, { role: role.value, source_in: Number(start.value), note: note.value });
+            input.oninput = () => mediaEdits.set(a.id, { role: role.value, source_in: Number(start.value), note: note.value, identity:readIdentity(card) });
         const save = node('button', '保存用途', 'secondary');
         save.type = 'button';
-        save.onclick = () => run(async () => { const next = await api(base() + '/assets/' + a.id, { method: 'PUT', body: JSON.stringify({ revision: p.revision, role: role.value, source_in: Number(start.value), note: note.value }) }); mediaEdits.delete(a.id); adopt(next); message('素材用途已保存。已有成片保留；新分镜按更新后的素材准备。'); });
+        save.onclick = () => run(async () => { const next = await api(base() + '/assets/' + a.id, { method: 'PUT', body: JSON.stringify({ revision: p.revision, role: role.value, source_in: Number(start.value), note: note.value, identity:readIdentity(card) }) }); mediaEdits.delete(a.id); adopt(next); message('素材用途已保存。已有成片保留；新分镜按更新后的素材准备。'); });
         const remove = node('button', '移除', 'secondary');
         remove.type = 'button';
-        remove.onclick = () => run(async () => { const next = await api(base() + '/assets/' + a.id, { method: 'DELETE', body: JSON.stringify({ revision: p.revision }) }); mediaEdits.delete(a.id); adopt(next); message('已从项目素材库移除，历史成片的素材快照仍保留。'); });
+        remove.onclick = () => run(async () => { const next = await api(base() + '/assets/' + a.id, { method: 'DELETE', body: JSON.stringify({ revision: p.revision }) }); mediaEdits.delete(a.id); adopt(next); message('已从素材库移除，未被制作版本引用的原件同步清理；历史版本及其原件仍保留。'); });
         card.append(save, remove);
         paintContentAnalysis(a,card);
         $('mediaList').append(card);
@@ -177,7 +180,7 @@ function paintFacts() {
     $('factsChecked').checked = false;
 }
 function currentDraft() { return p.product.script_drafts.find(d => d.id === p.product.current_draft_id); }
-function paintScript() { if(scriptAlternatives && scriptAlternatives.revision!==p.product.revision){scriptAlternatives=null;$('scriptAlternatives').replaceChildren();} const draft = currentDraft(); scenes = (draft?.payload || []).map(s => ({ text: s.text, fact_ids: [...s.fact_ids] })); $('scriptPanel').hidden = !p.product.current_review_id; renderScenes(); $('scriptChecked').checked = false; const approval = p.product.script_approvals.find(a => a.draft_id === draft?.id); $('approvedHint').textContent = approval ? `当前文稿已由 ${approval.reviewer} 确认。修改后需要再次确认。` : ''; $('prepare').disabled = !approval; }
+function paintScript() { paintCreativePlan(); if(scriptAlternatives && scriptAlternatives.revision!==p.product.revision){scriptAlternatives=null;$('scriptAlternatives').replaceChildren();} const draft = currentDraft(); scenes = (draft?.payload || []).map(s => ({ text: s.text, fact_ids: [...s.fact_ids] })); $('scriptPanel').hidden = !p.product.current_review_id; renderScenes(); $('scriptChecked').checked = false; const approval = p.product.script_approvals.find(a => a.draft_id === draft?.id); $('approvedHint').textContent = approval ? `当前文稿已由 ${approval.reviewer} 确认。修改后需要再次确认。` : ''; $('prepare').disabled = !approval; }
 function renderScenes() {
     $('scriptScenes').replaceChildren();
     const review = p.product.fact_reviews.find(r => r.id === p.product.current_review_id);
@@ -227,8 +230,9 @@ function paintDirections() {
             extra.append(node('small', '已上传配音保留原声与时长；合成语气/语速需先试听。自动选段需开启并完成本机识别；素材不足会提示，不用无关画面凑齐。'));
         }
         if (s.material_fit) { const f=s.material_fit; card.append(node('p','素材适配：'+({needs_material:'需要补素材',unknown:'尚不能判断',possible_with_review:'有候选，待回看'}[f.status]||f.status)+' · 可候选 '+f.can_do.length+' 句 · 缺口 '+f.gap_count+' · 未知 '+f.unknown_count),node('small',f.note)); if(f.style_gap)extra.append(node('small',f.style_gap.message,'customer-warning')); for(const m of f.missing.slice(0,3))extra.append(node('small','第'+m.line+'句：'+m.message,'customer-warning')); }
+        if(s.production_readiness&&!s.material_fit){const r=s.production_readiness;extra.append(node('p',`素材检查：缺口 ${r.fit.gap_count} 句 · 未知 ${r.fit.unknown_count} 句；未识别不能视为可做。`));for(const w of r.inventory.warnings)extra.append(node('small',w,'customer-warning'));}
         if (s.missing?.length) card.append(node('small', s.missing.join('；'), 'customer-warning'));
-        card.onclick = () => { selected = s.id; localStorage.setItem('ecom.direction.'+p.id, JSON.stringify({basis:p.direction_basis, style:selected})); paintDirections(); paintVolcVoice(); };
+        card.onclick = () => { selected = s.id; localStorage.setItem('ecom.direction.'+p.id, JSON.stringify({basis:p.direction_basis, style:selected})); paintDirections(); paintVolcVoice(); paintDeliveryReviews(); };
         optionCard.append(card,extra);
         $('directions').append(optionCard);
     }
@@ -381,6 +385,7 @@ function paintShots() {
     const editable = job.status === 'draft', locked = active();
     b.shots.forEach((shot, i) => {
         const changes = shotEdits.get(shot.shot_id) || {}, current = { ...shot, ...changes }, row = node('article', undefined, 'customer-shot');
+        row.dataset.shotId = shot.shot_id;
         row.append(node('h3', `第 ${i + 1} 镜 · ${shot.duration.toFixed(2)} 秒`));
         const view = node('div', undefined, 'shot-preview'), asset = (editable?job.assets.find(a=>a.id===current.asset_id):(changes.media_id?p.media.find(a=>a.id===changes.media_id):null))||job.assets.find(a=>a.id===shot.asset_id), media = node(asset.kind === 'image' ? 'img' : 'video');
         media.src = !editable&&changes.media_id?`/api/customer-projects/${p.id}/assets/${asset.id}`:`/api/jobs/${job.id}/assets/${asset.id}`;
@@ -416,8 +421,15 @@ function paintShots() {
             select.prepend(option('', '保留当前画面'));
             select.value = '';
         }
-        field(grid, `第 ${i + 1} 镜素材入点`, current.source_in, 'number', null, v => {mark('source_in', v);clearVisualGuards();});
+        const primaryIn=field(grid, `第 ${i + 1} 镜素材入点`, current.source_in, 'number', null, v => {mark('source_in', v);clearVisualGuards();});
+        if(current.source_cuts?.length){
+            select.disabled=true;primaryIn.disabled=true;
+            select.title=primaryIn.title='本镜使用多段实拍，请在“同一句的实拍分段与完整动作”中修改素材和入点；移除所有分段后可恢复单段编辑。';
+            grid.append(node('small',select.title));
+        }
         field(grid, `第 ${i + 1} 镜字卡`, current.headline, 'text', null, v => mark('headline', v));
+        const note=field(grid, '画面小字（不读出，最多40字）', current.caption_note || '', 'text', null, v => mark('caption_note', v));
+        note.maxLength=40;
         const direction = p.recommendations?.options?.find(s=>s.id===b.creative?.style_id) || p.recommendations?.options?.[0];
         const recipes = direction?.motion?.choices || [];
         if (recipes.length) {
@@ -438,6 +450,7 @@ function paintShots() {
         const guardLabel=node('label',`第 ${i + 1} 镜保护区间（本镜秒数）`), ranges=node('input'); ranges.type='text';ranges.maxLength=200;ranges.placeholder='例如 0.20-1.50; 2.10-2.80';ranges.value=motionPlan.windows.map(w=>w.start.toFixed(2)+'-'+w.end.toFixed(2)).join('; ');ranges.setAttribute('aria-label',`第 ${i + 1} 镜保护区间`);
         ranges.onchange=()=>{try{const windows=ranges.value.trim()?ranges.value.split(';').map(part=>{const m=part.trim().match(/^(\d+(?:\.\d+)?)\s*-\s*(\d+(?:\.\d+)?)$/);if(!m)throw Error('保护区间请用 起点-终点; 起点-终点');const start=Number(m[1]),end=Number(m[2]);if(start>=end||end>shot.duration+.001)throw Error('保护区间须在本镜时长内，结束晚于开始');return {start,end,basis:'manual'};}):[];if(windows.length>8)throw Error('每镜最多8个保护区间');ranges.setCustomValidity('');markMotion('windows',windows);}catch(e){ranges.setCustomValidity(e.message);ranges.reportValidity();message(e.message,true);}};
         guardLabel.append(ranges);grid.append(guardLabel);
+        cutEditor(form,current,shot,i,editable?mark:(k,v)=>{if(k!=='asset_id')mark(k,v);});
         form.append(node('small', motionPlan.windows.length ? `动作区间来源：${[...new Set(motionPlan.windows.map(w=>({manual:'手动标记',analysis:'本机分析建议（待核对）',voice_hint:'口播词提示（未核验实拍）'}[w.basis]||'待核对')))].join('、')}。` : '尚无动作保护区间。可手动填写；开启动作对齐可使用本机分析建议，仍须播放核对。'));
         for (const [key, label, values] of [['motion', '运镜', [['static', '固定 / 保留实拍'], ['push', '缓慢推近'], ['pull', '缓慢拉远'], ['pan_left', '向左移动'], ['pan_right', '向右移动']]], ['fit', '画幅', [['contain', '完整显示'], ['cover', '铺满画面']]], ['treatment', '编排', [['hero', '开场露出'], ['macro', '细节聚焦'], ['split', '双窗观察'], ['context', '场景展开'], ['footage', '实拍全画幅'], ['end', '收尾停留'], ['auto', '自动']]], ['transition', '转场', [['cut', '直接切接'], ['wipe', '遮罩擦拭'], ['iris', '开幕露出'], ['push-stack', '底边推叠（品牌底色衔接）'], ['line-carry', '线条接力'], ['media-pass', '媒体前景交接']]]]) {
             const input = field(grid, `第 ${i + 1} 镜${label}`, current[key], 'select', values, v => mark(key, v));
@@ -454,17 +467,20 @@ function paintShots() {
             input.max = '1';
         }
         form.append(grid, node('small', '字卡最多8字，须摘自本镜已确认文稿；配方只改变呈现，字幕仍跟随原配音。细节框使用下方焦点，须人工核对；选择“静止留看”可关闭额外动效。成片单镜修订保留原转场与其他镜头。'));
+        form.append(node('p',window.CustomerProduction?.editImpact(shotEdits.get(shot.shot_id)||{})||'视觉修改保留配音；新版仍需审片。','customer-safety-note'));
         const button = node('button', editable ? '保存这一镜' : '仅修改此镜并生成新版');
         button.type = 'button';
         button.onclick = () => { if ([ranges, delay].every(input => input.reportValidity())) run(() => saveShot(shot.shot_id)); };
         form.append(button);
+        window.CustomerEditor?.compactShot(form);
         row.append(form);
         candidatePicker(row,shot,i,editable,locked);
         paintShotVoice(row,shot,i);
         $('shotList').append(row);
     });
+    window.CustomerEditor?.refreshShots();
 }
-async function saveShot(id) {
+async function applyShot(id) {
     const changes = shotEdits.get(id);
     if (!changes || !Object.keys(changes).length)
         throw Error('请先修改这一镜的参数');
@@ -481,13 +497,14 @@ async function saveShot(id) {
         await api('/jobs/' + p.job.id + '/storyboard', { method: 'PUT', body: JSON.stringify({ revision: p.job.storyboard_revision, board: b }) });
         shotEdits.delete(id);
         adopt(await api(base()));
-        message('这一镜已保存。其他镜头未改动。');
+        message('镜头参数已保存；转场可能影响邻镜，请按影响预告核对并重新确认分镜。');
     }
     else {
         const payload = { ...version(), shot_id: id, request_id: crypto.randomUUID(), changes };
         const next = await post(base() + '/revise-shot', payload);
         shotEdits.delete(id);
         adopt(next);
+        if(p.delivery_reviews?.enabled&&!p.delivery_reviews.storyboard){message('已创建只修改此镜的待确认版本。请核对并确认最终分镜风格，再生成；原版保留。');return;}
         adopt(await post(base() + '/submit', version()));
         message('已创建只修改此镜的新版本，正在生成；原版保留。');
     }
@@ -498,7 +515,7 @@ function paintResult() {
     $('projectState').textContent = p.product.title + ' · 修订 ' + p.revision;
     $('jobState').textContent = job ? statuses[job.status] || job.status : '等待选定风格';
     $('inputChanged').hidden = !p.inputs_changed;
-    $('render').disabled = !job?.storyboard || job.status !== 'draft' || p.inputs_changed || !!p.iteration?.style_confirm_needed || (p.settings.brief.format !== 'showcase' && p.alignment?.status !== 'confirmed');
+    $('render').disabled = (p.delivery_reviews?.enabled&&!p.delivery_reviews.storyboard) || !job?.storyboard || job.status !== 'draft' || p.inputs_changed || !!p.iteration?.style_confirm_needed || (p.settings.brief.format !== 'showcase' && p.alignment?.status !== 'confirmed');
     $('cancelRender').hidden = !active();
     $('retryRender').hidden = job?.status !== 'failed';
     $('advanced').href = job ? '/?job=' + job.id : '/';
@@ -522,7 +539,23 @@ function paintResult() {
             a.href = `/api/jobs/${job.id}/artifacts/${kind}?download=true`;
             $('downloads').append(a);
         }
+    paintRevisionTools();
     paintCombinedAudit(job);
+    if (window.CustomerProduction && p.handoff_status) {
+        for (const text of window.CustomerProduction.handoffLines(p.handoff_status)) $('downloads').append(node('p', text));
+        if (p.handoff_status.export_available) {
+            const pack = node('button', p.handoff_status.approved_for_handoff ? '准备当前版本交付包' : '准备当前版本待审包', 'secondary');
+            pack.type = 'button';
+            pack.onclick = () => run(async () => {
+                const info = await post(base() + '/handoffs', version());
+                const a = node('a', '下载' + (info.approved_for_handoff ? '交付包' : '待审包') + ' ZIP');
+                a.href = info.download_url; a.download = info.filename;
+                $('downloads').append(a, node('small', 'SHA256：' + info.sha256));
+                message('成果包已冻结，点击链接下载。没有更改原任务或审批；请另存并保留业务备份。');
+            });
+            $('downloads').append(pack);
+        }
+    }
     $('reviewPanel').hidden = !job || job.status !== 'needs_review';
     $('versions').replaceChildren(node('h3', '已保存的制作版本'));
     for (const v of p.versions) {
@@ -531,6 +564,10 @@ function paintResult() {
         a.target = '_blank';
         a.rel = 'noopener';
         $('versions').append(a);
+        if(p.job && v.id!==p.job.id){
+            const compare=node('button','与当前版对比','secondary');compare.type='button';
+            compare.onclick=()=>run(()=>compareVersion(v.id));$('versions').append(compare);
+        }
     }
 }
 function schedule() { clearTimeout(timer); if (!p || !(active() || p.alignment?.status === 'running' || analysisPending()))
@@ -570,7 +607,7 @@ async function autoStart() { if (p.job.status !== 'draft' || p.inputs_changed)
     }
 } void showPreviews(); }
 $('createProject').onclick = () => run(async () => { if (dirty() && !confirm('有未保存修改，继续新建项目？'))
-    return; const next = await post('/customer-projects', { title: $('newTitle').value, settings: { material_checks:true, auto_select:true, reference_only:true, strict_product:true, action_timing:true, brief: { format: 'narrated' } } }); adopt(next, { reset: true }); await listProjects(); message('项目已创建。上传产品资料、商品画面和配音。'); });
+    return; const next = await post('/customer-projects', { title: $('newTitle').value, settings: { delivery_version:1, material_checks:true, auto_select:true, reference_only:true, strict_product:true, action_timing:true, brief: { format: 'narrated' } } }); adopt(next, { reset: true }); await listProjects(); message('项目已创建。上传产品资料、商品画面和配音。'); });
 $('projectSelect').onchange = () => run(async () => { const id = $('projectSelect').value; if (!id) {
     $('projectSelect').value = p?.id || '';
     return;
@@ -578,11 +615,13 @@ $('projectSelect').onchange = () => run(async () => { const id = $('projectSelec
     $('projectSelect').value = p.id;
     return;
 } await loadProject(id); });
-for (const id of ['format', 'brandName', 'category', 'audience', 'tone', 'motionRepeatLimit', 'reviewContext', 'autoSelect', 'referenceOnly', 'strictProduct', 'actionTiming', 'materialChecks', 'productReference'])
+for (const id of ['deliveryMode','identitySku','identityColor','format', 'brandName', 'category', 'audience', 'tone', 'motionRepeatLimit', 'reviewContext', 'autoSelect', 'referenceOnly', 'strictProduct', 'actionTiming', 'materialChecks', 'productReference'])
     $(id).oninput = () => { settingsDirty = true; paintDirections(); paintVolcVoice(); };
 $('saveSettings').onclick = () => run(async () => { const next = await api(base(), { method: 'PUT', body: JSON.stringify({ revision: p.revision, settings: settings() }) }); settingsDirty = false; adopt(next); await enqueueMissingAnalysis(); message('制作要求已保存。需要新版本时，使用已确认文稿继续制作。'); });
 async function uploads(input, role) { const files = Array.from(input.files || []); input.value = ''; for (const file of files) {
-    message('正在保存：' + file.name);
+    const video=/\.(mp4|mov|webm)$/i.test(file.name),limit=(video?512:100)*1048576;
+    if(!file.size||file.size>limit)throw Error(file.name+'：'+(video?'原始视频须为1字节至512 MiB':'图片/音频须为1字节至100 MiB'));
+    message('正在上传与预检：' + file.name+(video?'；必要时本机转正/转码，单份处理最多10分钟，请保持页面打开。原件保留。':''));
     const data = new FormData();
     data.append('revision', p.revision);
     data.append('role', role);
@@ -721,28 +760,58 @@ for(const [id,tags]of [['audience',['通勤上班族','年轻学生','首次购�
 }
 
 $('previewAlternatives').onclick=()=>run(async()=>{
- if(dirty())throw Error('先保存商品、人群、气质和文稿修改，再比较备选稿');
- const result=await post(productBase()+'/scripts/alternatives',{revision:p.product.revision,brief:p.settings.brief});
- scriptAlternatives=result;
- const box=$('scriptAlternatives');box.replaceChildren(node('p',result.method));
- for(const candidate of result.candidates){
-  const d=node('details');d.append(node('summary',candidate.name+' · '+candidate.payload.length+'句 · 待确认'));
-  const list=node('ol');candidate.payload.forEach((row,i)=>{
-   const li=node('li',row.text),plan=candidate.shot_strategies[i];
-   const sources=row.fact_ids.map(id=>p.product.facts.find(f=>f.id===id)?.locator||id).join('、');
-   li.append(node('small',' 来源：'+(sources||'中性引导语')+'；展示：'+plan.explanation));
-   if(plan.missing?.length)li.append(node('small',plan.missing.join('；'),'customer-warning'));
-   list.append(li);
-  });d.append(list);
-  if(candidate.material_fit){const f=candidate.material_fit;d.append(node('p','现有素材：候选 '+f.can_do.length+'句，缺口 '+f.gap_count+'句，未知 '+f.unknown_count+'句；镜长暂估，听核后重检。'));for(const m of f.missing)d.append(node('small','第'+m.line+'句：'+m.message,'customer-warning'));}
-  const use=node('button','采用这份备选，创建待确认稿');use.type='button';
-  use.onclick=()=>run(async()=>{
-   if(dirty()||active())throw Error('先保存修改并等待当前制作结束，再采用备选稿');
-   if(scriptAlternatives!==result || p.product.revision!==result.revision)throw Error('资料已变化，请重新比较备选稿');
-   await post(productBase()+'/scripts/alternatives/adopt',{revision:result.revision,brief:p.settings.brief,basis:result.basis,candidate_id:candidate.id});
-   scriptAlternatives=null;box.replaceChildren();adopt(await api(base()));
-   message('已创建待确认新稿。请核对事实与文稿，选定风格后重新准备对应配音和听核；旧版保留。');
-  });d.append(use);box.append(d);
- }
- message('三份备选稿已生成供比较；当前确认稿与配音没有替换。');
+ if(dirty()||active())throw Error('先保存修改并完成当前制作，再比较联合方案');
+ const result=await post(base()+'/creative-proposals',{revision:p.revision,product_revision:p.product.revision});
+ scriptAlternatives=result;paintCreativeBundle(result);
+ message('三套联合创意已生成供比较；当前确认稿与配音没有替换。');
+});
+
+$('delivery-direction-confirm').onclick=()=>run(()=>confirmDelivery('direction'));
+$('delivery-storyboard-confirm').onclick=()=>run(()=>confirmDelivery('storyboard'));
+
+async function saveShot(id) {
+    if(settingsDirty||scriptDirty||mediaEdits.size)throw Error('请先保存其他改动，再查看单镜影响');
+    const raw=shotEdits.get(id);if(!raw)throw Error('请先修改这一镜');
+    const changes=structuredClone(raw);
+    const stamp=JSON.stringify({v:version(),raw});
+    const impact=await post(base()+'/edit-impact',{...version(),shot_id:id,changes});
+    const panel=$('editImpact');panel.hidden=false;panel.replaceChildren(node('h4','保存前请核对影响范围'),node('p',impact.message),node('p','涉及镜头：'+impact.affected_shots.join('、')),node('p','后续需：'+impact.requires.join('、')),...impact.warnings.map(t=>node('p',t)));
+    const apply=node('button','按此范围保存修改');apply.type='button';apply.disabled=!impact.can_apply;
+    apply.onclick=()=>run(async()=>{if(stamp!==JSON.stringify({v:version(),raw:shotEdits.get(id)}))throw Error('编辑内容已变化，请重新预告');await applyShot(id);panel.hidden=true;});
+    const cancel=node('button','继续调整','secondary');cancel.type='button';cancel.onclick=()=>{panel.hidden=true;};panel.append(apply,cancel);panel.scrollIntoView({block:'nearest'});
+}
+function paintRevisionTools(){
+    const host=$('shotReviewTools');if(!host)return;
+    $('changeScope').textContent=[window.CustomerRevision.changeNotice('visual'),window.CustomerRevision.changeNotice('script'),window.CustomerRevision.changeNotice('voice')].join(' ');
+    const state=p.shot_reviews;host.replaceChildren(node('p',window.CustomerRevision.reviewSummary(state)));
+    $('acceptFilm').disabled=!!state?.enabled&&!state.all_passed;
+    if(p.job?.status!=='needs_review')return;
+    const reviewer=node('input');reviewer.maxLength=120;reviewer.placeholder='实际逐镜审核人';reviewer.setAttribute('aria-label','逐镜审核人');host.append(reviewer);
+    for(const item of state.shots){
+        const box=node('div',undefined,'source-card');box.append(node('h4',item.shot_id+' · '+(item.review?.decision==='pass'?'已检查':item.review?'需修改':'待检查')));
+        if(item.review)box.append(node('p',item.review.note+' · '+item.review.reviewer));
+        const reason=node('select');reason.setAttribute('aria-label',item.shot_id+'问题类型');
+        for(const [v,t]of Object.entries({checked:'已逐镜检查',product_visibility:'商品不清楚',action_mismatch:'动作不对应',caption_timing:'字幕时机',voice:'配音问题',facts:'事实或限定语',other:'其他'})){const opt=node('option',t);opt.value=v;reason.append(opt);}
+        const note=node('textarea');note.maxLength=1000;note.placeholder='具体秒数、问题或已核对的内容';note.setAttribute('aria-label',item.shot_id+'审核意见');
+        const check=node('input');check.type='checkbox';const label=node('label','已实际看听这一镜');label.prepend(check);
+        for(const [decision,text]of [['pass','此镜检查通过'],['changes_requested','记录此镜需修改']]){const button=node('button',text,'secondary');button.type='button';button.onclick=()=>run(async()=>{if(dirty())throw Error('请先保存编辑');if(!check.checked||!reviewer.value.trim()||!note.value.trim())throw Error('请实际看听并填写审核人和意见');await post(base()+'/shot-reviews',{...version(),basis:state.basis,shot_id:item.shot_id,decision,reason:reason.value,note:note.value,reviewer:reviewer.value,confirmed:true});adopt(await api(base()));});box.append(button);}
+        box.append(reason,note,label);host.append(box);
+    }
+}
+async function compareVersion(target){
+    if(dirty())throw Error('请先保存或撤销未保存编辑');
+    const pid=p.id,current=p.job.id;const result=await api(base()+'/version-comparison?before='+encodeURIComponent(target)+'&after='+encodeURIComponent(current));
+    if(p.id!==pid||p.job.id!==current)return;
+    const host=$('versionComparison');host.hidden=false;host.replaceChildren(node('h4','历史版 → 当前版'),node('p','变化镜头：'+(result.changed_shots.join('、')||'无')+'；文稿变化：'+result.script_changed+'；声音配置变化：'+result.audio_changed),node('p','全局变化：'+(result.global_fields.join('、')||'无')),node('p',result.scope));
+    for(const [id,url]of Object.entries(result.videos)){host.append(node('p',id));if(url){const film=node('video');film.controls=true;film.preload='none';film.src=url;film.style.maxWidth='220px';host.append(film);}}
+    const actor=node('input');actor.placeholder='恢复操作人';actor.setAttribute('aria-label','恢复操作人');actor.maxLength=120;
+    const check=node('input');check.type='checkbox';const label=node('label','恢复此历史版为当前制作版本；保留全部版本，不替换文稿、声音和审批');label.prepend(check);
+    const button=node('button','恢复这个历史版','secondary');button.type='button';const captured=version();button.onclick=()=>run(async()=>{if(dirty()||p.id!==pid||p.job.id!==current)throw Error('当前项目已变化，请重新对比');if(!check.checked||!actor.value.trim())throw Error('请核对并填写恢复操作人');adopt(await post(base()+'/restore-version',{...captured,target_job_id:target,reviewer:actor.value,confirmed:true}));host.hidden=true;message('已恢复活动版本；所有旧版和审核记录保留。');});host.append(actor,label,button);
+}
+$('loadLearning').onclick=()=>run(async()=>{
+    const pid=p.id;const result=await api(base()+'/learning-links');if(pid!==p.id)return;const host=$('learningResults');host.replaceChildren(node('p',result.note));
+    if(!result.snapshots.length)host.append(node('p','尚无关联冻结数据。客户投放后，在投放复盘页导入账户报表、绑定成片并冻结。'));
+    const entry=node('a','打开报表导入与冻结');entry.href='/distribution';host.append(entry);
+    for(const r of result.snapshots){const a=node('a',(r.current_version?'当前版本':'历史版本')+' · '+r.start_date+'—'+r.end_date+' · 素材 '+r.material_id+'：提出下一版假设');a.href=r.url;host.append(node('p',r.actor),a);}
+    for(const e of result.experiments){const a=node('a','查看迭代 '+e.id.slice(0,8)+' · '+e.status);a.href='/experiments?id='+e.id;host.append(a);}
 });

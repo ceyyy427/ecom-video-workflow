@@ -147,6 +147,14 @@ def references(c, tables):
                 add(f"analyses/{aid}/{frame}", None)
 
     frozen_ids = set()
+    # Working copies and historical job snapshots retain the original receipt.
+    # A library entry may have been removed after the job was frozen.
+    for table in ("assets", "customer_media"):
+        if table in tables:
+            for (raw,) in c.execute(f"SELECT metadata FROM {table}"):
+                original = json.loads(raw).get("intake") or {}
+                if original.get("original_path"):
+                    add(original["original_path"], original["original_sha256"])
     if "assets" in tables:
         for (raw,) in c.execute("SELECT metadata FROM assets"):
             analysis = json.loads(raw).get("content_analysis")

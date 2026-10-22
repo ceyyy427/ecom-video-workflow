@@ -2,7 +2,7 @@
 (() => {
     let current = null, flight = false;
     const labels = {proposed:'计划已准备',queued:'等待执行',running:'自动制作中',paused:'已暂停新步骤',waiting_human:'等待人工确认',completed:'已完成并人工审片',failed:'本次运行已停止',cancelled:'已取消',unknown:'上次结果待核对'};
-    const gates = {facts_script:'请先核对事实和文稿，再创建新计划',media:'需要商品素材',voice_upload:'需要成品配音',style:'请确认一个风格后恢复',listening:'请在上方逐句听核配音后恢复',alignment_failed:'对齐未通过，请在上方检查配音与文稿',film_review:'请在下方完整观看并人工审核成片'};
+    const gates = {storyboard:'请在分镜区实际核对并确认最终分镜风格后恢复',facts_script:'请先核对事实和文稿，再创建新计划',media:'需要商品素材',voice_upload:'需要成品配音',style:'请确认一个风格后恢复',listening:'请在上方逐句听核配音后恢复',alignment_failed:'对齐未通过，请在上方检查配音与文稿',film_review:'请在下方完整观看并人工审核成片'};
     const terminal = e => !e || ['completed','failed','cancelled','unknown'].includes(e.status);
     const binding = e => ({plan_hash:e.plan_hash,revision:e.revision,policy_id:e.policy.policy_id});
     const stamp = project => JSON.stringify([project.revision,project.product.revision,project.job?.id,project.job?.storyboard_revision,project.job?.status,project.alignment?.id,project.alignment?.status,analysisStamp(project)]);

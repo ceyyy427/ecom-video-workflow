@@ -8,6 +8,7 @@ from typing import Literal
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 from .creative import Creative, validate_creative
+from .delivery_plan import Delivery, SourceCut, validate_delivery
 from .shotcraft import MotionPlan, RecipeId
 
 
@@ -16,6 +17,7 @@ class Strict(BaseModel):
 
 
 class Shot(Strict):
+    source_cuts: list[SourceCut] | None = Field(default=None, min_length=1, max_length=4)
     shot_id: str | None = Field(default=None, pattern=r"^[a-zA-Z0-9_-]{1,48}$")
     headline: str = Field(default="", max_length=8)
     role: Literal["product", "detail", "lifestyle", "evidence"] = "product"
@@ -24,6 +26,7 @@ class Shot(Strict):
     shot_recipe: RecipeId | None = None
     motion_plan: MotionPlan | None = None
     evidence_note: str = Field(default="", max_length=500)
+    caption_note: str = Field(default="", max_length=40)
     asset_id: str | None = None
     duration: float = Field(default=3, ge=1, le=15)
     source_in: float = Field(default=0, ge=0, le=600)
@@ -42,6 +45,7 @@ class Narration(Strict):
 
 
 class Board(Strict):
+    delivery: Delivery | None = None
     version: Literal[1] = 1
     style: Literal["premium", "demo", "lifestyle"] = "premium"
     sample: bool = False
@@ -121,7 +125,7 @@ def validate_board(job, data):
         ):
             raise ValueError("动作保护区间超出本镜时长")
         if asset["kind"] == "video":
-            if shot["source_in"] + shot["duration"] > metadata(asset)["duration"] + 0.001:
+            if not shot.get("source_cuts") and shot["source_in"] + shot["duration"] > metadata(asset)["duration"] + 0.001:
                 raise ValueError("视频选段超出源素材时长，请缩短镜头或调整入点")
             if shot["motion"] != "static":
                 raise ValueError("图片运镜仅支持图片；视频请使用原素材镜头")
@@ -130,6 +134,7 @@ def validate_board(job, data):
                 raise ValueError("图片不支持视频入点")
             if shot["source_framing"] != "original":
                 raise ValueError("方形取景仅支持视频，请核对素材类型")
+    validate_delivery(job, board)
     if total > 120:
         raise ValueError("分镜总时长不得超过 120 秒")
     voice = board["narration"]

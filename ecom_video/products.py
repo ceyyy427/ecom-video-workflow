@@ -299,6 +299,11 @@ class Products:
                     "generation": {"mode": draft["mode"], "model": draft["model"]},
                     "semantic_verification": "human_only",
                 }
+                from .creative_proposals import current_plan
+
+                plan = current_plan(product)
+                if plan:
+                    provenance["creative_plan"] = plan
                 c.execute(
                     "INSERT INTO jobs(id,title,script,seconds,status,created_at,updated_at,provenance) VALUES(?,?,?,?,'draft',?,?,?)",
                     (jid, title, script, seconds, now, now, encoded(provenance)),

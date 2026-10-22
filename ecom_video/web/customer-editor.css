@@ -1,0 +1,58 @@
+/* Taste Skill framed-sheet: neutral frame, one work surface; no decorative motion.
+   1440px: 152px navigation + 32px gutters + 1256px sheet.
+   Editor: 184px library + 300px inspector + 24px gaps + flexible preview. */
+.customer-page{--ui-bg:#f2f4f3;--ui-surface:#fff;--ui-text:#202724;--ui-muted:#59635e;--ui-primary:#263e32;--ui-border:#e1e6e2;--ui-radius-panel:8px;--ui-radius-control:6px;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif}
+.customer-page .customer-sidebar{width:152px;padding:20px 12px;background:var(--ui-bg);border:0}
+.customer-page .brand-copy small,.customer-page .nav-caption,.customer-page .workspace-intro,.customer-page .workspace-preview-link{display:none}
+.customer-page .customer-sidebar nav a{padding:10px 8px;gap:6px;font-size:13px}
+.customer-page .customer-sidebar nav a[aria-current='page']{background:#e6eae7;color:#202724}
+.customer-page .customer-main{margin-left:152px;max-width:none;padding:16px}
+.customer-page .customer-heading h1{font-size:20px;line-height:1.3}
+.customer-page .customer-heading{margin-bottom:12px}.customer-page .eyebrow{margin:0 0 4px;font-size:12px;letter-spacing:0}
+.customer-page .workspace-topbar{align-items:center;min-height:48px}
+.customer-page .workspace-status{display:flex;align-items:center;gap:12px;max-width:none}.customer-page #workspaceSaveState{margin:0}
+.customer-page .customer-workbench{gap:16px;grid-template-columns:minmax(0,1fr) 280px}
+.customer-page #message{margin-bottom:8px;padding:8px 12px;font-size:13px}
+.customer-page .cut-projects{margin-bottom:8px}.customer-page .cut-projects>summary{font-size:12px;padding:4px 0}
+.customer-page .workspace-steps{position:static;margin:0 0 12px;padding:0;display:flex;gap:12px;border:0}
+.customer-page .workspace-steps a{min-height:36px;border:0;border-bottom:2px solid transparent;border-radius:0;padding:6px 4px;flex:none}
+.customer-page .workspace-steps a[aria-current='step']{background:transparent;border-bottom-color:#263e32}
+.customer-page .workspace-steps .cut-all{margin-left:auto;font-size:12px;min-height:32px;padding:4px 8px}
+.customer-page .customer-panel{padding:16px;margin-bottom:16px}.customer-page .step-heading{margin-bottom:12px}.customer-page .step-heading>span{display:none}
+.customer-page .step-heading h2{font-size:16px}.customer-page .step-heading small{flex-basis:auto}
+.customer-page .customer-main button{min-height:34px;padding:6px 10px;font-size:13px}.customer-page .customer-main label{font-size:13px;gap:6px}
+.customer-page .customer-main :is(input,select,textarea){min-height:36px;font-size:13px}
+.customer-page.cut-editing .customer-workbench{display:block}.customer-page.cut-editing .workspace-preview{display:none}
+.cut-surface{display:grid;grid-template-columns:184px minmax(0,1fr) 300px;gap:12px;min-width:0}
+.cut-surface>section{min-width:0;height:400px;overflow:auto;padding:12px;background:#f5f7f5;border:1px solid var(--ui-border);border-radius:8px}
+.cut-surface h3,.cut-timeline h3{font-size:14px;margin:0 0 10px;font-weight:600}
+.customer-page .cut-library button{display:block;width:100%;text-align:left;margin:0 0 6px;overflow-wrap:anywhere;background:#fff;font-size:12px;line-height:1.4}
+.cut-stage{display:flex;flex-direction:column}.cut-screen{background:#1c201e;flex:1;min-height:0;display:grid;place-items:center;border-radius:4px;overflow:hidden}
+.cut-screen :is(video,img){width:100%;height:100%;max-height:270px;object-fit:contain}.cut-screen [hidden]{display:none}
+.cut-caption{margin:6px 0;min-height:20px;text-align:center;font-size:13px;white-space:pre-line}.cut-notice{font-size:11px;margin:0;color:#59635e;line-height:1.4}
+.cut-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;min-width:0}.cut-toolbar output{font-size:12px;font-variant-numeric:tabular-nums}
+.customer-page .cut-inspector .customer-shot{border:0;margin:0;padding:0;border-radius:0;background:transparent}
+.cut-inspector .customer-grid{grid-template-columns:1fr;gap:10px;margin:10px 0}.cut-inspector .shot-preview{display:none!important}
+.cut-inspector .customer-shot h3{font-size:13px}.cut-inspector .customer-shot p{font-size:12px}.cut-inspector .customer-shot .customer-grid label{font-size:12px}
+.customer-page .cut-inspector input[type=range]{padding:0;min-height:24px;accent-color:#35654b}
+.cut-timeline{margin:12px 0;padding:12px;background:#fff;border:1px solid var(--ui-border);border-radius:8px;font-variant-numeric:tabular-nums;overflow:hidden}
+.cut-timeline .cut-toolbar span{font-size:12px;color:#59635e}.customer-page .cut-timeline input[type=range]{display:block;min-height:24px;height:24px;padding:0;accent-color:#35654b;margin:0 0 6px}
+.cut-track{display:grid;grid-template-columns:44px minmax(0,1fr);gap:8px;margin-top:5px;align-items:center;font-size:12px}.cut-lane{position:relative;height:26px;background:#f4f6f4;min-width:0;overflow:hidden}
+.customer-page .cut-lane button{position:absolute;top:0;height:26px;min-height:26px;margin:0;padding:2px 6px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;text-align:left;font-size:11px;border:1px solid #fff;border-radius:4px;color:#263e32;background:#e0e9e3}
+.customer-page .cut-lane .cut-audio{background:#edf0f4;color:#364355}.customer-page .cut-lane .cut-music{background:#efefef;color:#464646}.customer-page .cut-lane .cut-subtitle{background:#f2eedf;color:#5e5126}
+.customer-page .cut-lane button[aria-pressed=true]{outline:2px solid #35654b;outline-offset:-2px}.cut-lane small{font-size:11px;line-height:26px;color:#59635e}
+.customer-page .cut-secondary{margin:8px 0}.customer-page #step4>.customer-output{grid-template-columns:180px minmax(0,1fr)}
+@media(max-width:1100px){.customer-page .customer-sidebar{position:static;width:auto;padding:8px 16px;display:flex;flex-direction:row;align-items:center;gap:12px}.customer-page .customer-sidebar nav{display:flex;flex-wrap:wrap}.customer-page .sidebar-bottom{display:none}.customer-page .customer-main{margin-left:0}.cut-surface{grid-template-columns:150px minmax(0,1fr) 260px;gap:8px}.customer-page .customer-workbench{grid-template-columns:1fr}.customer-page .workspace-status{display:block}}
+@media(max-width:760px){.customer-page .customer-sidebar .brand{display:none}.customer-page .customer-main{padding:12px}.customer-page .workspace-steps{overflow:auto;gap:8px}.customer-page .workspace-status .local-badge{display:none}.cut-surface{grid-template-columns:minmax(0,1fr)}.cut-surface>.cut-library{height:auto;max-height:120px;order:2}.cut-surface>.cut-stage{height:390px;order:1}.cut-surface>.cut-inspector{height:auto;max-height:420px;order:3}.cut-timeline .cut-toolbar{display:block}.customer-page #step4>.customer-output{grid-template-columns:1fr}.cut-toolbar span{display:block}.customer-page .workspace-topbar{gap:8px}.customer-page .customer-panel{padding:12px}}
+@media(prefers-reduced-motion:reduce){.customer-page *{scroll-behavior:auto;transition:none!important}}
+/* Keep the working image dominant; optional parameters remain reachable in place. */
+.cut-advanced,.cut-settings{margin:10px 0;padding:10px;background:#edf1ed;border-radius:4px}
+.cut-advanced>summary,.cut-settings>summary{cursor:pointer;font-size:12px;font-weight:600;color:#3f5045}
+.cut-settings[open]{display:block}.cut-settings label{margin:10px 0}
+.customer-page.cut-editing #step4>.customer-output .film-stage{display:none}
+.customer-page.cut-editing #step4>.customer-output{grid-template-columns:minmax(0,1fr)}
+.cut-surface{grid-template-columns:156px minmax(0,1fr) 280px}
+.cut-surface>section{height:430px}.cut-screen :is(video,img){max-height:306px}
+.cut-inspector .cut-advanced label{line-height:1.45}.cut-inspector .cut-advanced .customer-grid{margin-bottom:0}
+@media(max-width:1100px){.cut-surface{grid-template-columns:136px minmax(0,1fr) 248px}}
+@media(max-width:760px){.cut-surface{grid-template-columns:minmax(0,1fr)}.cut-surface>.cut-library{height:auto}.cut-surface>.cut-stage{height:430px}.cut-surface>.cut-inspector{height:auto}}

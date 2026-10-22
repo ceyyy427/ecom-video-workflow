@@ -509,6 +509,11 @@ def material_inputs(project):
     )
     assets = []
     for a in project["media"]:
+        if settings.get("delivery_version") and a["kind"] != "audio":
+            from .delivery_plan import identity_matches
+
+            if not identity_matches(a, settings.get("identity_lock")):
+                continue
         analysis = a.get("analysis") or {}
         assets.append(
             {

@@ -119,7 +119,6 @@ def package_path_allowed(value):
                     and Path(name).name
                     in (
                         "render.mjs",
-                        "cleanup.mjs",
                         "setup-browser.mjs",
                         "package.json",
                         "package-lock.json",
