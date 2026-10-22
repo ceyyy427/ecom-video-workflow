@@ -145,7 +145,7 @@ def create_app(root):
     root = Path(root).resolve()
     root.mkdir(parents=True, exist_ok=True)
     store = Store(root / "workflow.db")
-    app = FastAPI(title="剪序 · 电商视频工作台", version="0.16.0", docs_url=None, redoc_url=None)
+    app = FastAPI(title="剪序 · 电商视频工作台", version="0.17.0", docs_url=None, redoc_url=None)
     app.state.store = store
     app.state.qianchuan = QianchuanTasks(root, store)
     token = secrets.token_urlsafe(32)

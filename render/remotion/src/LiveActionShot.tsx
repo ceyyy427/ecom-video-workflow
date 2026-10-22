@@ -31,7 +31,7 @@ export const LiveActionShot:React.FC<Props & {transitionLayer?:React.ReactNode}>
   <div style={{position:'absolute',top:108,left:cinema?100:72,right:cinema?100:72,display:'flex',justifyContent:'space-between',fontSize:28,letterSpacing:3,color:cinema?'#e7dbc5':ink}}>
    <span>{p.brand.name}</span><span>{lab?'观察 / ':''}{label}—{total}</span>
   </div>
-  <div style={{position:'absolute',...heading,color:titleColor,opacity:reveal,transform:`translateY(${(1-reveal)*(cinema?14:28)}px)`}}>
+  <div style={{position:'absolute',...heading,color:titleColor,opacity:p.suppressTitle?0:reveal,transform:`translateY(${(1-reveal)*(cinema?14:28)}px)`}}>
    {p.headline}
    {hook&&!cinema&&<div style={{width:lab?125:85,height:lab?3:8,background:accent,marginTop:28}}/>}
   </div>

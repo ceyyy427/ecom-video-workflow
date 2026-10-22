@@ -16,7 +16,7 @@ export const DirectionShot:React.FC<Props>=(p)=>{
  const hIndex=Array.from(p.text.slice(0,Math.max(0,p.text.indexOf(p.headline)))).filter(c=>/[\p{L}\p{N}]/u.test(c)).length;
  const anchor=p.words[hIndex]?.start??p.voiceStart;
  const titleStart=silent?12:Math.max(0,anchor*30);
- const groups=headlineGroups(p.headline);
+ const groups=headlineGroups(p.suppressTitle?'':p.headline);
  const caption=p.captions.find(c=>t>=c.start&&t<=c.end);
  const z=p.motion==='static'?1:p.motion==='pull'?1.12-.12*move:1+.12*move;
  const px=p.motion==='pan_left'?30-60*move:p.motion==='pan_right'?-30+60*move:0;

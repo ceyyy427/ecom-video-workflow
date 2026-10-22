@@ -42,6 +42,7 @@ def engine_hash():
                 PROJECT / "ecom_video/captions.py",
                 PROJECT / "ecom_video/subtitle_layout.py",
                 PROJECT / "ecom_video/visual_finish.py",
+                PROJECT / "ecom_video/typography.py",
                 PROJECT / "ecom_video/motion_treatment.py",
                 PROJECT / "ecom_video/shotcraft.py",
                 PROJECT / "ecom_video/source_framing.py",
@@ -246,6 +247,15 @@ def render_remotion(job, root, directory, check):
             props.update(motionPlan=decision, shotRecipe=decision["recipe"])
             scene["motion_decision"] = decision
         scene["effective_transition"] = transitions[i]
+        if scene.get("typography"):
+            from .typography import prepare_typography
+            type_props = {**props, "typography": scene["typography"]}
+            prepared = prepare_typography(type_props, scene)
+            if prepared:
+                props["typography"] = prepared
+                scene["typography_decision"] = {
+                    k: v for k, v in prepared.items() if k != "segments"
+                }
         props.update(prepare_visuals(props))
         if props.get("titleLayout"):
             scene["visual_finish"] = {

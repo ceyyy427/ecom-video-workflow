@@ -10,6 +10,7 @@ from pydantic import BaseModel, ConfigDict, Field, ValidationError
 from .creative import Creative, validate_creative
 from .delivery_plan import Delivery, SourceCut, validate_delivery
 from .shotcraft import MotionPlan, RecipeId
+from .typography import Typography, validate_typography
 
 
 class Strict(BaseModel):
@@ -26,6 +27,7 @@ class Shot(Strict):
     shot_recipe: RecipeId | None = None
     motion_plan: MotionPlan | None = None
     evidence_note: str = Field(default="", max_length=500)
+    typography: Typography | None = None
     caption_note: str = Field(default="", max_length=40)
     asset_id: str | None = None
     duration: float = Field(default=3, ge=1, le=15)
@@ -125,7 +127,10 @@ def validate_board(job, data):
         ):
             raise ValueError("动作保护区间超出本镜时长")
         if asset["kind"] == "video":
-            if not shot.get("source_cuts") and shot["source_in"] + shot["duration"] > metadata(asset)["duration"] + 0.001:
+            if (
+                not shot.get("source_cuts")
+                and shot["source_in"] + shot["duration"] > metadata(asset)["duration"] + 0.001
+            ):
                 raise ValueError("视频选段超出源素材时长，请缩短镜头或调整入点")
             if shot["motion"] != "static":
                 raise ValueError("图片运镜仅支持图片；视频请使用原素材镜头")
@@ -134,6 +139,8 @@ def validate_board(job, data):
                 raise ValueError("图片不支持视频入点")
             if shot["source_framing"] != "original":
                 raise ValueError("方形取景仅支持视频，请核对素材类型")
+    for shot, line in zip(board["shots"], lines, strict=True):
+        validate_typography(shot.get("typography"), shot["headline"], line)
     validate_delivery(job, board)
     if total > 120:
         raise ValueError("分镜总时长不得超过 120 秒")
@@ -187,6 +194,11 @@ def rebase_board(existing, script, seconds, assets):
         shot["shot_id"] = shot.get("shot_id") or "shot-" + uuid.uuid4().hex[:12]
         if shot.get("headline") and shot["headline"] not in line:
             shot["headline"] = ""
+        if shot.get("typography"):
+            try:
+                validate_typography(shot["typography"], shot.get("headline", ""), line)
+            except ValueError:
+                shot["typography"] = None
     old["shots"] = shots
     old["previous_creative"] = old.get("creative") or old.get("previous_creative")
     if old["previous_creative"]:

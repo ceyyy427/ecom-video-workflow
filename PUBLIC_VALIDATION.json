@@ -1,76 +1,69 @@
 {
   "date": "2026-10-22",
-  "version": "0.16.0",
-  "scope": "Apple Silicon Mac; existing M2/8GiB host; fresh installation directories; no Computer Use",
-  "python_local_full": {
-    "passed": 932,
-    "skipped": 3,
-    "deselected": 1,
-    "seconds": 383.08
-  },
-  "public_python_verification": {
-    "full_run_passed": 930,
-    "full_run_failed": 1,
+  "version": "0.17.0",
+  "scope": "Apple Silicon Mac M2/8GiB; fresh directories on existing host; no Computer Use",
+  "public_python_final": {
+    "passed": 949,
     "skipped": 4,
     "deselected": 1,
-    "seconds": 305.08,
-    "resolved_failure": "Removed obsolete render/remotion/cleanup.mjs; current renderer uses src/cleanup.mjs",
-    "cleanup_recheck_passed": 5,
-    "last_failed_recheck_passed": 1,
-    "remaining_known_failures": 0,
-    "private_evidence_skipped_when_absent": true
-  },
-  "node": {
-    "passed": 35,
+    "seconds": 332.15,
     "failed": 0
   },
-  "dom_events": "passed; not browser layout or screenshot",
+  "node": {
+    "passed": 38,
+    "failed": 0
+  },
+  "dom_events": "real HTML + script; project/shot/version binding, clear and stale responses; no browser/layout engine",
   "ruff": "passed",
   "remotion_typescript": "passed",
-  "mac_package": {
-    "files": 249,
-    "upgrade_sha256": "ba6659b9ee90ace4d308f8560abeaac4cdce6749cae77db38a497dba65722844",
-    "installer_sha256": "8d7bf7b4b5aee0440817e8bc5cfe2a58178abc0c28c5e283fd1d8d76508cc8af",
-    "fresh_install_start": true,
-    "manifest_matches": true,
-    "old_0131_validator_accepts": true
-  },
-  "real_media_engineering": {
-    "seconds": 27.8,
+  "independent_review": "six integration issues fixed; final scoped review has no unresolved issue",
+  "real_media_fixture": {
+    "duration": 27.8,
+    "cold_render_seconds": 154.08,
+    "single_shot_seconds": 23.39,
     "cache_hits": 5,
-    "rerendered": 1,
-    "other_five_scenes_identical": true,
-    "pcm_and_srt_identical": true,
-    "version_restore_and_export": true,
-    "backup_restore": true,
-    "approvals": "AUTOMATED FIXTURE, not customer approvals"
+    "rendered": 1,
+    "other_five_clips_byte_identical": true,
+    "decoded_pcm_identical": true,
+    "srt_identical": true,
+    "strict_decode_passed": true,
+    "approvals": "AUTOMATED FIXTURE; no new customer approval",
+    "timing_scope": "concurrent with other tests; not a controlled performance benchmark"
   },
-  "existing_customer_project": {
-    "backup_to_new_directory": true,
-    "fact_script_listening_shot_film_records_preserved": true,
-    "old_directory_preserved": true
-  },
-  "runtime_and_render_sources_byte_identical_to_local_project": true,
-  "secret_scan": {
-    "tool": "Yelp/detect-secrets",
-    "version": "1.5.0",
-    "license": "Apache-2.0",
-    "mode": "relative-directory --all-files --no-verify; no credential verification",
-    "initial_candidates": 893,
-    "reviewed_false_positive_categories": {
-      "fingerprints": 874,
-      "manifest_paths": 2,
-      "synthetic_tests": 16,
-      "credential_reference_expression": 1
+  "mac_package": {
+    "files": 253,
+    "upgrade_sha256": "8a3cc1bcbff4f4dbaaea857fe9cbbe1cf52c2f816b1c266ea0cf802c3ce87d5d",
+    "installer_sha256": "69e59a0a826a22b36ac1018351789a4e45bef7879196d00100c6f52397df2fe1",
+    "fresh_dependency_install_start": true,
+    "actual_installed_render": {
+      "width": 1080,
+      "height": 1920,
+      "frames": 120,
+      "sha256": "7cdbd15cb7d2a0c187fc532a92d5bc09ed4fa7bc64eaf0852eeab88221a117a8",
+      "original_demo_prop": true
     },
-    "confirmed_credentials": 0
+    "manifest_all_match_public_source": true,
+    "old_0160_and_0131_validators_accept": true,
+    "restored_approved_project_and_export_preserved": true,
+    "new_approval_records": 0
   },
-  "customer_data_included": false,
-  "models_included": false,
-  "credentials_included": false,
+  "secret_scan": {
+    "tool": "Yelp/detect-secrets 1.5.0 Apache-2.0",
+    "no_credential_verification": true,
+    "new_runtime_and_document_candidates": 0,
+    "metadata_candidates": "SHA256 manifests; reviewed as hashes, not credentials",
+    "existing_source": "same previously reviewed 0.16.0 baseline"
+  },
+  "schema": 14,
+  "new_dependencies": 0,
+  "new_cloud_calls": 0,
+  "platform_writes": 0,
+  "new_customer_approvals": 0,
   "computer_use": false,
   "browser_visual_tested": false,
-  "platform_writes": 0,
-  "new_paid_requests": 0,
-  "new_customer_approvals": 0
+  "readme_interface_images": "original labelled illustrations, not screenshots",
+  "readme_motion_media": "actual local Remotion rendering of original illustrative prop",
+  "customer_data_included": false,
+  "credentials_included": false,
+  "models_included": false
 }

@@ -15,6 +15,7 @@ from .delivery_plan import IdentityTarget, MediaIdentity, SourceCut
 from .media import EXTENSIONS, MAX_UPLOAD, digest, inspect_media, safe_path
 from .media_intake import MAX_VIDEO_SOURCE, intake_video
 from .shotcraft import MotionPlan, RecipeId
+from .typography import Typography
 
 Role = Literal["product", "detail", "lifestyle", "evidence", "voice", "music"]
 
@@ -97,6 +98,7 @@ class ShotChanges(Strict):
     shot_recipe: RecipeId | None = None
     media_id: str | None = None
     headline: str | None = Field(default=None, max_length=8)
+    typography: Typography | None = None
     caption_note: str | None = Field(default=None, max_length=40)
     source_in: float | None = Field(default=None, ge=0, le=600)
     motion: Literal["static", "push", "pull", "pan_left", "pan_right"] | None = None
@@ -143,6 +145,14 @@ def router(root, store):
     api = APIRouter(prefix="/api/customer-projects")
     service = Customers(root, store)
     preview_lock = threading.Lock()
+
+    @api.get("/{pid}/prompt-adaptation")
+    def prompt_adaptation(pid: str, card_id: str, shot_id: str | None = None):
+        from .prompt_choice import adaptation
+        try:
+            return adaptation(service, pid, card_id, shot_id)
+        except KeyError:
+            raise HTTPException(404, "项目或参考卡不存在") from None
 
     @api.get("/{pid}/timeline")
     def editor_timeline(pid: str, job_id: str | None = None):

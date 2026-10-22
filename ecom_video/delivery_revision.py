@@ -37,7 +37,7 @@ def canonical(job):
                 k: normalized(v)
                 for k, v in value.items()
                 if k not in ("fingerprint", "alignment_id")
-                and not (k == "caption_note" and not v)
+                and not (k in ("caption_note", "typography") and not v)
             }
         if isinstance(value, list):
             return [normalized(v) for v in value]
@@ -124,6 +124,8 @@ def impact(service, pid, data):
         changes = ShotChanges.model_validate(changes).model_dump(
             exclude_unset=True, exclude_none=True
         )
+        if "typography" in data["changes"] and data["changes"]["typography"] is None:
+            changes["typography"] = None
         media_id = changes.pop("media_id", None)
         selected = None
         selected_id = None

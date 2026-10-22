@@ -428,6 +428,9 @@ function paintShots() {
             grid.append(node('small',select.title));
         }
         field(grid, `第 ${i + 1} 镜字卡`, current.headline, 'text', null, v => mark('headline', v));
+        field(grid, '文字表现', current.typography?.mode || '', 'select', [['','保留原版'],['impact','关键词重拍'],['reveal','分词揭示'],['contrast','大小字对照']], value=>{mark('typography',value?{mode:value,keyword:current.typography?.keyword||''}:null);paintShots();paintWorkspace();});
+        if(current.typography){const kw=field(grid,'着重词（摘自本镜字卡）',current.typography.keyword||'','text',null,value=>mark('typography',{...current.typography,keyword:value}));kw.maxLength=8;}
+        const library=node('a','自主选择 Prompt →');library.href='/prompts?project='+encodeURIComponent(p.id)+'&shot='+encodeURIComponent(shot.shot_id);form.append(library);
         const note=field(grid, '画面小字（不读出，最多40字）', current.caption_note || '', 'text', null, v => mark('caption_note', v));
         note.maxLength=40;
         const direction = p.recommendations?.options?.find(s=>s.id===b.creative?.style_id) || p.recommendations?.options?.[0];
@@ -441,7 +444,8 @@ function paintShots() {
         }
         const motionPlan = {version:2, strength:'balanced', cue_offset:0, protect_action:true, windows:[], repeat_limit:p.settings.motion_repeat_limit||2, intent:'auto', ...(current.motion_plan||{})};
         const markMotion = (key,value) => { const edits=shotEdits.get(shot.shot_id)||{}; mark('motion_plan',{...motionPlan,...(edits.motion_plan||{}),[key]:value}); if (!(edits.shot_recipe ?? current.shot_recipe)) mark('shot_recipe','none'); };
-        const promptChoices=direction?.prompt_direction?.choices || [];
+        const promptChoices=[...(direction?.prompt_direction?.choices || [])];
+        if(motionPlan.prompt_card&&!promptChoices.some(c=>c.id===motionPlan.prompt_card))promptChoices.push({id:motionPlan.prompt_card,name:'自主选择 · '+motionPlan.prompt_card,recipe:current.shot_recipe});
         field(grid, `第 ${i + 1} 镜商品画面 Prompt`,motionPlan.prompt_card||'','select',[['','保留基础编排'],...promptChoices.map(c=>[c.id,c.name])],v=>{const c=promptChoices.find(c=>c.id===v);mark('shot_recipe',promptRecipe(current.shot_recipe,shotEdits.get(shot.shot_id)?.shot_recipe,c));markMotion('prompt_card',v||null);paintShots();});
         field(grid, `第 ${i + 1} 镜画面精修`, motionPlan.visual_finish || 'legacy', 'select', [['legacy','保留原版'],['polished-v1','标题精排 · 人声关键词轻强调']], v=>markMotion('visual_finish',v));
         field(grid, `第 ${i + 1} 镜动效强度`, motionPlan.strength, 'select', [['subtle','克制'],['balanced','适中'],['bold','利落']], v=>markMotion('strength',v));
@@ -712,11 +716,13 @@ window.addEventListener('beforeunload', e => { if (dirty()) {
     token = (await api('/session')).token;
     await loadVolcVoiceStatus();
     await listProjects();
-    const id = new URLSearchParams(location.search).get('project') || localStorage.getItem('ecom.customer');
+    const libraryParams = new URLSearchParams(location.search);
+    const id = libraryParams.get('project') || localStorage.getItem('ecom.customer');
     if (id)
         await run(() => loadProject(id));
     else
         message('新建一个客户商品项目，或继续已有项目。');
+    await stageLibraryChoice(libraryParams);
     controls();
 }
 catch (e) {
@@ -815,3 +821,14 @@ $('loadLearning').onclick=()=>run(async()=>{
     for(const r of result.snapshots){const a=node('a',(r.current_version?'当前版本':'历史版本')+' · '+r.start_date+'—'+r.end_date+' · 素材 '+r.material_id+'：提出下一版假设');a.href=r.url;host.append(node('p',r.actor),a);}
     for(const e of result.experiments){const a=node('a','查看迭代 '+e.id.slice(0,8)+' · '+e.status);a.href='/experiments?id='+e.id;host.append(a);}
 });
+
+async function stageLibraryChoice(params){
+ if(!params.get('prompt')||!p)return;
+ if(dirty())throw Error('请先保存当前编辑，再从参考库选择 Prompt。');
+ const id=p.id,job=p.job?.id;
+ const adapted=await api(base()+'/prompt-adaptation?'+new URLSearchParams({card_id:params.get('card')||'',shot_id:params.get('shot')||''}));
+ if(p.id!==id||p.job?.id!==job)throw Error('当前项目已切换，未应用参考卡。');
+ const change=window.CustomerPromptChoice.pending(params,p,adapted);
+ shotEdits.set(change.shot_id,change.changes);paintShots();paintWorkspace();
+ message('已带入所选 Prompt，尚未保存。请检查这一镜及修改影响，保存后重新确认分镜；听核和成片审核继续保留。');
+}

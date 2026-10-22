@@ -10,6 +10,32 @@
 
 </div>
 
+![剪辑工作台界面示意](docs/media/workbench-illustration.svg)
+
+<p align="center"><sub>依据当前工作台绘制的界面示意，非浏览器截图；未使用客户素材。</sub></p>
+
+## 让商品讲解有画面，让重点被看见
+
+在同一个工作台里选素材、看原片、改一镜，配音、音乐与停顿字幕共用时间轴。改完先看影响范围，生成新版后再听审；旧片和确认记录保留。
+
+![自主选择 Prompt 的页面示意](docs/media/prompt-library-illustration.svg)
+
+**参考卡可以自己选。** 先选商品和那一句，再看人群、气质与原稿如何适配。已有本机变体可带回该镜草稿；待适配卡保留为资料。上图为界面示意，不代表所有参考效果已实现。
+
+| 关键词重拍 | 分词揭示 | 大小字对照 |
+|---|---|---|
+| 让关键观察点落在人声重音处 | 随语义分组展开，保持字幕稳定 | 用大小层级说明一句话的主次 |
+
+![本机真实渲染的三种文字表现](docs/media/typography-contact.png)
+
+<details><summary>播放文字动效预览</summary>
+
+![本机渲染动效](docs/media/typography-demo.gif)
+
+</details>
+
+预览由 Remotion 在本机实际渲染，商品为本项目绘制的示意道具。此处是无声编排演示；实际口播优先使用可信字锚点，不足时回退句级标题，动作段关闭文字运动。它不是客户成片签收或实拍样例。
+
 ![工作流程示意](docs/media/workflow.svg)
 
 ## 能做什么
@@ -58,6 +84,7 @@ python3 scripts/launch_customer.py
 |---|---|
 | `/create` | 商品资料、文稿、三方向、声音与剪辑工作台 |
 | `/setup` | 环境自检、本机模型及语音配置 |
+| `/prompts` | 自选参考卡、按商品及本句适配，带回镜头草稿 |
 | `/samples` | 本机已有样片与效果参考 |
 | `/distribution` | 客户投放后的报表导入与复盘 |
 | `/experiments` | 冻结复盘、创意假设及版本对比 |
@@ -66,14 +93,14 @@ python3 scripts/launch_customer.py
 
 示意图展示流程，非浏览器截图。实际界面以启动后的本机版本为准；仓库不附客户素材与配音。
 
-## 本版更新 · 0.16.0
+## 本版更新 · 0.17.0
 
-- 新版剪辑工作台进入 Mac 交付包：素材、预览、单镜检查器及真实字幕时间线。
-- 常用项优先展示；动效、焦点和动作保护参数按需展开，保留既有值及人工确认。
-- 停顿字幕、单色多段实拍、完整动作与逐镜小字接入同一制作版本。
-- 修复项目切换残留、旧任务比较误报及已审导出误判；新版仍保留历史成片与审核。
+- 三种可选文字表现，着重词只摘自确认文稿；测量本机字体，保护字幕阅读和完整动作。
+- 参考库接入商品与逐镜选择，适配说明、可执行变体及来源在同一页，返回后仍是待保存编辑。
+- 镜头参考页与剪辑工作台采用同一布局体系，来源和实现细节按需展开。
+- 保留旧任务、原版文字效果和全部人工审批，未增加模型、云调用或自动投放。
 
-验收范围、实测结果和回退方法见[Mac 本轮验收](docs/MAC_WORKBENCH_ACCEPTANCE.md)。历史进度保存在本地项目文档中。
+操作见[文字与 Prompt 指南](docs/TYPOGRAPHY_PROMPT_GUIDE.md)，实测和回退见[本轮验收](docs/TYPOGRAPHY_PROMPT_ACCEPTANCE.md)。
 
 ## 文档
 
@@ -81,7 +108,7 @@ python3 scripts/launch_customer.py
 - [首次安装](docs/CUSTOMER_INSTALL.md) · [备份恢复](docs/CUSTOMER_RECOVERY.md) · [客户交付清单](docs/CUSTOMER_HANDOFF.md)
 - [架构](docs/ARCHITECTURE.md) · [状态机](docs/STATE_MACHINE.md)
 - [配音授权配置](docs/VOLC_VOICE_AUTHORIZATION.md)
-- [开源采用依据](docs/third-party/p0-editor-reuse.md)
+- [文字动效和手动 Prompt 采用依据](docs/third-party/typography-prompt-reuse.md) · [剪辑工作台参考](docs/third-party/p0-editor-reuse.md)
 
 ## 开发验证
 
