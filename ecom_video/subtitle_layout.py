@@ -130,7 +130,9 @@ def prepare_captions(props):
     paging = pause_phrases if props.get("captionPolicy") == "pause-v1" else phrases
 
     color = (
-        props["brand"]["paper"]
+        "#ffffff"
+        if props.get("clientPresentation")
+        else props["brand"]["paper"]
         if props.get("motionPlan", {}).get("version") == 2
         and props["style"] in ("lab", "evidence", "bauhaus")
         else "#ffffff"

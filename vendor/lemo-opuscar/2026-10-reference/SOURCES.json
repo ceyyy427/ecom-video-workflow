@@ -1,0 +1,769 @@
+{
+  "repository": "https://github.com/lemomo-ai/lemo-opuscar",
+  "commit": "3961ddb3d24d8876e0e2754f7790d66908acee51",
+  "license": "MIT (code and docs); no upstream film/audio copied",
+  "files": [
+    {
+      "path": "LICENSE",
+      "sha256": "14c9ff6f14bfb2391e74fedb01c256891d2a3bba1c2acf5789901bdf77e54e33",
+      "git_blob": "5ba3cce5467fd31494d7e117662de08f477e372a",
+      "bytes": 1064
+    },
+    {
+      "path": "MY-STYLES.md",
+      "sha256": "02102b5a2983a5ee7a8841b10e52e561ddca4a28fad7de0b71a34bda776f1630",
+      "git_blob": "29a93c707f76f90cef0ce69c36d64eef66504cdd",
+      "bytes": 16143
+    },
+    {
+      "path": "README.md",
+      "sha256": "c7988c67fab6491e206fd5af4e4efaa6042fdedabf461a461783ad2a03ee8867",
+      "git_blob": "1b1a4ccb38cc0073a37491f476ffd695f5550ec2",
+      "bytes": 34017
+    },
+    {
+      "path": "README.zh-CN.md",
+      "sha256": "7262ed627b64b0e9b7c3e8791492b8e81405e0b8b83d0b2006dd0c4f0014d6a4",
+      "git_blob": "8044f4decd6d6fec0cab0ee2a37790fb63a3bd8b",
+      "bytes": 33864
+    },
+    {
+      "path": "core/README.md",
+      "sha256": "c13c11532dda994b3e4c0933e8756286fa4f8b7f288cb47ba0beee26d399dbfa",
+      "git_blob": "9a956c3423e2b084a65db7564ba1ed86c0402539",
+      "bytes": 7456
+    },
+    {
+      "path": "styleboard/catalog.json",
+      "sha256": "b4df54942ce6ec2ff50c390964a34ca732f37ab51594cd3e5b8021a385ba4d62",
+      "git_blob": "35a75597bdc210dd91bfefbc3282e95329e59231",
+      "bytes": 29293
+    },
+    {
+      "path": "styles/README.md",
+      "sha256": "66c4ad73fb0135a7ec95efc503119f2527cb28bec4a4557cbaf0917698c13c58",
+      "git_blob": "45067578454962594e0a3c1400a1647d8b7ddc12",
+      "bytes": 7656
+    },
+    {
+      "path": "styles/_template/STYLE.md",
+      "sha256": "759bbcd16895f101523ac48127723249473dd21d10202533d2062f1423b017b1",
+      "git_blob": "e497b98056926e851737a6cb6458ae014a2b3776",
+      "bytes": 4832
+    },
+    {
+      "path": "styles/_template/style.json",
+      "sha256": "0d06b21552f1841ac380cdfa7fae6490a98b6cf954b586b05f85f7c7ee4e3e0c",
+      "git_blob": "dad7d1c1139f854866226f3ef3c1ce45cf2cbf98",
+      "bytes": 384
+    },
+    {
+      "path": "styles/archive-lighttable/STYLE.md",
+      "sha256": "2f18ac9a42822b7a9941866c42b0642e5417dea5431d61f141f6e11b29c1ec14",
+      "git_blob": "d3f5afde708f94af9347ff05d10f4f9860557492",
+      "bytes": 13338
+    },
+    {
+      "path": "styles/archive-lighttable/style.json",
+      "sha256": "555a56a6edb2a27820b5a140e07ac21dbf8fff2886d1b6b55a726919dbf122c7",
+      "git_blob": "f6c14fcdfa16ef0e9610c6271a3045765f6db453",
+      "bytes": 516
+    },
+    {
+      "path": "styles/art-deco/STYLE.md",
+      "sha256": "d73b30c0fa6d153487549d32d8c6c599733cf5e7576badec862a12da6d284761",
+      "git_blob": "3cd68b219282eab2d3fdb60e18f465787a54c388",
+      "bytes": 12196
+    },
+    {
+      "path": "styles/art-deco/style.json",
+      "sha256": "0ea0e1866adf9c601ca4118229555a563f0f9f0b2dca433f60c2b70a21bf23d5",
+      "git_blob": "c5affabbdd48b86f01e5710d67320d7fe98b8b4a",
+      "bytes": 497
+    },
+    {
+      "path": "styles/ascii-crt/STYLE.md",
+      "sha256": "cbe0b8957c785a165f85ccb3b8eba61c30c0462b32983db6a16c76046a2bb333",
+      "git_blob": "396825b8d4f770c1c20f19db30b76790d849e0aa",
+      "bytes": 12202
+    },
+    {
+      "path": "styles/ascii-crt/style.json",
+      "sha256": "6698b02e4a68e1c12c3c7dc95874337e40642e813dc2ae50f1d3530cbb9dac8d",
+      "git_blob": "eec62276df1cacfc5ac3e8639d3378bf223dd414",
+      "bytes": 518
+    },
+    {
+      "path": "styles/backrooms/STYLE.md",
+      "sha256": "2a3697a1ce37d0fbae3281220ae6154eeb9789233f1fae472d55ac169ba26fb4",
+      "git_blob": "a2aab364447994ab9159e773cfb2d09bebfc786f",
+      "bytes": 12620
+    },
+    {
+      "path": "styles/backrooms/style.json",
+      "sha256": "8e40af80d492119fd0ec63ab5a4284d52c65c0ce2e5b12a71d9e7d41e35a9299",
+      "git_blob": "38173778c51986f2103bd589f715aed98bc2539a",
+      "bytes": 535
+    },
+    {
+      "path": "styles/blueprint/STYLE.md",
+      "sha256": "de01fc7fcb38b17b58eb017c9cdbcb36b9242b029435a33587614c93088e1717",
+      "git_blob": "08c33019ee14b8ecff9254c29b32a0a4c15ec1fe",
+      "bytes": 12323
+    },
+    {
+      "path": "styles/blueprint/style.json",
+      "sha256": "6d50613e83879a1741bc1ca60f2ad528c2a0e35778fdac6f55d4af7e67ea4da7",
+      "git_blob": "937c25354cd08c9c3bf6c8453a51dc5420edb8b2",
+      "bytes": 550
+    },
+    {
+      "path": "styles/brick-toy/STYLE.md",
+      "sha256": "29b23e846951856b722a698a03c9458cfc17b4fc71d044f45d773acf2a742768",
+      "git_blob": "a93656c9c254fe36ff8ed94dfde04d79ccf9e7dd",
+      "bytes": 12556
+    },
+    {
+      "path": "styles/brick-toy/style.json",
+      "sha256": "74691fbe30fb39816e51f8a0290f79a7b130e980e67967400f98267b7d31aa56",
+      "git_blob": "406ef14a9af2ac68a3e2b695a41a32f98952e0f0",
+      "bytes": 447
+    },
+    {
+      "path": "styles/briefing-board/STYLE.md",
+      "sha256": "44669da808da4ed37e2a4a0f6e5d2b23008775a3c4870add04641d714e9f323d",
+      "git_blob": "912cae2d8cd1db96f9434e2ceb2e73f07b61dfad",
+      "bytes": 13328
+    },
+    {
+      "path": "styles/briefing-board/style.json",
+      "sha256": "9a4767b21623df0b3bcb2e33555da08a260d2567cbe80d95d9dbe85b6d2a4fc1",
+      "git_blob": "6a8e45b2bc8bf6339d33bb31da523a820a6cce4b",
+      "bytes": 539
+    },
+    {
+      "path": "styles/caption-news/STYLE.md",
+      "sha256": "ba4c0bb5dd13e49c2c2b520af5e42a28112b36354dc445d0f6ade3727b458fd2",
+      "git_blob": "ec61b297ba202a4df241d0a1dca38fabc2667637",
+      "bytes": 17153
+    },
+    {
+      "path": "styles/caption-news/style.json",
+      "sha256": "efa7d8e1dd42d11301dd5e7f1a4f66968c7b8d0259292153454a7926b6a52a0f",
+      "git_blob": "0e58ea0c851986e26f555d2d97808893255a6e67",
+      "bytes": 517
+    },
+    {
+      "path": "styles/cel-anime-80s/STYLE.md",
+      "sha256": "1e16f5c6f90ebf09556ec94d37434400d309c978e00ee89e9d38dec476664eaf",
+      "git_blob": "bde19c4d29f1d15dcb6ee1f4b5abcfbfbfa0d35f",
+      "bytes": 12647
+    },
+    {
+      "path": "styles/cel-anime-80s/style.json",
+      "sha256": "6a4afb02b4d388d7c8462b930556cfa2d79c61092efe9606783be7b626a62c4c",
+      "git_blob": "b8c42401aab88c6b1a111293c8d0bd050fb07bf3",
+      "bytes": 512
+    },
+    {
+      "path": "styles/city-symphony/STYLE.md",
+      "sha256": "8b78d2b08cadb045ac1649cade1e5274fba935b1177c64c176e7567c6e8b31e1",
+      "git_blob": "b809ca3097843bdff3abb5e8b4c4ce2b24402426",
+      "bytes": 18474
+    },
+    {
+      "path": "styles/city-symphony/style.json",
+      "sha256": "4ad353d02e858d16534179ed39eaa05761225865dc818e0544529e2fff2fcd4b",
+      "git_blob": "ae360efadbc5143aa7f8439a9e3863b39c4b5e48",
+      "bytes": 515
+    },
+    {
+      "path": "styles/countdown/STYLE.md",
+      "sha256": "867cca6e0c9bb0d6fb914cc4e9a2e295623ecd345fda9bd00bc362ff233f220f",
+      "git_blob": "3c9d4386120211931895ebdd61eabc1d0fbc805b",
+      "bytes": 17032
+    },
+    {
+      "path": "styles/countdown/style.json",
+      "sha256": "d30ae465e30a1576cd08d2357e488209d5042cfde16d85dc6452562400c12e61",
+      "git_blob": "ccfef7cb73cf7e073885aa9329fc642716de4760",
+      "bytes": 551
+    },
+    {
+      "path": "styles/crayon-book/STYLE.md",
+      "sha256": "ba558478fe519fa6777fe28fa7d1980117297c7beb6fe2e366ef6f00688aa175",
+      "git_blob": "d17e37cdedc5b62a03537066631987cc558e931b",
+      "bytes": 11339
+    },
+    {
+      "path": "styles/crayon-book/style.json",
+      "sha256": "6a03a6548019ba3393a8e2c73c96aa38aefc3257cdf8f6b87f32c808da27f098",
+      "git_blob": "09b2a0277a868c0abbb6c2b8f4ccf2eb76b68235",
+      "bytes": 488
+    },
+    {
+      "path": "styles/dark-keynote/STYLE.md",
+      "sha256": "b0791b5e95f56bf46c621e6064d426ebbee810c7515fb87e951b73668a2a0d24",
+      "git_blob": "a2c94fd284715fe1b1da718b7f2404a12171a434",
+      "bytes": 12164
+    },
+    {
+      "path": "styles/dark-keynote/style.json",
+      "sha256": "c992e65414bb4e96ff6e0eeeba2cfc7a795d332fadfb3baa5301faa0b0c6b992",
+      "git_blob": "4772e12da68c0c3b31f46300f83912b12bc2fa32",
+      "bytes": 504
+    },
+    {
+      "path": "styles/data-physical/STYLE.md",
+      "sha256": "2d2e6685b0dcf8a1e2ba2ff904ab02d51aede1f5dbb246fd2f6e81c8d146f208",
+      "git_blob": "6b9aaf1537738cb841e08fbf3b4806effc5e81b9",
+      "bytes": 13475
+    },
+    {
+      "path": "styles/data-physical/style.json",
+      "sha256": "dfe640da294e2e128260bf788bab25eeceb9415a46675c3d7d1e0cbecfe90319",
+      "git_blob": "e49faa7de7c91e3cc8b25687b6a15e1005988cf9",
+      "bytes": 536
+    },
+    {
+      "path": "styles/dataviz/STYLE.md",
+      "sha256": "e94013d5a7c548c8844598a671ff0b49bc78770696cbca0d8d00846336f3c67f",
+      "git_blob": "1d3c361cd488f053388be6d98120a9dcfa8033a1",
+      "bytes": 11415
+    },
+    {
+      "path": "styles/dataviz/style.json",
+      "sha256": "a459b5b712af023a00112b94c6812f0bf7e0b3a7cd39ae818e4a47805f57a8f3",
+      "git_blob": "28ed820c6825a99ff9853e26b2e0aaf3a70be440",
+      "bytes": 461
+    },
+    {
+      "path": "styles/engraving/STYLE.md",
+      "sha256": "0c6816b8b47163d158ae0ea668feecf53dcbef9d1310e27b9e797d9b9e7aac0d",
+      "git_blob": "b9529171436dfb98516756181b83aaf1afe29f1b",
+      "bytes": 12338
+    },
+    {
+      "path": "styles/engraving/style.json",
+      "sha256": "f5c99e129f786bfb75185f3d61c6be212c55b497e269ded71f55e0b971b6db80",
+      "git_blob": "f5931165292181d0562b8260998cfbb2470dd45a",
+      "bytes": 593
+    },
+    {
+      "path": "styles/game-show/STYLE.md",
+      "sha256": "cadee8f0ff8cfc206b49d852e5a0b15d7da432ad497fa8b19ac568ce386ff8e3",
+      "git_blob": "7a4a01447c26870379b6fd914894889444b642f6",
+      "bytes": 12485
+    },
+    {
+      "path": "styles/game-show/style.json",
+      "sha256": "4596e00ca6942c151ae4cba763bf4f91c26a001c88f2ac0a1b0353c1f6b069aa",
+      "git_blob": "f17e20724c95eb4ca860fa7679f93e16713b1dd9",
+      "bytes": 514
+    },
+    {
+      "path": "styles/glass-product/STYLE.md",
+      "sha256": "630fa80cde0930154ba64f15bce5c8ee0c8dcf48d921253f8c7e3194712c8fb5",
+      "git_blob": "01628dbe058a8e63ffb66122d487e1964825fc42",
+      "bytes": 12199
+    },
+    {
+      "path": "styles/glass-product/style.json",
+      "sha256": "12a59c3c50e9fdd6d5613d9d093c5da7489c6baa746037dd4686ecad4a899290",
+      "git_blob": "562c9922b0a3112340acca8e016b8f23ed9836eb",
+      "bytes": 472
+    },
+    {
+      "path": "styles/halftone-dossier/STYLE.md",
+      "sha256": "71b4b8f089836d95f6bd8fc3719ae184cbf2be4a04ecd935c6d55d89a5bb558d",
+      "git_blob": "66da3ae8e6a20684d86c7556651d2afde0ff27d8",
+      "bytes": 12415
+    },
+    {
+      "path": "styles/halftone-dossier/style.json",
+      "sha256": "c732c96a0d0b117252fda4cc734dac4f73ab14c323742d6ace0eff04f45c6d95",
+      "git_blob": "fe3b6a4e8261bfaff1530519a4fdd94e8332d886",
+      "bytes": 499
+    },
+    {
+      "path": "styles/hd-2d/STYLE.md",
+      "sha256": "bdc5ef4f60d8ba9ff6e5151391a6a62d8da4685d393c242699fd5c6188f0551a",
+      "git_blob": "dc6531146dcc28e1c5c9878cf7755c15efc31e08",
+      "bytes": 12356
+    },
+    {
+      "path": "styles/hd-2d/style.json",
+      "sha256": "e3dd21ebeb8b4efc07e9caa85fb7264105ef4a43e85d875ff8a0ede8a3998e29",
+      "git_blob": "19a300485727342d14b6c8c36eee705e5b5bc253",
+      "bytes": 453
+    },
+    {
+      "path": "styles/hologram-hud/STYLE.md",
+      "sha256": "81e2c6b0ede2cc211a8dd676417a1ce5efda278514f273c5249165e38ff34573",
+      "git_blob": "d4d505d0eb74474603b326fadc68416f90b31cde",
+      "bytes": 11833
+    },
+    {
+      "path": "styles/hologram-hud/style.json",
+      "sha256": "acbce6cfe0ff3c1a622090d424f60f8a3e47f9485f43f825bfc3f5980eafff34",
+      "git_blob": "28b1637dec5cae4b6d6b288958d71f215edc92ab",
+      "bytes": 521
+    },
+    {
+      "path": "styles/impasto/STYLE.md",
+      "sha256": "38a0dcb2808c2ff03ef721c1319b9145438b4074ed37ab7a09dcf20b7268e062",
+      "git_blob": "87eb6d8ed9936c26ccd9740f88145be8a0c98d45",
+      "bytes": 12013
+    },
+    {
+      "path": "styles/impasto/style.json",
+      "sha256": "8eb0c2c320a2c7dd58600d2eaee537bd6f3137bed1d40f65b7e05a52bd600c31",
+      "git_blob": "7f0333de0035684ace40f05b25b5728da09762e1",
+      "bytes": 509
+    },
+    {
+      "path": "styles/ink-wash/STYLE.md",
+      "sha256": "5d71598f0b9cf4034c6461956b0d8bd63bd33750b4045376044f0d956b01d645",
+      "git_blob": "b17e52b77c94ba4a8e99aa7193d7481e800460fd",
+      "bytes": 11277
+    },
+    {
+      "path": "styles/ink-wash/style.json",
+      "sha256": "19fca58eb8e84cecaae62837f88b33e286f4ed8e45942b3395e9a320af172bde",
+      "git_blob": "10d4196adfe11f7016aa1e5304c6625dd4938fd6",
+      "bytes": 449
+    },
+    {
+      "path": "styles/iso-infographic/STYLE.md",
+      "sha256": "a3bf89913255043ff2c8616bff9be9f9536efe1eb7a3b98c755cb4189bd7dff1",
+      "git_blob": "3abfcfb60d912ef32b7de9fe4d047acc60eb8ce6",
+      "bytes": 11989
+    },
+    {
+      "path": "styles/iso-infographic/style.json",
+      "sha256": "53b58520900edafef0a5229e456206fbcfdeb0665fcc8c661b73792bfc985b97",
+      "git_blob": "204120ad3469d2b9b2e4e0c7dabcbc28ada3adde",
+      "bytes": 478
+    },
+    {
+      "path": "styles/kino-montage/STYLE.md",
+      "sha256": "8c63deefda22d4677d286ddfffb243ce6385dfa7ab56fbc493705fe13908f204",
+      "git_blob": "4baf1f5e32b78feba4da5c22100d56c478d22510",
+      "bytes": 20124
+    },
+    {
+      "path": "styles/kino-montage/style.json",
+      "sha256": "57ffe5f5aabf16c010ea0ae8c96de5b265ab744307e76a473023b8b9008a7f6a",
+      "git_blob": "9bae152889cecca7b1a2965d7d6b8040184a338a",
+      "bytes": 547
+    },
+    {
+      "path": "styles/lidar-survey/STYLE.md",
+      "sha256": "d1b60fda2793932286372e7cf68d62af5723bba14c37e9a437639ea57b1a310d",
+      "git_blob": "c0fcfbd6474e6eac9228d36000f886c28859de40",
+      "bytes": 13154
+    },
+    {
+      "path": "styles/lidar-survey/style.json",
+      "sha256": "16250593c1a9123ba85f38e45a81e3e2111d1cc1a7c07a5e091501a006bf4d82",
+      "git_blob": "636b6c2438cd6d5fb933ead4824c9647936cf291",
+      "bytes": 498
+    },
+    {
+      "path": "styles/living-screencast/STYLE.md",
+      "sha256": "02e8e5521fe1f553b0e58dacc2a556aea361dd5823e2ca0996963839d3c7d5c7",
+      "git_blob": "d54ca48cc3f8a1d9bd739419997f01853f4186f0",
+      "bytes": 11503
+    },
+    {
+      "path": "styles/living-screencast/style.json",
+      "sha256": "47b9b1c6e209f5a320b4c136efdb43f8caf8e7ee705e2428485f6021877f0fdc",
+      "git_blob": "2e5f8ff57959e24fff6c62407ac3ac84355e2231",
+      "bytes": 531
+    },
+    {
+      "path": "styles/lowpoly-island/STYLE.md",
+      "sha256": "1ae7bcd6aa3d521f563d8905f8109842fd7252ff8b70c1bd18265105a8a450f9",
+      "git_blob": "fff411fe84ff3d59f8ddb967fc01d669a1c2f0e6",
+      "bytes": 12310
+    },
+    {
+      "path": "styles/lowpoly-island/style.json",
+      "sha256": "7ab82e432e2e725a361ef54b1df252ba19416aead6f87897bc0bc79a48c8177a",
+      "git_blob": "090f069c33b6970c49d844936abc81d0ac5acefd",
+      "bytes": 530
+    },
+    {
+      "path": "styles/microgame/STYLE.md",
+      "sha256": "ad13d34bd06a65bef81b04f531c4f256bcc0bff4f229f976d52e07d5beef9dd5",
+      "git_blob": "a4a3a403da7b070aaaadcf88d38164b3e4cc05b7",
+      "bytes": 12563
+    },
+    {
+      "path": "styles/microgame/style.json",
+      "sha256": "827824fb45b72ca9ec6176f40e06ae755d1b075818f5f732eb53a4bcd8104aee",
+      "git_blob": "38cdd30a6d630dbee1ca23717c8f21666617424f",
+      "bytes": 489
+    },
+    {
+      "path": "styles/microscope/STYLE.md",
+      "sha256": "63040631bdc28a3c7f8cf05e2e8523969becd0267741e00dd3e171c22be16e92",
+      "git_blob": "f3a4d081774167aa754fa47d8c2055e483519335",
+      "bytes": 13153
+    },
+    {
+      "path": "styles/microscope/style.json",
+      "sha256": "eb4afae4910ec49ce0d8dac9fb228deffb080ef81ba096be8df49adb906fc4db",
+      "git_blob": "1c7b4a0f61dfcd72afd9258cfeb54a0f6e8ff52a",
+      "bytes": 532
+    },
+    {
+      "path": "styles/midcentury-toon/STYLE.md",
+      "sha256": "e73614b6f9e2f2e8ee279f4909da8429235b96f6d13a12345b6e57d5823c30b8",
+      "git_blob": "22ca95355affd767f0e9c49b0dae5aa0110136c7",
+      "bytes": 12620
+    },
+    {
+      "path": "styles/midcentury-toon/style.json",
+      "sha256": "5595ed4524303d0e5ae3a5b6805255c0fb9cb7232ee5d680df5ae59ba8998c68",
+      "git_blob": "890fd78450dc2cbd4c4570677e85b73bf7e5d5ff",
+      "bytes": 459
+    },
+    {
+      "path": "styles/news-package/STYLE.md",
+      "sha256": "6f9d1b6a04878229260ea542fe71f2b77c560ed8e40df68b68e80ac4e21710ce",
+      "git_blob": "42c627ac6659cef6f867bdc8a3b15cdf8f7e714d",
+      "bytes": 20556
+    },
+    {
+      "path": "styles/news-package/style.json",
+      "sha256": "7b399ecf0a748e4f4b3dab016fda9eed2167a1c707aed6c8b0d2eee896bd7965",
+      "git_blob": "75d34c319f957a22272a245f4a7667f509ec635f",
+      "bytes": 546
+    },
+    {
+      "path": "styles/newsreel/STYLE.md",
+      "sha256": "0f82c1423d2463dfc2700b23dff9ec183f596724a4820757e189c6fa5225e600",
+      "git_blob": "8f0eff3d43dc9980707f06d56642e011304d0e63",
+      "bytes": 17715
+    },
+    {
+      "path": "styles/newsreel/style.json",
+      "sha256": "d20ae96a49893f17a46b4d549bd9324d6129e76392376b6089673f72a2a2339f",
+      "git_blob": "f65d2935bf9d9d24ca97ea851a3b851f0af97a91",
+      "bytes": 532
+    },
+    {
+      "path": "styles/one-line/STYLE.md",
+      "sha256": "69d26cb06f48ab6b03c12a76c2390d0945cdaddc38bc109b7d5e292b9af1399b",
+      "git_blob": "e5731a7f84b07772860db04c3359aefde9642d67",
+      "bytes": 11372
+    },
+    {
+      "path": "styles/one-line/style.json",
+      "sha256": "52f2dec514028b976dfa080270b45b1bbbe1a0e965ae358fdd929ad4f2035ea0",
+      "git_blob": "db25ff77adbf11427fbbffd85df7ee87212dac64",
+      "bytes": 475
+    },
+    {
+      "path": "styles/paper-lantern/STYLE.md",
+      "sha256": "6f3001ad45657262384b3012f441883ef5ac9c558b82d23e503d14e2f672ac91",
+      "git_blob": "8c6ddf8f3e9b531da9bc661b30c0f4c0ef799b92",
+      "bytes": 12134
+    },
+    {
+      "path": "styles/paper-lantern/style.json",
+      "sha256": "39d839aafce6dfa94455e9857e852951bce92cac30c0153bba6e5c6c47d935e2",
+      "git_blob": "7f6298508f01b080688070a25192dea4b4bdf3d2",
+      "bytes": 506
+    },
+    {
+      "path": "styles/paper-popup/STYLE.md",
+      "sha256": "8e5c0ca430fd96b75c4d9c2af92a87c84d4d1af8cda64280a189c51279e1ee9b",
+      "git_blob": "cf00194c3d7e57f646ef0abc4d4a12e7094eeddd",
+      "bytes": 12095
+    },
+    {
+      "path": "styles/paper-popup/style.json",
+      "sha256": "aa52b5e53c3125c0a3dcb74f9964200dad1780efba557129512bafcaf817e490",
+      "git_blob": "fea532a139285c1246359103f68edad63ca7bf03",
+      "bytes": 526
+    },
+    {
+      "path": "styles/papercut-red/STYLE.md",
+      "sha256": "65e317d83335e0cb34696b643e31ad9e46fb0bb93fd748c2e21d74358aea61ec",
+      "git_blob": "7f870e33d104bf435331feff95d1a23bed890675",
+      "bytes": 12450
+    },
+    {
+      "path": "styles/papercut-red/style.json",
+      "sha256": "9dd9b45e83f3eafd09c2740cfc93f9021fd2239f915af9011f4fa01063e3dc05",
+      "git_blob": "9da5be1ef15c39f89bcc65fef67722bb39b89588",
+      "bytes": 531
+    },
+    {
+      "path": "styles/pictogram-motion/STYLE.md",
+      "sha256": "e982606f3d7d132d320abdc1a74c226b1e0642b664a0c41582bc76fec646da1a",
+      "git_blob": "a8688359bf18c820a1df37e70df65c60092fb24f",
+      "bytes": 12085
+    },
+    {
+      "path": "styles/pictogram-motion/style.json",
+      "sha256": "55f9659926edf159471051da1bed0d2d48b2bc2c4571afee738ba5e2711bd111",
+      "git_blob": "d53eea6fbf9cd3e68beb080aff6e5bc94dca49b3",
+      "bytes": 497
+    },
+    {
+      "path": "styles/pixel-rpg/STYLE.md",
+      "sha256": "f79fac0d9aed03d2a69f17a50b37adca2da84156b3fa525537761c507bcaea8e",
+      "git_blob": "373eec9ff3188ad86a8ed5fd48840fedc6e14788",
+      "bytes": 11284
+    },
+    {
+      "path": "styles/pixel-rpg/style.json",
+      "sha256": "79e57f1bf9536dda3826519f4b09be75f6643e34abace9fcd98d056840721c6b",
+      "git_blob": "057925c27b639e0194d222d6e84a156a88ed27bb",
+      "bytes": 462
+    },
+    {
+      "path": "styles/risograph/STYLE.md",
+      "sha256": "c3d85c91a81b0afde091d964482749482adc66c12730afe124708f7b18b331a6",
+      "git_blob": "4b2f4e2c53ff87ae5cddd4e16f6ab4b8a765c4b3",
+      "bytes": 12030
+    },
+    {
+      "path": "styles/risograph/style.json",
+      "sha256": "9fddc997a4daa93ff7fb696749d1143d35044412d78fd887558147d19b8f3759",
+      "git_blob": "42bc33efe8257d5146c0308da9bbd5be4cbd2ce8",
+      "bytes": 574
+    },
+    {
+      "path": "styles/rubber-hose/STYLE.md",
+      "sha256": "bf850f9cd22e68b2125fed00d1b9804e91479620b44420ba7ec50e570e472a94",
+      "git_blob": "7e4212fdbdbef1ac35dd27e6589b4ff9b4076a4d",
+      "bytes": 12791
+    },
+    {
+      "path": "styles/rubber-hose/style.json",
+      "sha256": "c23b23f1363450dd324e8c6ca14a4e980d61e570faae64d08fa57f63a2848fcf",
+      "git_blob": "ac8e09611844af1d8b5778c8f963a12be5566795",
+      "bytes": 460
+    },
+    {
+      "path": "styles/satellite-briefing/STYLE.md",
+      "sha256": "39fec0c7fda13600de04f1a9631ca636dc8850429033c1f65bb6d3283ec2988d",
+      "git_blob": "8fb341c5fe18f85ddcec9ef24085b229b4db38c4",
+      "bytes": 13174
+    },
+    {
+      "path": "styles/satellite-briefing/style.json",
+      "sha256": "43fb790ce6bc3257aeb5d8c2736c99fbd578b0a854935e864531379bed4368ae",
+      "git_blob": "0e68fdfb42ac47aa04e8af4dc021878cf3cdbe44",
+      "bytes": 523
+    },
+    {
+      "path": "styles/scifi-toon/STYLE.md",
+      "sha256": "9a720a57ce50dc554e9237e698a979cdf7311527e6e6a0dad803278dfe8ad2ce",
+      "git_blob": "39b2a410d0c6fc2587ae6c62603e128daf6042c1",
+      "bytes": 12755
+    },
+    {
+      "path": "styles/scifi-toon/style.json",
+      "sha256": "e8920bbceae36c8811e88f15ccb0cf8b04158c4b93d008320b2c4643d272cbf9",
+      "git_blob": "ce5287262b7907590ab1e405ae4ade7bef89d725",
+      "bytes": 502
+    },
+    {
+      "path": "styles/shadow-puppet/STYLE.md",
+      "sha256": "8be075a8262d5a3deea9b05684d8a9abdc1e54c0d90649bf14609ecb4106c3af",
+      "git_blob": "75b626f05d270175d077b64c7cf3592368c03888",
+      "bytes": 12787
+    },
+    {
+      "path": "styles/shadow-puppet/style.json",
+      "sha256": "de2e5662f81e12a95a2f6370bed8d706d8a4d8387a2715532f15e18bc9441e1f",
+      "git_blob": "ec0e0708fef006975e6bf8176d6ef0e3ddf1d57e",
+      "bytes": 475
+    },
+    {
+      "path": "styles/silent-film/STYLE.md",
+      "sha256": "44633a4edd4ec6b84be809bd48b38503a75a71531112b3d28a52f27135012b20",
+      "git_blob": "144cf0ed868aad8e9e5435ba9c6a6b3da5a5821a",
+      "bytes": 11585
+    },
+    {
+      "path": "styles/silent-film/style.json",
+      "sha256": "0afe1c8a86cb16bcea47782d43abd90ef206b8e9ab380102a2ef44c5943f29d0",
+      "git_blob": "7f5349fd0348103772241918aac78b43312e753d",
+      "bytes": 499
+    },
+    {
+      "path": "styles/silkscreen-poster/STYLE.md",
+      "sha256": "a8b3792efb1476b78493f86a033221b27f60c1927463cc435f8816e4d9eda148",
+      "git_blob": "d743ffdf86e62fb126c2dafe7deea07334a1300c",
+      "bytes": 13026
+    },
+    {
+      "path": "styles/silkscreen-poster/style.json",
+      "sha256": "1da0fc7bbb16158d7ef082d86238b95486fdd0a23c93e8ba63203a7428ba34f4",
+      "git_blob": "cb0e0e08f5d1ab6561772dd007f3752450b151e4",
+      "bytes": 557
+    },
+    {
+      "path": "styles/spy-titles/STYLE.md",
+      "sha256": "ea6e9e9073af43ef0bb860e368f60b16ec32a91668386115a142907d92cb1f75",
+      "git_blob": "3cef2fc775f5474da05598eeb6ffcf9194ec1fe6",
+      "bytes": 11411
+    },
+    {
+      "path": "styles/spy-titles/style.json",
+      "sha256": "229b04a3a23d83c29840c3e8ba8e077ed1586dde14c57ba635c54e7b807d1885",
+      "git_blob": "210236fe0c776a6b6945911d681ea69c48629d74",
+      "bytes": 536
+    },
+    {
+      "path": "styles/stained-glass/STYLE.md",
+      "sha256": "0f6551bd109a4127404068aa1e75f18f16b58c80b486c23480b3d193e597b060",
+      "git_blob": "b0527b0b117e62bee1c9201665c6bb42569ee12e",
+      "bytes": 11945
+    },
+    {
+      "path": "styles/stained-glass/style.json",
+      "sha256": "f65be17f876377c074be18f641e9e003b5b1d8e3567bac59294318611e4c9b23",
+      "git_blob": "81a16dd4c7f281fa4c5f2dae93a8d7f92f0bc208",
+      "bytes": 517
+    },
+    {
+      "path": "styles/swiss-motion/STYLE.md",
+      "sha256": "14ddeb6dc495e691a220497069a2ee4827d820f9ee7a3173de5846489ef41f57",
+      "git_blob": "93020f3881000381785f1cda8b551c7838b25a56",
+      "bytes": 10696
+    },
+    {
+      "path": "styles/swiss-motion/style.json",
+      "sha256": "90019625917e8461bb2ed091cc7cd0cc7dc47ba8a32f8d9cc9ca3a39cae9ed5e",
+      "git_blob": "ecab2b1fe57598daa632275b6138e94506fdad9d",
+      "bytes": 528
+    },
+    {
+      "path": "styles/teardown/STYLE.md",
+      "sha256": "90df05a02a3d33add58e0dd99bef19ca20ea16b10390b3c2350d8483106922ee",
+      "git_blob": "3d145b6bc44c388df2d62437bc14ffc5d16e0036",
+      "bytes": 13572
+    },
+    {
+      "path": "styles/teardown/style.json",
+      "sha256": "8c55836a46c932b455b87b513a66eb919be9bd2d390bc8669a06947dd349f6c3",
+      "git_blob": "da505e387a810b1d1673ca8fdf78a37860625eb9",
+      "bytes": 532
+    },
+    {
+      "path": "styles/telestrator/STYLE.md",
+      "sha256": "7289027728dc5e1b6d095b7c7bc7806790bb579934c81682265c0c1b4897a3d0",
+      "git_blob": "e68778a66484135cd991eb6522deb07bad3c8994",
+      "bytes": 16954
+    },
+    {
+      "path": "styles/telestrator/style.json",
+      "sha256": "e9eb4d0796252b34b6eb5042f943258dcaeacf32e4ee8dc02b1c985cf99821ee",
+      "git_blob": "77a0a030da72f47197e5b95b11af68405584e68e",
+      "bytes": 523
+    },
+    {
+      "path": "styles/tilt-shift/STYLE.md",
+      "sha256": "131ae50c6bddd30922638cbd5f2fae5c047223360a3f6924b074b0db525a5c63",
+      "git_blob": "b65726e68f73b051385a4fd4f9071f2c090076bd",
+      "bytes": 12077
+    },
+    {
+      "path": "styles/tilt-shift/style.json",
+      "sha256": "a41aa18fd789273c049562d08f0d6e63ba8fbb8c95527c3fce212428b653ebe9",
+      "git_blob": "8b3dc99e870621639e0181b68629498b138ee174",
+      "bytes": 447
+    },
+    {
+      "path": "styles/ukiyoe/STYLE.md",
+      "sha256": "218c48a204f9034d1c2fb7f11698b4834f1faee1ca68c9e336f3d6ab992ff2e4",
+      "git_blob": "d4af11e9ad82873774ecf867b7aa4463544d5852",
+      "bytes": 12441
+    },
+    {
+      "path": "styles/ukiyoe/style.json",
+      "sha256": "58f9c8f2315fd7545f6804cb1bbc5c6bb9faaf46aea9f11de138fa39395964f0",
+      "git_blob": "f2a474d196ab26fb2260582d6a6a5233388e2f7e",
+      "bytes": 564
+    },
+    {
+      "path": "styles/urban-sketch/STYLE.md",
+      "sha256": "2baf1a19f31b06e55d66d62e4c3449c7a2686c689190976f3e3d0cbdce2faa9a",
+      "git_blob": "033bc2e22493e5a93dcd3434c062452010f6fb42",
+      "bytes": 11766
+    },
+    {
+      "path": "styles/urban-sketch/style.json",
+      "sha256": "0a7d9cfef5b650413a9d8ea4516bd8d56aa0ef9b1c10f2ce4afbf3604bc4f179",
+      "git_blob": "b156c9a3ad196b7da6415cdec95b00c199ae1fc8",
+      "bytes": 517
+    },
+    {
+      "path": "styles/visual-investigation/STYLE.md",
+      "sha256": "9b39ebaa00c3d77ae544d7453e99b79caf4dfaae1d37798b1f995a5578aac30b",
+      "git_blob": "5addf529a6345c3bad299bedd5826d2361b26d2b",
+      "bytes": 18977
+    },
+    {
+      "path": "styles/visual-investigation/style.json",
+      "sha256": "4c07d9fdf3c14c7ceb375c65933b7de9fba4d5b1aef788a73ddbc43596e39d8b",
+      "git_blob": "afe414f315dc15201c21b748ec35b7594951d260",
+      "bytes": 562
+    },
+    {
+      "path": "styles/watercolor/STYLE.md",
+      "sha256": "662d57568408a7c82ef8f64980ca85798b8bb239df3dc3a6715283d7f4555ef0",
+      "git_blob": "26068ee10232bde36f40f2b49c1b9ea96ee010fb",
+      "bytes": 11099
+    },
+    {
+      "path": "styles/watercolor/style.json",
+      "sha256": "fe64241069de6aaf0173de56b6ff038ae03eb131ef96c799512a5efea7821b47",
+      "git_blob": "c68618fa3fb388a7b334c8963f88649e07cbf467",
+      "bytes": 506
+    },
+    {
+      "path": "styles/white-model/STYLE.md",
+      "sha256": "02b6423a69ac5a30322997ec9523bd6b6f776b7c8cf14f249eeb996b9d21e2c2",
+      "git_blob": "9dcb279f1bcd1562f9448cf8d7fb4516cad244fd",
+      "bytes": 13581
+    },
+    {
+      "path": "styles/white-model/style.json",
+      "sha256": "411b60987f3e61c827b8cf4ec3449acaa7514b2f6c19ad7ce723b9ded2ae9849",
+      "git_blob": "02217d4c04a2b953e04882ad8c0ac595bc21580e",
+      "bytes": 526
+    },
+    {
+      "path": "styles/whiteboard/STYLE.md",
+      "sha256": "19f66326257bcafb8aca18af3e209d1fee31d9e23902ce1708bbb606cbf4b718",
+      "git_blob": "faf164bab6fb2e9f967a9f2a8b6e56d8dd928d79",
+      "bytes": 11676
+    },
+    {
+      "path": "styles/whiteboard/style.json",
+      "sha256": "d0037e21fb291faca08cd0f379d51f8a452bb73992165b713d7b229653648f5b",
+      "git_blob": "73362ba30daa18dff0ce1dd68e5c8a4f2ff6d4e6",
+      "bytes": 527
+    },
+    {
+      "path": "styles/woodcut/STYLE.md",
+      "sha256": "b96fda6eeac038137310cc0766d979c8d8a5f3ff6acd87bada5aa50d5136a6a0",
+      "git_blob": "ea4f2acb7b5bdf54ae79c39336f241bbb94c4052",
+      "bytes": 12194
+    },
+    {
+      "path": "styles/woodcut/style.json",
+      "sha256": "5143205fccfc7977a594f360ce1549630cd15c4a0df04873e9428fe352f152c4",
+      "git_blob": "3550da49ce5f1b51023ab8d9006e8702b2297084",
+      "bytes": 483
+    }
+  ]
+}

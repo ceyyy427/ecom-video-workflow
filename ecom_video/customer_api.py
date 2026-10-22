@@ -93,6 +93,7 @@ class StyleReview(Version):
 
 
 class ShotChanges(Strict):
+    presentation: Literal["client", "legacy"] | None = None
     source_cuts: list[SourceCut] | None = Field(default=None, min_length=1, max_length=4)
     motion_plan: MotionPlan | None = None
     shot_recipe: RecipeId | None = None

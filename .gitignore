@@ -44,3 +44,14 @@ docs/evidence/
 !.env.example
 # Full upstream checkouts are local references; existing tracked license notices stay.
 vendor/*
+# Pinned MIT style documents only; no upstream demo media or application checkout.
+!vendor/lemo-opuscar/
+vendor/lemo-opuscar/*
+!vendor/lemo-opuscar/2026-10-reference/
+!vendor/lemo-opuscar/2026-10-reference/**
+# Inactive, synthetic manual workflow; never include real execution data.
+!examples/
+examples/*
+!examples/n8n/
+examples/n8n/*
+!examples/n8n/ideas-manual.json

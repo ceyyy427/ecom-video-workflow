@@ -26,7 +26,13 @@ def title_layout(props):
     if not text:
         return None
     film = props["style"] in ("cinema", "quiet")
-    color = "#f5eddf" if film else props["brand"]["ink"]
+    color = (
+        "#ffffff"
+        if props.get("clientPresentation")
+        else "#f5eddf"
+        if film
+        else props["brand"]["ink"]
+    )
     candidates = (
         [
             Path("/System/Library/Fonts/Supplemental/Songti.ttc"),
@@ -115,6 +121,8 @@ def emphasize(props, captions):
 
 
 def caption_color(props):
+    if props.get("clientPresentation"):
+        return "#ffffff"
     style = props["style"]
     return (
         props["brand"]["paper"]
@@ -127,6 +135,10 @@ def caption_color(props):
 
 def prepare_visuals(props):
     captions = prepare_captions(props)
+    if props.get("clientPresentation"):
+        from .client_finish import client_captions, protect_labels
+
+        captions = protect_labels(props, client_captions(props) or captions)
     if not enabled(props):
         return {"captions": captions}
     result = {"captions": emphasize(props, captions)}

@@ -10,6 +10,7 @@ function setVoiceAudio(player, url) {
 function paintVolcVoice() {
   const state = $('volcVoiceState'), button = $('volcVoiceGenerate'), select = $('volcVoiceSpeaker');
   if (!state || !button || !select) return;
+  if (typeof paintLocalVoice === 'function') paintLocalVoice();
   if (!select.options.length && volcVoiceStatus) {
     Object.entries(volcVoiceStatus.speakers).forEach(([id, label]) => select.append(option(id, label)));
   }
@@ -39,7 +40,7 @@ function paintVolcVoice() {
     history.dataset.stamp = stamp; history.replaceChildren();
     for (const t of takes) {
       const row = node('article', undefined, 'voice-take');
-      const params = t.params, name = volcVoiceStatus?.speakers?.[params.speaker] || '上传声音';
+      const params = t.params, name = params.provider === 'voicestudio' ? 'VoiceStudio · ' + params.engine : volcVoiceStatus?.speakers?.[params.speaker] || '上传声音';
       const activeTake = existing && (existing.metadata.voice_source?.take_id || existing.id) === t.id;
       row.append(node('p', `${t.scope === 'preview' ? '首句试听' : params.provider === 'assembled' ? '完整声音（包含单句换声）' : '完整声音'} · ${name}${params.provider === 'assembled' ? '（换声句）' : ''} · ${volcVoiceStatus?.profiles?.[params.style_id]?.name || '原声音'} · ${Number(t.duration).toFixed(1)}秒${activeTake ? ' · 当前采用' : ''}`));
       const audio = node('audio'); audio.controls = true; audio.preload = 'none'; audio.src = takeUrl(t.id); row.append(audio);

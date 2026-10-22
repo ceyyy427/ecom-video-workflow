@@ -427,6 +427,7 @@ function paintShots() {
             select.title=primaryIn.title='本镜使用多段实拍，请在“同一句的实拍分段与完整动作”中修改素材和入点；移除所有分段后可恢复单段编辑。';
             grid.append(node('small',select.title));
         }
+        field(grid, '成片画面', current.presentation || 'legacy', 'select', [['legacy','保留历史样式'],['client','客户成片 · 原画与简洁字幕']], v => mark('presentation', v));
         field(grid, `第 ${i + 1} 镜字卡`, current.headline, 'text', null, v => mark('headline', v));
         field(grid, '文字表现', current.typography?.mode || '', 'select', [['','保留原版'],['impact','关键词重拍'],['reveal','分词揭示'],['contrast','大小字对照']], value=>{mark('typography',value?{mode:value,keyword:current.typography?.keyword||''}:null);paintShots();paintWorkspace();});
         if(current.typography){const kw=field(grid,'着重词（摘自本镜字卡）',current.typography.keyword||'','text',null,value=>mark('typography',{...current.typography,keyword:value}));kw.maxLength=8;}

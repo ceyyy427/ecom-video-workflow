@@ -37,7 +37,7 @@ def canonical(job):
                 k: normalized(v)
                 for k, v in value.items()
                 if k not in ("fingerprint", "alignment_id")
-                and not (k in ("caption_note", "typography") and not v)
+                and not (k in ("caption_note", "typography", "presentation") and not v)
             }
         if isinstance(value, list):
             return [normalized(v) for v in value]

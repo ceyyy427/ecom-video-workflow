@@ -502,6 +502,18 @@ def create_app(root):
 
     app.state.shot_voice = ShotVoice(app.state.volc_voice)
     app.include_router(volc_voice_router(app.state.volc_voice, app.state.shot_voice))
+    from .local_voice import LocalVoice
+    from .local_voice_api import router as local_voice_router
+
+    app.state.local_voice = LocalVoice(root, store)
+    app.include_router(local_voice_router(app.state.local_voice))
+    from .film_styles_api import router as film_styles_router
+
+    app.include_router(film_styles_router())
+
+    @app.get("/ideas")
+    def ideas_page():
+        return FileResponse(WEB / "ideas.html")
     app.include_router(analysis_router(root, store))
     app.include_router(agent_router(root, store))
     app.include_router(distribution_router(root, store))

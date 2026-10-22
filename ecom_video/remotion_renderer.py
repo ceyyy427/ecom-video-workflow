@@ -43,6 +43,7 @@ def engine_hash():
                 PROJECT / "ecom_video/subtitle_layout.py",
                 PROJECT / "ecom_video/visual_finish.py",
                 PROJECT / "ecom_video/typography.py",
+                PROJECT / "ecom_video/client_finish.py",
                 PROJECT / "ecom_video/motion_treatment.py",
                 PROJECT / "ecom_video/shotcraft.py",
                 PROJECT / "ecom_video/source_framing.py",
@@ -214,6 +215,11 @@ def render_remotion(job, root, directory, check):
         )
         if scene.get("caption_note"):
             props["captionNote"] = scene["caption_note"]
+        if scene.get("presentation") == "client":
+            props["clientPresentation"] = True
+            sku = ((board.get("delivery") or {}).get("identity_lock") or {}).get("sku")
+            if sku:
+                props["protectedTerms"] = [sku]
         if board.get("delivery"):
             props["captionPolicy"] = board["delivery"]["caption_policy"]
         if scene.get("shot_recipe") is not None:
@@ -270,7 +276,9 @@ def render_remotion(job, root, directory, check):
             asset_sha256=asset["sha256"],
             word_anchors=words,
             caption_layout=[caption_record(c) for c in props["captions"]],
-            layers=["product_media", "brand_title", "plain_phrase_subtitles", "progress"],
+            layers=["product_media", "plain_phrase_subtitles"]
+            if scene.get("presentation") == "client"
+            else ["product_media", "brand_title", "plain_phrase_subtitles", "progress"],
             source_policy="user supplied; original video audio muted",
         )
         if scene.get("shot_recipe") is not None:

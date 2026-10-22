@@ -5,7 +5,7 @@ import shutil
 import sys
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field, ValidationError
+from pydantic import BaseModel, ConfigDict, Field, ValidationError, model_validator
 
 from .creative import Creative, validate_creative
 from .delivery_plan import Delivery, SourceCut, validate_delivery
@@ -18,6 +18,7 @@ class Strict(BaseModel):
 
 
 class Shot(Strict):
+    presentation: Literal["client", "legacy"] | None = None
     source_cuts: list[SourceCut] | None = Field(default=None, min_length=1, max_length=4)
     shot_id: str | None = Field(default=None, pattern=r"^[a-zA-Z0-9_-]{1,48}$")
     headline: str = Field(default="", max_length=8)
@@ -37,6 +38,16 @@ class Shot(Strict):
     source_framing: Literal["original", "square"] = "original"
     focus_x: float = Field(default=0.5, ge=0, le=1)
     focus_y: float = Field(default=0.5, ge=0, le=1)
+
+    @model_validator(mode="after")
+    def client_recipe_has_plan(self):
+        if (
+            self.presentation == "client"
+            and self.shot_recipe not in (None, "none")
+            and self.motion_plan is None
+        ):
+            raise ValueError("客户成片动效需要动效计划，请补齐声音与动作编排或保留历史样式")
+        return self
 
 
 class Narration(Strict):

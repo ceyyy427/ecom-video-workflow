@@ -1,0 +1,86 @@
+{
+  "name": "剪序 · 手动创意方向（不审批不投放）",
+  "active": false,
+  "nodes": [
+    {
+      "id": "manual",
+      "name": "手动开始",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "session",
+      "name": "读取本机会话",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        240,
+        0
+      ],
+      "parameters": {
+        "url": "http://127.0.0.1:8790/api/session",
+        "options": {}
+      }
+    },
+    {
+      "id": "directions",
+      "name": "仅比较六个创意方向",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        500,
+        0
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "http://127.0.0.1:8790/api/film-styles/recommend",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Workflow-Token",
+              "value": "={{ $json.token }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"idea\": \"解释桥梁怎样承重\", \"audience\": \"中学生\", \"tone\": \"清楚、有好奇心\", \"mode\": \"code\"}",
+        "options": {}
+      }
+    }
+  ],
+  "connections": {
+    "手动开始": {
+      "main": [
+        [
+          {
+            "node": "读取本机会话",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "读取本机会话": {
+      "main": [
+        [
+          {
+            "node": "仅比较六个创意方向",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": []
+}
