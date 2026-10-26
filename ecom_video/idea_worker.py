@@ -8,7 +8,7 @@ import time
 from .db import Conflict
 from .idea_media import check_materials
 from .idea_plans import IdeaPlans
-from .idea_renderer import cached, render_option
+from .idea_renderer import cached, engine_key, render_option
 
 log = logging.getLogger(__name__)
 
@@ -43,6 +43,8 @@ def run_once(worker, lease):
         service.check(pid, token)
 
     try:
+        if row["plan"]["engine"] != engine_key():
+            raise ValueError("渲染引擎已更新，请按原想法重新生成方案；旧预览保留，不混用版本")
         check_materials(worker.root, row["plan"]["materials"])
         for option in row["plan"]["options"]:
             check()

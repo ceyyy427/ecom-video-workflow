@@ -4,9 +4,9 @@ import copy
 import re
 from typing import Literal
 
-from pydantic import Field, field_validator
+from pydantic import Field, field_validator, model_validator
 
-from .creative import Strict, signature
+from .creative import CATALOG, Strict, signature
 from .film_styles import catalog, recommend
 
 VERSION = "creative-plan-v1"
@@ -54,9 +54,25 @@ ADAPTERS = {
 }
 
 
+def plain_text(value):
+    if not isinstance(value, str):
+        raise ValueError("需要填写文字")
+    if any(ord(c) < 32 and c not in "\r\n\t" for c in value):
+        raise ValueError("输入不能包含控制字符")
+    return value.strip()
+
+
 class Claim(Strict):
     text: str = Field(min_length=1, max_length=100)
     source: str = Field(min_length=1, max_length=200)
+
+    @field_validator("text", "source", mode="before")
+    @classmethod
+    def single_unit(cls, value):
+        value = plain_text(value)
+        if "\n" in value or "\r" in value:
+            raise ValueError("每条事实与来源请分别写在一行，保留完整语境")
+        return value
 
 
 class Datum(Strict):
@@ -64,6 +80,14 @@ class Datum(Strict):
     value: float = Field(ge=-1e9, le=1e9)
     unit: str = Field(default="", max_length=16)
     source: str = Field(min_length=1, max_length=200)
+
+    @field_validator("label", "unit", "source", mode="before")
+    @classmethod
+    def readable_data(cls, value):
+        value = plain_text(value)
+        if "\n" in value or "\r" in value:
+            raise ValueError("数据名称、单位和来源分别填写一行")
+        return value
 
 
 class MaterialRef(Strict):
@@ -85,12 +109,21 @@ class ContentBrief(Strict):
     preferred: str | None = Field(default=None, max_length=80)
     target_seconds: Literal[24] = 24
 
-    @field_validator("idea", "subject", "audience", "tone")
+    @field_validator("idea", "subject", "audience", "tone", mode="before")
     @classmethod
     def readable(cls, value):
-        if any(ord(c) < 32 and c not in "\r\n\t" for c in value):
-            raise ValueError("输入不能包含控制字符")
-        return value.strip()
+        return plain_text(value)
+
+    @model_validator(mode="after")
+    def coherent(self):
+        if any(
+            "\n" in value or "\r" in value for value in (self.subject, self.audience, self.tone)
+        ):
+            raise ValueError("主题、人群和气质请分别写在一行")
+        refs = [(a.origin, a.project_id, a.id) for a in self.materials]
+        if len(set(refs)) != len(refs):
+            raise ValueError("同一份素材只需选择一次，可直接调整入点")
+        return self
 
 
 def subject_for(brief):
@@ -106,7 +139,7 @@ def build_plan(brief: ContentBrief, materials: list, *, engine="preview-v1"):
     claims = [{"id": "topic", "text": subject, "source": "用户输入的创作主题，作为待核对设定"}]
     claims += [{"id": f"fact-{i}", **f.model_dump()} for i, f in enumerate(brief.facts)]
     claims += [
-        {"id": f"data-{i}", "text": f"{d.label}：{d.value:g}{d.unit}", "source": d.source}
+        {"id": f"data-{i}", "text": f"{d.label}：{d.value}{d.unit}", "source": d.source}
         for i, d in enumerate(brief.data)
     ]
     first = claims[1] if len(claims) > 1 else claims[0]
@@ -137,6 +170,13 @@ def build_plan(brief: ContentBrief, materials: list, *, engine="preview-v1"):
     for key in order:
         index = list(ADAPTERS).index(key)
         name, style, recipes = ADAPTERS[key]
+        colors = next(s["colors"] for s in CATALOG if s["id"] == style)
+        paper, ink, accent = colors
+        if key == "blueprint":
+            paper, ink, accent = "#12394b", "#e2f4ff", "#6ec7eb"
+        if key == "dark-keynote":
+            paper, ink, accent = "#121919", "#fbf5e8", "#d5b681"
+        brand = {"name": "", "paper": paper, "ink": ink, "accent": accent, "subtitle_size": 52}
         body = [second, first] if index in (2, 5) else [first, second]
         texts = [hooks[key], body[0]["text"], body[1]["text"], closings[index]]
         scenes = []
@@ -146,7 +186,28 @@ def build_plan(brief: ContentBrief, materials: list, *, engine="preview-v1"):
                 {
                     "id": f"scene-{i + 1:02d}",
                     "text": text,
-                    "claim_ids": [body[i - 1]["id"]] if i in (1, 2) else ["topic"],
+                    "headline": (
+                        subject
+                        if subject in text and len(subject) <= 8
+                        else next(
+                            (
+                                part.strip()
+                                for part in re.split(r"[，。！？；：]", text)
+                                if 0 < len(part.strip()) <= 8
+                            ),
+                            "",
+                        )
+                    ),
+                    "claim_ids": list(
+                        dict.fromkeys(
+                            ([body[i - 1]["id"]] if i in (1, 2) else ["topic"])
+                            + (
+                                [c["id"] for c in claims if c["id"].startswith("data-")]
+                                if key == "dataviz"
+                                else []
+                            )
+                        )
+                    ),
                     "seconds": 6,
                     "purpose": ["hook", "detail", "evidence", "closing"][i],
                     "recipe": recipes[i],
@@ -170,6 +231,7 @@ def build_plan(brief: ContentBrief, materials: list, *, engine="preview-v1"):
                 "id": key,
                 "name": name,
                 "native_style": style,
+                "brand": brand,
                 "source": rows[key]["source"],
                 "reference_name": rows[key]["name"],
                 "status": "adapted",

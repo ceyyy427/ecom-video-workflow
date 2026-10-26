@@ -271,7 +271,7 @@ def _recommend(job, brief, *, legacy=False, policy=3):
     if (
         not legacy
         and brief["format"] != "auto"
-        and any(brief[k].strip() for k in ("category", "audience", "tone"))
+        and (idea_selection(job) or any(brief[k].strip() for k in ("category", "audience", "tone")))
     ):
         return contextual(job, brief, policy)
     text = " ".join([job["title"], job["script"], *brief.values()])

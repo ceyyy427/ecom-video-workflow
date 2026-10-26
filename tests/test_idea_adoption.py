@@ -1,7 +1,7 @@
 import pytest
 
 
-def prepared(tmp_path, previews=False):
+def prepared(tmp_path, previews=False, materials=None):
     from ecom_video.content_plan import ContentBrief
     from ecom_video.db import Store
     from ecom_video.idea_plans import IdeaPlans
@@ -14,7 +14,7 @@ def prepared(tmp_path, previews=False):
             subject="藏蓝软壳衣",
             facts=[{"text": "有拉链口袋", "source": "用户资料"}],
         ),
-        [],
+        materials or [],
     )
     # Only engineering setup: no actual render or customer approval is claimed.
     with store.transaction() as c:
@@ -82,3 +82,58 @@ def test_stale_basis_and_missing_actual_previews_cannot_create_project(tmp_path)
         adopt(tmp_path, store, p["id"], p["basis"], "swiss-motion")
     with store.connect() as c:
         assert c.execute("SELECT COUNT(*) FROM customer_projects").fetchone()[0] == 0
+
+
+def test_omitting_optional_audience_and_tone_keeps_the_chosen_direction_available():
+    from ecom_video.content_plan import ContentBrief, build_plan
+    from ecom_video.creative import recommend
+
+    p = build_plan(ContentBrief(idea="展示一个文具的结构"), [])
+    option = next(o for o in p["options"] if o["id"] == "swiss-motion")
+    result = recommend(
+        {
+            "title": "文具",
+            "script": option["script"],
+            "assets": [],
+            "provenance": {
+                "idea_plan": {"basis": p["basis"], "option_id": option["id"], "option": option}
+            },
+        },
+        {"format": "showcase", "category": "", "audience": "", "tone": ""},
+    )
+    assert "kinetic" in {o["id"] for o in result["options"]}
+
+
+def test_new_project_keeps_identity_source_but_requires_its_own_confirmation(tmp_path):
+    from PIL import Image
+
+    from ecom_video.delivery_plan import identity_matches
+    from ecom_video.idea_adoption import adopt
+    from ecom_video.media import digest
+
+    source = tmp_path / "declared.png"
+    Image.new("RGB", (80, 100), "navy").save(source)
+    identity = {
+        "sku": "工程同款",
+        "color": "藏蓝",
+        "reviewer": "旧项目工程标记",
+        "confirmed": True,
+        "source_sha256": digest(source),
+    }
+    asset = {
+        "id": "original",
+        "name": source.name,
+        "kind": "image",
+        "path": source.name,
+        "sha256": digest(source),
+        "size": source.stat().st_size,
+        "source_in": 0,
+        "metadata": {"identity": identity},
+    }
+    store, p = prepared(tmp_path, previews=True, materials=[asset])
+    project = adopt(tmp_path, store, p["id"], p["basis"], p["plan"]["options"][0]["id"])
+    item = project["media"][0]
+    assert "identity" not in item["metadata"]
+    assert item["metadata"]["identity_reference"]["reviewer"] == "旧项目工程标记"
+    assert not identity_matches(item, {"sku": "工程同款", "color": "藏蓝"})
+    assert project["product"]["fact_reviews"] == []

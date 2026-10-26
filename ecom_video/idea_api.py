@@ -49,6 +49,13 @@ def router(root, store):
 
     @api.post("/api/idea-plans/{pid}/previews")
     def previews(pid: str, data: Basis):
+        from .db import Conflict
+
+        current = service.get(pid)
+        if (current["status"] != "ready" or current["repair_needed"]) and current["plan"][
+            "engine"
+        ] != engine_key():
+            raise Conflict("渲染引擎已更新，请按当前输入重新生成方案；旧预览保留，不混用版本")
         return service.enqueue(pid, data.basis)
 
     @api.delete("/api/idea-plans/{pid}/previews")

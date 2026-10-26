@@ -29,16 +29,17 @@ def frame_local_time(at, start):
 
 
 def engine_hash():
+    font = font_path()
     return signature(
         {
-            str(p): digest(p)
+            ("font" if p == font else p.relative_to(PROJECT).as_posix()): digest(p)
             for p in [
                 *sorted((ENGINE / "src").glob("*.tsx")),
                 ENGINE / "render.mjs",
                 ENGINE / "src/cleanup.mjs",
                 ENGINE / "src/pause-pages.cjs",
                 ENGINE / "package-lock.json",
-                font_path(),
+                font,
                 PROJECT / "ecom_video/captions.py",
                 PROJECT / "ecom_video/subtitle_layout.py",
                 PROJECT / "ecom_video/visual_finish.py",
@@ -285,7 +286,9 @@ def render_remotion(job, root, directory, check):
             props["codeVisual"] = CodeVisual.model_validate(
                 asset["metadata"]["code_visual"]
             ).model_dump()
-            props["headline"] = props["codeVisual"]["subject"][:8]
+            props["headline"] = (
+                props["codeVisual"]["subject"] if len(props["codeVisual"]["subject"]) <= 8 else ""
+            )
         if scene.get("presentation") == "client":
             props["clientPresentation"] = True
             sku = ((board.get("delivery") or {}).get("identity_lock") or {}).get("sku")

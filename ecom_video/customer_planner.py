@@ -42,6 +42,16 @@ def plan_board(job, settings, style_id, alignment=None):
             + [math.ceil(voice["metadata"]["duration"] * 30) / 30]
         )
         durations = [round((b - a) * 30) / 30 for a, b in zip(ends, ends[1:], strict=False)]
+    from .creative import idea_selection
+
+    frozen = idea_selection(job)
+    if (
+        mode == "showcase"
+        and frozen
+        and frozen["option"]["native_style"] == style_id
+        and lines == [s["text"] for s in frozen["option"]["scenes"]]
+    ):
+        durations = [s["seconds"] for s in frozen["option"]["scenes"]]
     # Match the renderer frame grid before allocating ranges, not after selecting them.
     durations = [round(t * 30) / 30 for t in durations]
     if any(not 1 <= t <= 15 for t in durations) or sum(durations) > 120:
@@ -332,7 +342,7 @@ def plan_board(job, settings, style_id, alignment=None):
         notes.append(f"{shot['shot_id']} Prompt匹配：{row['reason']}；不新增商品事实。")
     from .idea_adoption import apply_board
 
-    apply_board(job, board, mode, notes)
+    apply_board(job, board, mode, notes, preserve_media=decisions is not None)
     transitions = effective_transitions(
         [{**s, "frames": round(s["duration"] * 30)} for s in board["shots"]]
     )

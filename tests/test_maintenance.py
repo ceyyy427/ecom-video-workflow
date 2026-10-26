@@ -159,7 +159,7 @@ def test_check_api_and_guide_preserve_business_rows(tmp_path):
     with TestClient(create_app(root), base_url="http://localhost") as client:
         response = client.get("/api/system/check")
         assert response.status_code == 200
-        assert response.json()["database"]["schema"] == 14
+        assert response.json()["database"]["schema"] == 15
         assert "deliveryCheck" in client.get("/guide").text
         assert client.get("/api/system/check", headers={"Host": "evil.example"}).status_code == 400
     assert store.get(job["id"])["status"] == "draft"

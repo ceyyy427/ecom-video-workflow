@@ -23,35 +23,35 @@
 ### Task 1: 共用协议、六方向规划与持久状态
 **Files:** content_plan.py、idea_plans.py、migrations/015_idea_plans.sql、db.py；tests/test_idea_plans.py。
 **Interfaces:** ContentBrief → build_plan(brief, materials) → CreativePlan；IdeaPlans(root,store).create/get/enqueue/cancel/claim/progress/finish。
-- [ ] 写未给数据不造数字、六方向/四镜结构、受众气质变化、哈希绑定、排队/取消/过期/复用的失败测试并运行。
-- [ ] 实现协议与只新增表迁移；保存不可变计划和有界状态。
-- [ ] 运行测试，固定旧schema14升级与旧任务保留用例，提交。
+- [x] 写未给数据不造数字、六方向/四镜结构、受众气质变化、哈希绑定、排队/取消/过期/复用的失败测试并运行。
+- [x] 实现协议与只新增表迁移；保存不可变计划和有界状态。
+- [x] 运行测试，固定旧schema14升级与旧任务保留用例，提交。
 
 ### Task 2: 素材与真实预览执行
 **Files:** idea_media.py、idea_renderer.py、idea_worker.py、worker.py、render/remotion/src/CodeVisual.tsx、现有媒体组件；tests/test_idea_render.py。
 **Interfaces:** material_refs→冻结素材；render_option(plan,option,root,directory,check)→MP4/PNG/manifest；Worker无旧任务时消费预览队列。
-- [ ] 写图片/视频边界、已知身份冲突、保护动作、短素材、取消/失败/复用、图示无伪数据的失败测试并运行。
-- [ ] 复用现有媒体检查/渲染器与清理逻辑；六适配和生成图示；输出严格核验后才ready。
-- [ ] 运行相关测试/TS；提交。
+- [x] 写图片/视频边界、已知身份冲突、保护动作、短素材、取消/失败/复用、图示无伪数据的失败测试并运行。
+- [x] 复用现有媒体检查/渲染器与清理逻辑；六适配和生成图示；输出严格核验后才ready。
+- [x] 运行相关测试/TS；提交。
 
 ### Task 3: 选择后进入客户制作，保留人工门禁
 **Files:** idea_adoption.py、customer.py、customer_directions.py、creative.py、customer_planner.py、products.py；tests/test_idea_adoption.py。
 **Interfaces:** adopt(plan_id,option,basis)→新customer_id；apply_script(pid,revision)→待确认文稿；读取同一plan驱动方向/分镜。
-- [ ] 写幂等采用、stale拒绝、事实未审不能带入、确认后仍待文稿/风格/听核、逐镜修改/恢复旧任务兼容的失败测试并运行。
-- [ ] 实现资料/素材复制与来源映射；无自动审批；只有关联项目消费新的方向提示，旧任务指纹不变。
-- [ ] 跑客户/版本相关回归并提交。
+- [x] 写幂等采用、stale拒绝、事实未审不能带入、确认后仍待文稿/风格/听核、逐镜修改/恢复旧任务兼容的失败测试并运行。
+- [x] 实现资料/素材复制与来源映射；无自动审批；只有关联项目消费新的方向提示，旧任务指纹不变。
+- [x] 跑客户/版本相关回归并提交。
 
 ### Task 4: 页面与API接线
 **Files:** idea_api.py、api.py、web/ideas.{html,js,css}、web/customer.js；tests/test_idea_api.py、tests/web/ideas.test.cjs。
 **Interfaces:** 使用设计中的/api/idea-plans与既有会话校验；轮询只读，所有变更由按钮发起。
-- [ ] 写实际JS事件、重载恢复、表单变化废弃旧选择、仅ready采用、上传/跨目录/伪造basis的失败测试并运行。
-- [ ] 保留现有页面外观，加入素材、事实折叠区、六视频播放器/状态/采用与制作链接。
-- [ ] 跑API/DOM/TS测试并提交。
+- [x] 写实际JS事件、重载恢复、表单变化废弃旧选择、仅ready采用、上传/跨目录/伪造basis的失败测试并运行。
+- [x] 保留现有页面外观，加入素材、事实折叠区、六视频播放器/状态/采用与制作链接。
+- [x] 跑API/DOM/TS测试并提交。
 
 ### Task 5: 真实实拍与图示验收、文档与复核
 **Files:** scripts/accept_six_previews.py、docs/SIX_PREVIEWS_{USAGE,ACCEPTANCE}.md、docs/third-party/six-previews-reuse.md。
 **Interfaces:** 隔离验收目录→真实渲染/严格解码/多帧/差异/耗时/复用/进入制作证据；不写客户审批。
-- [ ] 用许可明确的本机鲜橙实拍与无素材知识主题各生成六预览，实际抽帧检查并修复。
-- [ ] 隔离夹具验证采用→事实/文稿确认→分镜→修改/恢复；审批标记fixture，真实样片保持待人审。
-- [ ] 全量非浏览器pytest、前端测试、TS/Ruff；按复核技能作独立只读复核并修复。
+- [x] 用许可明确的本机鲜橙实拍与无素材知识主题各生成六预览，实际抽帧检查并修复。
+- [x] 隔离夹具验证采用→事实/文稿确认→分镜→修改/恢复；审批标记fixture，真实样片保持待人审。
+- [x] 全量非浏览器pytest、前端测试、TS/Ruff；按复核技能作独立只读复核并修复。
 - [ ] 更新操作、采用依据、验收结果/限制与回退，提交并把变更合回原仓库，保留原UI/未提交文档。

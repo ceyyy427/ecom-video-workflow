@@ -1,16 +1,17 @@
 """Silent real MP4 previews, using the existing pinned Remotion/FFmpeg engine."""
 
+import re
 import shutil
 import time
 from pathlib import Path
-from typing import Literal
+from typing import Annotated, Literal
 
 from PIL import Image, ImageDraw, ImageFont
 from pydantic import Field
 
 from .content_plan import ADAPTERS, Datum
 from .creative import CATALOG, Strict, signature
-from .idea_media import check_materials
+from .idea_media import check_materials, source_windows
 from .media import digest, font_path, input_options, probe, run_checked, safe_path
 from .remotion_renderer import ENGINE, engine_hash
 from .renderer import write_json
@@ -23,7 +24,9 @@ class CodeVisual(Strict):
         "swiss-motion", "blueprint", "dataviz", "paper-popup", "dark-keynote", "kino-montage"
     ]
     subject: str = Field(max_length=60)
-    labels: list[str] = Field(min_length=1, max_length=3)
+    labels: list[Annotated[str, Field(min_length=1, max_length=100)]] = Field(
+        min_length=1, max_length=3
+    )
     data: list[Datum] = Field(default_factory=list, max_length=6)
     schematic: Literal[True] = True
     tone: str = Field(default="", max_length=120)
@@ -35,6 +38,7 @@ def engine_key():
             "engine": engine_hash(),
             "plan": digest(Path(__file__).with_name("content_plan.py")),
             "renderer": digest(Path(__file__)),
+            "source_checks": digest(Path(__file__).with_name("idea_media.py")),
         }
     )
 
@@ -65,7 +69,7 @@ def visual_poster(path, spec):
     image.save(path)
 
 
-def preview_props(plan, option, scene, seconds, index, src="", kind="image"):
+def preview_props(plan, option, scene, seconds, index, src="", kind="image", windows=None):
     style = next(s for s in CATALOG if s["id"] == option["native_style"])
     paper, ink, accent = style["colors"]
     if option["id"] == "blueprint":
@@ -75,12 +79,13 @@ def preview_props(plan, option, scene, seconds, index, src="", kind="image"):
     props = {
         "frames": round(seconds * 30),
         "text": scene["text"],
-        "headline": scene["text"][:8],
+        "headline": scene.get("headline", ""),
         "src": src,
         "kind": kind,
         "style": option["native_style"],
         "format": "narrated",
-        "brand": {"name": "", "ink": ink, "paper": paper, "accent": accent, "subtitle_size": 52},
+        "brand": option.get("brand")
+        or {"name": "", "ink": ink, "paper": paper, "accent": accent, "subtitle_size": 52},
         "motion": "static",
         "fit": "contain",
         "focus_x": 0.5,
@@ -101,6 +106,7 @@ def preview_props(plan, option, scene, seconds, index, src="", kind="image"):
     }
     motion = MotionPlan(
         intent="hook" if index == 0 else "detail",
+        windows=windows or [],
         visual_finish="polished-v1",
         strength="subtle" if "克制" in plan["brief"]["tone"] else "balanced",
     ).model_dump()
@@ -119,7 +125,7 @@ def preview_props(plan, option, scene, seconds, index, src="", kind="image"):
         props["codeVisual"] = visual_spec(plan, option, scene)
         props["captions"] = []  # The entire sentence lives inside the diagram.
     if props.get("codeVisual"):
-        props["headline"] = plan["subject"][:8]
+        props["headline"] = plan["subject"] if len(plan["subject"]) <= 8 else ""
     props.update(prepare_visuals(props))
     if props.get("codeVisual"):
         props["captions"] = []
@@ -140,6 +146,8 @@ def cached(root, record, basis, engine):
 
 
 def render_option(plan, option, root, directory, check=lambda: None):
+    if plan["engine"] != engine_key():
+        raise ValueError("渲染引擎已更新，请重新生成六个方案；旧预览保留，不混用版本")
     check()
     check_materials(root, plan["materials"])
     directory = Path(directory)
@@ -155,6 +163,7 @@ def render_option(plan, option, root, directory, check=lambda: None):
     for index, (scene, seconds) in enumerate(
         zip(option["scenes"][:2], option["preview_scene_seconds"], strict=True)
     ):
+        windows = []
         asset = assets.get(scene["material_id"])
         src = ""
         kind = "image"
@@ -173,13 +182,7 @@ def render_option(plan, option, root, directory, check=lambda: None):
                     start = candidate
                 if start + seconds > duration + 0.001:
                     raise ValueError("实拍长度不足，不能靠循环或冻结凑预览")
-                for action in asset["metadata"].get("complete_actions", []):
-                    if (
-                        start < action["end"]
-                        and start + seconds > action["start"]
-                        and not (start <= action["start"] and start + seconds >= action["end"])
-                    ):
-                        raise ValueError("预览会截断已标记的完整动作，请调整素材入点或使用代码方案")
+                windows = source_windows(asset, start, seconds)
                 run_checked(
                     [
                         "ffmpeg",
@@ -221,37 +224,15 @@ def render_option(plan, option, root, directory, check=lambda: None):
                         "sha256": asset["sha256"],
                     }
                 )
-        props = preview_props(plan, option, scene, seconds, index, src, kind)
+        props = preview_props(plan, option, scene, seconds, index, src, kind, windows)
         shots.append({"key": f"scene-{index + 1}", "props": props})
     config = directory / "render.json"
     write_json(
         config, {"publicDir": str(public), "outputDir": str(out), "shots": shots, "mode": "preview"}
     )
     run_checked(["node", str(ENGINE / "render.mjs"), str(config)], check=check, timeout=900)
-    concat = directory / "concat.txt"
-    concat.write_text("\n".join(f"file '{(out / (s['key'] + '.mp4')).as_posix()}'" for s in shots))
-    video = directory / "preview.mp4"
+    video = join_preview_clips(directory, shots, check)
     poster = directory / "poster.png"
-    run_checked(
-        [
-            "ffmpeg",
-            "-v",
-            "error",
-            "-y",
-            "-f",
-            "concat",
-            "-safe",
-            "0",
-            "-i",
-            str(concat),
-            "-c",
-            "copy",
-            "-movflags",
-            "+faststart",
-            str(video),
-        ],
-        check=check,
-    )
     shutil.copyfile(out / "scene-1.png", poster)
     info = probe(video)
     stream = next(s for s in info["streams"] if s["codec_type"] == "video")
@@ -270,3 +251,34 @@ def render_option(plan, option, root, directory, check=lambda: None):
         "video": {"path": video.relative_to(root).as_posix(), "sha256": digest(video)},
         "poster": {"path": poster.relative_to(root).as_posix(), "sha256": digest(poster)},
     }
+
+
+def join_preview_clips(directory, shots, check=lambda: None):
+    directory = Path(directory)
+    if any(not re.fullmatch(r"[a-zA-Z0-9_-]{1,64}", s["key"]) for s in shots):
+        raise ValueError("预览片段标识不合法")
+    # FFmpeg resolves relative paths against the list file, including quoted roots.
+    concat = directory / "concat.txt"
+    concat.write_text("\n".join(f"file 'clips/{s['key']}.mp4'" for s in shots))
+    video = directory / "preview.mp4"
+    run_checked(
+        [
+            "ffmpeg",
+            "-v",
+            "error",
+            "-y",
+            "-f",
+            "concat",
+            "-safe",
+            "1",
+            "-i",
+            str(concat),
+            "-c",
+            "copy",
+            "-movflags",
+            "+faststart",
+            str(video),
+        ],
+        check=check,
+    )
+    return video

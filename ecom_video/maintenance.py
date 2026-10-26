@@ -22,6 +22,7 @@ REFERENCES = {
     "artifacts": ("path", "sha256"),
     "product_sources": ("path", "sha256"),
     "customer_media": ("path", "sha256"),
+    "idea_uploads": ("path", "sha256"),
     "voice_takes": ("path", "sha256"),
     "report_batches": ("path", "sha256"),
     "review_sources": ("path", "sha256"),
@@ -29,6 +30,7 @@ REFERENCES = {
 }
 PENDING = {
     "jobs": ("queued", "validating", "rendering", "auditing"),
+    "idea_plans": ("queued", "rendering"),
     "alignments": ("running",),
     "media_analyses": ("queued", "running"),
     "agent_executions": ("queued", "running"),
@@ -43,7 +45,7 @@ PENDING = {
         "creating",
     ),
 }
-DATA_DIRS = {"jobs", "products", "customers", "analyses", "reports", "distribution"}
+DATA_DIRS = {"jobs", "products", "customers", "analyses", "reports", "distribution", "ideas"}
 
 
 class MaintenanceError(ValueError):
@@ -141,6 +143,18 @@ def references(c, tables):
             for item in json.loads(row[0]).values():
                 add(item["path"], item["sha256"])
 
+    if "idea_plans" in tables:
+        for raw, previews in c.execute("SELECT plan,previews FROM idea_plans"):
+            for asset in json.loads(raw)["materials"]:
+                add(asset["path"], asset["sha256"])
+                original = asset["metadata"].get("intake") or {}
+                if original.get("original_path"):
+                    add(original["original_path"], original["original_sha256"])
+            for preview in json.loads(previews).values():
+                for kind in ("video", "poster"):
+                    if preview.get(kind):
+                        add(preview[kind]["path"], preview[kind]["sha256"])
+
     def add_frames(aid, result):
         for segment in result.get("segments", []):
             for frame in segment.get("frames", []):
@@ -149,7 +163,7 @@ def references(c, tables):
     frozen_ids = set()
     # Working copies and historical job snapshots retain the original receipt.
     # A library entry may have been removed after the job was frozen.
-    for table in ("assets", "customer_media"):
+    for table in ("assets", "customer_media", "idea_uploads"):
         if table in tables:
             for (raw,) in c.execute(f"SELECT metadata FROM {table}"):
                 original = json.loads(raw).get("intake") or {}

@@ -87,8 +87,11 @@ class BodyLimit:
             else 32 * 1024**2
             if scope["path"] == "/api/maintenance/packages"
             else 513 * 1024**2
-            if scope["path"].startswith("/api/customer-projects/")
-            and scope["path"].endswith("/assets")
+            if (
+                scope["path"].startswith("/api/customer-projects/")
+                and scope["path"].endswith("/assets")
+            )
+            or scope["path"] == "/api/idea-uploads"
             else MAX_UPLOAD + 1024**2
             if scope["path"].endswith("/assets")
             else (
@@ -517,6 +520,7 @@ def create_app(root):
     @app.get("/ideas")
     def ideas_page():
         return FileResponse(WEB / "ideas.html")
+
     app.include_router(analysis_router(root, store))
     app.include_router(agent_router(root, store))
     app.include_router(distribution_router(root, store))

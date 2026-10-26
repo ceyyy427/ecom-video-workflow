@@ -88,6 +88,8 @@ def adopt(root, store, plan_id, basis, option_id):
                 backup = visual_dir / (aid + "-original" + old.suffix)
                 shutil.copyfile(old, backup)
                 metadata["intake"]["original_path"] = backup.relative_to(root).as_posix()
+            if metadata.get("identity"):
+                metadata["identity_reference"] = metadata.pop("identity")
             metadata["idea_material_id"] = asset["id"]
             media.append(
                 {
@@ -141,6 +143,7 @@ def adopt(root, store, plan_id, basis, option_id):
                 "tone": plan["brief"]["tone"],
             },
             delivery_version=1,
+            brand=option.get("brand"),
         ).model_dump()
         with store.transaction() as c:
             current = service.row(c, plan_id)
@@ -267,7 +270,7 @@ def apply_script(store, pid, basis, revision):
     )
 
 
-def apply_board(job, board, mode, notes):
+def apply_board(job, board, mode, notes, *, preserve_media=False):
     selected = (job.get("provenance") or {}).get("idea_plan")
     if not selected:
         return
@@ -278,6 +281,10 @@ def apply_board(job, board, mode, notes):
     lines = job["script"].splitlines()
     scenes = option["scenes"]
     if lines != [s["text"] for s in scenes]:
+        if any(a["metadata"].get("code_visual") for a in job["assets"]):
+            raise ValueError(
+                "文稿已修改，旧图示文字不能继续沿用；请重新生成对应方案或替换图示素材，再确认分镜"
+            )
         notes.append("文稿已编辑，本次按当前文稿编排，原创意计划留作参考；不强行套用旧语义映射。")
         return
     from .shotcraft import MotionPlan
@@ -294,7 +301,7 @@ def apply_board(job, board, mode, notes):
             ),
             None,
         )
-        if matched:
+        if matched and not preserve_media:
             start = matched["metadata"].get("source_in", 0)
             if (
                 matched["kind"] == "video"
@@ -313,14 +320,32 @@ def apply_board(job, board, mode, notes):
         motion = shot.get("motion_plan") or MotionPlan().model_dump()
         motion["prompt_card"] = None
         shot.update(
+            headline=scene.get("headline", shot.get("headline", "")),
             presentation="design",
             shot_id=scene["id"],
             shot_recipe=scene["recipe"],
             transition=scene["transition"],
             motion_plan=motion,
         )
-        if mode == "showcase":
-            shot["duration"] = scene["seconds"]
     notes.append(
         f"沿用创意预览 {selected['plan_id']} / {selected['option_id']}：同一文稿、稳定镜头ID与配方；声音时长优先，仍待逐镜和成片审核。"
     )
+
+
+def validate_diagram(asset, line, provenance):
+    from .idea_renderer import CodeVisual
+
+    value = asset["metadata"]
+    if isinstance(value, str):
+        value = json.loads(value)
+    spec = CodeVisual.model_validate(value["code_visual"])
+    if spec.labels != [line]:
+        raise ValueError("图示文字与当前文稿不同，请更新对应图示或重新生成方案，不能显示旧事实")
+    if spec.data:
+        selected = (provenance or {}).get("idea_plan")
+        expected = {
+            c["text"] for c in (selected or {}).get("claims", []) if c["id"].startswith("data-")
+        }
+        confirmed = {f["text"] for f in (provenance or {}).get("facts", [])}
+        if not expected or not expected.issubset(confirmed):
+            raise ValueError("数据图示含尚未确认的数值，请核对完整来源后再制作")

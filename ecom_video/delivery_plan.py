@@ -106,6 +106,24 @@ def validate_delivery(job, board):
                 speed = length / cut["duration"]
                 if not 0.5 <= speed <= 2:
                     raise ValueError("普通实拍速度须在0.5–2倍内；完整动作保持原速")
+                from .idea_media import source_windows
+
+                known_windows = source_windows(asset, start, length)
+                if known_windows:
+                    if abs(speed - 1) > 0.001:
+                        raise ValueError("已知完整动作必须原速，不能用多段变速绕过保护")
+                    known_plan = shot.get("motion_plan") or MotionPlan().model_dump()
+                    if not known_plan["protect_action"]:
+                        raise ValueError("已知完整动作不能关闭动作保护")
+                    for window in known_windows:
+                        shifted = {
+                            **window,
+                            "start": round(at + window["start"] / speed, 6),
+                            "end": round(at + window["end"] / speed, 6),
+                        }
+                        if shifted not in known_plan["windows"]:
+                            known_plan["windows"].append(shifted)
+                    shot["motion_plan"] = MotionPlan.model_validate(known_plan).model_dump()
                 action = cut.get("complete_action")
                 if action:
                     if start > action["start"] + 0.001 or start + length < action["end"] - 0.001:

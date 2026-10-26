@@ -57,3 +57,62 @@ def test_upload_requires_usage_declaration_and_rejects_paths_and_code(tmp_path):
     assert len(p["plan"]["materials"]) == 1
     for extra in [{"path": "/etc/passwd"}, {"code": 'fetch("https://example.test")'}]:
         assert c.post("/api/idea-plans", json={"idea": "非法输入", **extra}).status_code == 422
+
+
+def test_video_intake_route_uses_existing_video_upload_budget(tmp_path):
+    from ecom_video.api import BodyLimit
+    from ecom_video.media_intake import MAX_VIDEO_SOURCE
+
+    # A Content-Length check must classify the new path like customer media, not JSON.
+    calls = []
+
+    async def app(scope, receive, send):
+        calls.append("allowed")
+
+    import asyncio
+
+    async def check():
+        async def receive():
+            return {"type": "http.request", "body": b"", "more_body": False}
+
+        async def send(message):
+            calls.append(message.get("status"))
+
+        scope = {
+            "type": "http",
+            "method": "POST",
+            "path": "/api/idea-uploads",
+            "headers": [(b"content-length", str(MAX_VIDEO_SOURCE - 1).encode())],
+        }
+        await BodyLimit(app, tmp_path)(scope, receive, send)
+
+    asyncio.run(check())
+    assert calls == ["allowed"]
+
+
+def test_freezing_project_media_survives_deleting_the_original_library_entry(tmp_path):
+    from test_customer import picture, project
+
+    from ecom_video.maintenance import backup
+    from ecom_video.media import safe_path
+
+    c = client(tmp_path)
+    p = picture(c, project(c))
+    a = p["media"][0]
+    row = c.post(
+        "/api/idea-plans",
+        json={
+            "idea": "用这张图讲清楚构图",
+            "mode": "footage",
+            "materials": [{"origin": "customer", "project_id": p["id"], "id": a["id"]}],
+        },
+    ).json()
+    frozen = safe_path(tmp_path, row["plan"]["materials"][0]["path"])
+    r = c.request(
+        "DELETE",
+        f"/api/customer-projects/{p['id']}/assets/{a['id']}",
+        json={"revision": p["revision"]},
+    )
+    assert r.status_code == 200, r.text
+    assert frozen.is_file()
+    backup(tmp_path, tmp_path.parent / (tmp_path.name + "-backup"))

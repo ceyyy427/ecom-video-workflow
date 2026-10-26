@@ -103,3 +103,49 @@ def test_plan_queue_survives_restart_cancels_and_recovers_expired_runs(tmp_path)
     with store.connect() as c:
         assert c.execute("PRAGMA user_version").fetchone()[0] == 15
         assert c.execute("PRAGMA foreign_key_check").fetchall() == []
+
+
+def test_empty_multiline_scene_fields_and_duplicate_media_do_not_create_broken_scripts():
+    from ecom_video.content_plan import ContentBrief
+
+    for payload in [
+        {"idea": "   "},
+        {"idea": "正常主题", "subject": "标题\n另起一行"},
+        {"idea": "正常主题", "facts": [{"text": "两行\n事实", "source": "资料"}]},
+        {"idea": "正常主题", "facts": [{"text": "   ", "source": "资料"}]},
+        {
+            "idea": "正常主题",
+            "materials": [
+                {"origin": "upload", "id": "a" * 32},
+                {"origin": "upload", "id": "a" * 32},
+            ],
+        },
+    ]:
+        with pytest.raises(ValueError):
+            ContentBrief.model_validate(payload)
+
+
+def test_missing_ready_preview_can_be_retried_without_recreating_good_options(tmp_path):
+    from ecom_video.db import Store
+    from ecom_video.idea_plans import IdeaPlans
+    from ecom_video.media import digest
+    from ecom_video.products import encoded
+
+    store = Store(tmp_path / "workflow.db")
+    svc = IdeaPlans(tmp_path, store)
+    p = svc.create(brief(), [])
+    file = tmp_path / "preview.mp4"
+    file.write_bytes(b"isolated state-machine fixture")
+    record = {
+        "video": {"path": file.name, "sha256": digest(file)},
+        "poster": {"path": file.name, "sha256": digest(file)},
+    }
+    with store.transaction() as c:
+        c.execute(
+            "UPDATE idea_plans SET status='ready',previews=? WHERE id=?",
+            (encoded({o["id"]: record for o in p["plan"]["options"]}), p["id"]),
+        )
+    file.unlink()
+    assert svc.get(p["id"])["repair_needed"] is True
+    retried = svc.enqueue(p["id"], p["basis"])
+    assert retried["status"] == "queued" and retried["completed"] == 0

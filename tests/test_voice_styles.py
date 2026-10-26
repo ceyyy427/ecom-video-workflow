@@ -278,6 +278,9 @@ def test_schema_12_upgrade_preserves_prior_rows(tmp_path):
             t: [tuple(r) for r in db.execute('SELECT * FROM "' + t + '" ORDER BY rowid')]
             for t in tables
         }
+        db.execute("DROP TABLE idea_adoptions")
+        db.execute("DROP TABLE idea_plans")
+        db.execute("DROP TABLE idea_uploads")
         db.execute("DROP TABLE voice_patches")
         db.execute("DROP TABLE voice_takes")
         db.execute("DELETE FROM schema_migrations WHERE version>=13")

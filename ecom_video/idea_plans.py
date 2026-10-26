@@ -27,13 +27,19 @@ class IdeaPlans:
             out = self.row(c, pid)
         out["plan"] = json.loads(out["plan"])
         out["previews"] = json.loads(out["previews"])
-        out["completed"] = len(out["previews"])
+        invalid = (
+            self.invalid_previews(out["plan"], out["previews"]) if out["status"] == "ready" else []
+        )
+        out["repair_needed"] = bool(invalid)
+        out["completed"] = len(out["previews"]) - len([k for k in invalid if k in out["previews"]])
         if not internal:
             out.pop("lease_token", None)
         return out
 
     def create(self, brief, materials, *, engine="preview-v1"):
-        plan = build_plan(brief, materials, engine=engine)
+        from .idea_media import freeze_materials
+
+        plan = build_plan(brief, freeze_materials(self.root, materials), engine=engine)
         with self.store.transaction() as c:
             prior = c.execute(
                 "SELECT id FROM idea_plans WHERE basis=?", (plan["basis"],)
@@ -55,8 +61,16 @@ class IdeaPlans:
             row = self.row(c, pid)
             if row["basis"] != basis:
                 raise Conflict("创意方案依据已变化，请重新比较")
-            if row["status"] in ("queued", "rendering", "ready"):
+            if row["status"] in ("queued", "rendering"):
                 return self.get(pid)
+            if row["status"] == "ready":
+                plan, previews = json.loads(row["plan"]), json.loads(row["previews"])
+                invalid = self.invalid_previews(plan, previews)
+                if not invalid:
+                    return self.get(pid)
+                for key in invalid:
+                    previews.pop(key, None)
+                c.execute("UPDATE idea_plans SET previews=? WHERE id=?", (encoded(previews), pid))
             if (
                 c.execute("SELECT COUNT(*) FROM idea_plans WHERE status='queued'").fetchone()[0]
                 >= 8
@@ -128,6 +142,23 @@ class IdeaPlans:
                 (status, error, time.time(), pid),
             )
         return self.get(pid)
+
+    def invalid_previews(self, plan, previews):
+        invalid = []
+        for option in plan["options"]:
+            record = previews.get(option["id"])
+            try:
+                if not record:
+                    invalid.append(option["id"])
+                    continue
+                for kind in ("video", "poster"):
+                    path = safe_path(self.root, record[kind]["path"])
+                    if not path.is_file() or digest(path) != record[kind]["sha256"]:
+                        invalid.append(option["id"])
+                        break
+            except (ValueError, KeyError):
+                invalid.append(option["id"])
+        return invalid
 
     def preview(self, pid, option, kind):
         record = self.get(pid)["previews"].get(option)

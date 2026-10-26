@@ -19,12 +19,12 @@ class Element{
  addEventListener(name,fn){this.listeners[name]=fn;} pause(){this.paused=true;}
  querySelectorAll(tag){return this.children.flatMap(n=>[...(n.tagName===tag?[n]:[]),...n.querySelectorAll(tag)]);}
 }
-async function boot(){
+async function boot({mutateDuringSubmit=false,mutateDuringRestore=false}={}){
  const ids=new Map(),get=id=>{if(!ids.has(id))ids.set(id,new Element());return ids.get(id);};
  for(const [id,value]of Object.entries({ideaText:'桥梁怎样承重',ideaSubject:'桥梁',ideaAudience:'中学生',ideaTone:'清楚',ideaMode:'code'}))get(id).value=value;
  const options=['swiss-motion','blueprint','dataviz','paper-popup','dark-keynote','kino-montage'].map(id=>({id,name:id,native_style:'lab',script:'示例文稿',reason:'按主题解释',missing:[],source:{url:'https://example.test/source'},scenes:[{text:'一句待核对文稿',visual_reason:'场景示意'}],voice_suggestion:{tone:'自然',speed:1}}));
- const row={id:'plan1',basis:'basis1',status:'ready',completed:6,plan:{options,missing:[],brief:{},preview_seconds:7},previews:Object.fromEntries(options.map(o=>[o.id,{video:{sha256:'sha'},poster:{sha256:'sha'}}]))};
- const context={console,URLSearchParams,location:{search:''},setTimeout(){return 1;},clearTimeout(){},localStorage:{getItem(){return null;},setItem(){}},document:{getElementById:get,createElement:tag=>new Element(tag),querySelectorAll:tag=>get('ideaResults').querySelectorAll(tag)},window:{IdeaState:state},fetch:async url=>({ok:true,json:async()=>url==='/api/session'?{token:'test'}:url==='/api/film-styles'?options:url==='/api/idea-plans'?row:url.endsWith('/adopt')?{id:'new-project'}:row})};
+ const row={id:'plan1',basis:'basis1',status:'ready',completed:6,plan:{options,missing:[],brief:{idea:'旧主题A',subject:'桥梁',audience:'中学生',tone:'清楚',mode:'code',facts:[],data:[]},materials:[],preview_seconds:7},previews:Object.fromEntries(options.map(o=>[o.id,{video:{sha256:'sha'},poster:{sha256:'sha'}}]))};
+ const context={console,URLSearchParams,location:{search:''},setTimeout(){return 1;},clearTimeout(){},localStorage:{getItem(){return mutateDuringRestore?"plan1":null;},setItem(){}},document:{getElementById:get,createElement:tag=>new Element(tag),querySelectorAll:tag=>get('ideaResults').querySelectorAll(tag)},window:{IdeaState:state},fetch:async url=>{if(url==='/api/idea-plans/plan1'&&mutateDuringRestore){get('ideaText').value='正在填写的新主题';get('ideaForm').listeners.input();}if(url==='/api/idea-plans'&&mutateDuringSubmit){get('ideaText').value='新主题B';get('ideaForm').listeners.input();}return {ok:true,json:async()=>url==='/api/session'?{token:'test'}:url==='/api/film-styles'?options:url==='/api/idea-plans'?row:url.endsWith('/adopt')?{id:'new-project'}:row}}};
  vm.createContext(context);vm.runInContext(fs.readFileSync(path.resolve(__dirname,'../../ecom_video/web/ideas.js'),'utf8'),context);await new Promise(r=>setImmediate(r));
  await get('ideaForm').listeners.submit({preventDefault(){}});return {get,row,context};
 }
@@ -36,4 +36,15 @@ test('ready plan shows six real video controls and adoption opens a pending cust
 test('editing the brief immediately disables adoption of stale suggestions',async()=>{
  const {get}=await boot();get('ideaText').value='新主题';get('ideaForm').listeners.input();
  const buttons=get('ideaResults').querySelectorAll('button').filter(n=>n.textContent==='采用这个方向');assert.equal(buttons.length,6);assert.ok(buttons.every(n=>n.disabled));
+});
+
+test('an in-flight response cannot revive stale adoption after user edits',async()=>{
+ const {get}=await boot({mutateDuringSubmit:true});
+ assert.equal(get('ideaText').value,'新主题B');
+ const buttons=get('ideaResults').querySelectorAll('button').filter(n=>n.textContent==='采用这个方向');
+ assert.equal(buttons.length,6);assert.ok(buttons.every(n=>n.disabled));
+});
+
+test('loading history does not overwrite text entered while its request was pending',async()=>{
+ const {get}=await boot({mutateDuringRestore:true});assert.equal(get('ideaText').value,'正在填写的新主题');
 });

@@ -126,10 +126,17 @@ def validate_board(job, data):
         raise ValueError("分镜数必须与已保存脚本行数一致")
     assets = {a["id"]: a for a in job["assets"]}
     total = 0
-    for shot in board["shots"]:
+    for shot_index, shot in enumerate(board["shots"]):
         asset = assets.get(shot["asset_id"])
         if not asset or asset["kind"] == "audio":
             raise ValueError("每镜必须选择属于本任务的画面素材")
+        if metadata(asset).get("code_visual"):
+            from .idea_adoption import validate_diagram
+
+            provenance = job.get("provenance") or {}
+            if isinstance(provenance, str):
+                provenance = json.loads(provenance)
+            validate_diagram(asset, lines[shot_index], provenance)
         shot["duration"] = round(shot["duration"] * 30) / 30
         shot["source_in"] = round(shot["source_in"] * 30) / 30
         total += shot["duration"]
@@ -138,6 +145,18 @@ def validate_board(job, data):
         ):
             raise ValueError("动作保护区间超出本镜时长")
         if asset["kind"] == "video":
+            if not shot.get("source_cuts"):
+                from .idea_media import source_windows
+
+                windows = source_windows(asset, shot["source_in"], shot["duration"])
+                if windows:
+                    plan = shot.get("motion_plan") or MotionPlan().model_dump()
+                    if not plan["protect_action"]:
+                        raise ValueError("已知完整动作不能关闭动作保护")
+                    for window in windows:
+                        if window not in plan["windows"]:
+                            plan["windows"].append(window)
+                    shot["motion_plan"] = MotionPlan.model_validate(plan).model_dump()
             if (
                 not shot.get("source_cuts")
                 and shot["source_in"] + shot["duration"] > metadata(asset)["duration"] + 0.001
