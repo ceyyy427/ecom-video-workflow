@@ -42,6 +42,8 @@ node --test tests/web/*.test.cjs
 
 本机留存：`preview-acceptance.json`、两组contact图、`regression-latest.json`及工程子目录、`production-migration.json`、升级前schema14备份目录和可在维护页导入的ZIP。文件位于本轮指定的仓库外验收目录，不提交媒体或客户备份到GitHub。
 
+主仓库合入后的新功能回归29项通过。原先175份修改/未跟踪文件及20张业务表的指纹保持；原主库仍为schema14，真实迁移只在恢复副本完成。
+
 ## 使用与回退
 
 操作见 [六预览指南](SIX_PREVIEWS_USAGE.md)。首期适配6个结构，其余53种仍是参考资料；预览静音。复杂图示、任意画风、全自动知识核验、配音重做不在本期新增范围。既有本机模型、逐镜编辑及听审入口保留。
