@@ -18,7 +18,7 @@ class Strict(BaseModel):
 
 
 class Shot(Strict):
-    presentation: Literal["client", "legacy"] | None = None
+    presentation: Literal["client", "legacy", "design"] | None = None
     source_cuts: list[SourceCut] | None = Field(default=None, min_length=1, max_length=4)
     shot_id: str | None = Field(default=None, pattern=r"^[a-zA-Z0-9_-]{1,48}$")
     headline: str = Field(default="", max_length=8)

@@ -97,31 +97,79 @@ def prepare_cut_video(root, target, scene, assets, check):
         part = target.with_name(target.stem + f"-part-{i}.mp4")
         frames = round(cut["duration"] * 30)
         speed = cut["source_duration"] / cut["duration"]
-        vf = (f"trim=duration={cut['source_duration']},setpts=(PTS-STARTPTS)/{speed},"
-              + crop_filter(scene)
-              + "scale=1080:1920:force_original_aspect_ratio=decrease:force_divisible_by=2,"
-              + "pad=1080:1920:(ow-iw)/2:(oh-ih)/2,setsar=1,fps=30,")
+        vf = (
+            f"trim=duration={cut['source_duration']},setpts=(PTS-STARTPTS)/{speed},"
+            + crop_filter(scene)
+            + "scale=1080:1920:force_original_aspect_ratio=decrease:force_divisible_by=2,"
+            + "pad=1080:1920:(ow-iw)/2:(oh-ih)/2,setsar=1,fps=30,"
+        )
         # Up to one final frame for sample/frame-grid rounding, never action-length padding.
         vf += "tpad=stop_mode=clone:stop_duration=0.034"
-        run_checked(["ffmpeg", "-v", "error", "-y", "-ss", str(cut["source_in"]),
-                     *input_options(source), "-i", str(source), "-an", "-vf", vf,
-                     "-frames:v", str(frames), "-c:v", "libx264", "-preset", "veryfast",
-                     "-threads", "2", "-pix_fmt", "yuv420p", str(part)], check)
+        run_checked(
+            [
+                "ffmpeg",
+                "-v",
+                "error",
+                "-y",
+                "-ss",
+                str(cut["source_in"]),
+                *input_options(source),
+                "-i",
+                str(source),
+                "-an",
+                "-vf",
+                vf,
+                "-frames:v",
+                str(frames),
+                "-c:v",
+                "libx264",
+                "-preset",
+                "veryfast",
+                "-threads",
+                "2",
+                "-pix_fmt",
+                "yuv420p",
+                str(part),
+            ],
+            check,
+        )
         stream = next(s for s in probe(part)["streams"] if s["codec_type"] == "video")
         if int(stream.get("nb_frames", 0)) != frames:
             raise ValueError("实拍分段解码帧数不足；未循环或长冻结填充")
         parts.append(part)
     listing = target.with_suffix(".txt")
     listing.write_text("".join(f"file '{p.name}'\n" for p in parts))
-    run_checked(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "1", "-i",
-                 str(listing), "-c", "copy", str(target)], check)
+    run_checked(
+        [
+            "ffmpeg",
+            "-v",
+            "error",
+            "-y",
+            "-f",
+            "concat",
+            "-safe",
+            "1",
+            "-i",
+            str(listing),
+            "-c",
+            "copy",
+            str(target),
+        ],
+        check,
+    )
 
 
 def render_remotion(job, root, directory, check):
     root, directory = Path(root), Path(directory)
     snap = job["snapshot"]
     assets = {
-        a["id"]: {**a, "metadata": {**asset_metadata(a), **inspect_media(safe_path(root, a["path"]), a["kind"])}}
+        a["id"]: {
+            **a,
+            "metadata": {
+                **asset_metadata(a),
+                **inspect_media(safe_path(root, a["path"]), a["kind"]),
+            },
+        }
         for a in snap["assets"]
     }
     board = validate_board({**snap, "assets": list(assets.values())}, snap["storyboard"])
@@ -180,8 +228,22 @@ def render_remotion(job, root, directory, check):
             from .delivery_timeline import cut_records
 
             record = cut_records(scene, assets)
-            src = signature({"cuts": [{k: v for k, v in c.items() if k not in ("asset_id", "source_name", "reason")}
-                                      for c in record], "framing": media_suffix(scene)}) + ".mp4"
+            src = (
+                signature(
+                    {
+                        "cuts": [
+                            {
+                                k: v
+                                for k, v in c.items()
+                                if k not in ("asset_id", "source_name", "reason")
+                            }
+                            for c in record
+                        ],
+                        "framing": media_suffix(scene),
+                    }
+                )
+                + ".mp4"
+            )
         props = {
             k: scene[k]
             for k in [
@@ -215,6 +277,15 @@ def render_remotion(job, root, directory, check):
         )
         if scene.get("caption_note"):
             props["captionNote"] = scene["caption_note"]
+        if scene.get("presentation") == "design":
+            props["cleanPresentation"] = True
+        if asset["metadata"].get("code_visual"):
+            from .idea_renderer import CodeVisual
+
+            props["codeVisual"] = CodeVisual.model_validate(
+                asset["metadata"]["code_visual"]
+            ).model_dump()
+            props["headline"] = props["codeVisual"]["subject"][:8]
         if scene.get("presentation") == "client":
             props["clientPresentation"] = True
             sku = ((board.get("delivery") or {}).get("identity_lock") or {}).get("sku")
@@ -255,6 +326,7 @@ def render_remotion(job, root, directory, check):
         scene["effective_transition"] = transitions[i]
         if scene.get("typography"):
             from .typography import prepare_typography
+
             type_props = {**props, "typography": scene["typography"]}
             prepared = prepare_typography(type_props, scene)
             if prepared:
@@ -518,13 +590,22 @@ def render_remotion(job, root, directory, check):
     loudness = mux(mixed, directory / "output.mp4")
     if board["music_id"]:
         mux(directory / "clean.wav", directory / "voice-only.mp4")
-    subtitle_rows = [
-        {"text": c["text"], "start": s["start"] + c["start"], "end": s["start"] + c["end"]}
-        for s in scenes for c in s.get("caption_layout", [])
-    ] if board.get("delivery") else [
-        {"text": s["text"], "start": s.get("voice_start", s["start"]),
-         "end": s.get("voice_end", s["end"])} for s in scenes
-    ]
+    subtitle_rows = (
+        [
+            {"text": c["text"], "start": s["start"] + c["start"], "end": s["start"] + c["end"]}
+            for s in scenes
+            for c in s.get("caption_layout", [])
+        ]
+        if board.get("delivery")
+        else [
+            {
+                "text": s["text"],
+                "start": s.get("voice_start", s["start"]),
+                "end": s.get("voice_end", s["end"]),
+            }
+            for s in scenes
+        ]
+    )
     (directory / "subtitles.srt").write_text(
         "\n\n".join(
             f"{i + 1}\n{stamp(s['start'])} --> {stamp(s['end'])}\n{s['text']}"
@@ -568,8 +649,14 @@ def render_remotion(job, root, directory, check):
     write_json(
         directory / "shotbook.json",
         {
-            **({"clock": manifest["delivery_timeline"], "delivery_reviews": snap.get("delivery_reviews")}
-               if board.get("delivery") else {}),
+            **(
+                {
+                    "clock": manifest["delivery_timeline"],
+                    "delivery_reviews": snap.get("delivery_reviews"),
+                }
+                if board.get("delivery")
+                else {}
+            ),
             "style": style,
             "motion_treatment": manifest["motion_treatment"],
             "brand": creative["brand"],

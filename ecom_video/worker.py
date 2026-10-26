@@ -46,7 +46,9 @@ class Worker:
         self.store.worker_heartbeat(self.owner)
         job = self.store.claim(self.owner)
         if job is None:
-            return False
+            from .idea_worker import run_once
+
+            return run_once(self, lease)
         jid, token = job["id"], job["lease_token"]
         directory = self.root / "jobs" / jid / f"attempt-{job['attempts']}-{token}"
         directory.mkdir(parents=True, exist_ok=False)

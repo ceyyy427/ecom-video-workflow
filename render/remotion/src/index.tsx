@@ -1,4 +1,5 @@
 import React from 'react';
+import type {CodeVisualData} from './CodeVisual';
 import {Caption,type CaptionData} from './Caption';
 import {DirectionShot} from './directions';
 import {ClientShot} from './ClientShot';
@@ -8,7 +9,7 @@ import {AbsoluteFill,Composition,Img,Video,registerRoot,useCurrentFrame,interpol
 // Project-owned product layouts and motion. All displayed media belongs to the task.
 const clamp=(x:number)=>Math.max(0,Math.min(1,x));
 const camEase=(p:number)=>p*p*(3-2*p);
-export type Props={clientPresentation?:boolean;suppressTitle?:boolean;typography?:TypographyData;captionNote?:string;titleLayout?:{text:string;image:string;width:number;height:number;font_size:number;lines:string[];font_family?:string};motionPlan?:{quote?:{text:string;fact_ids:string[];label?:string};prompt_card?:string|null;presentation?:{zoom:number;travel_frames:number;shape:string};visual_finish?:string;version:2;amount:number;cue_frame:number;intent:string;strength:string;guard_outcome:string;beats:{text:string;frame:number}[]};shotRecipe?:string;preview?:boolean;format?:string;treatment?:string;transition?:string;exitTransition?:string;captions:CaptionData[];src:string;kind:string;frames:number;text:string;headline:string;style:string;brand:{name:string;ink:string;paper:string;accent:string;subtitle_size:number};motion:string;fit:'contain'|'cover';focus_x:number;focus_y:number;sample:boolean;words:{text:string;start:number;end:number}[];voiceStart:number;voiceEnd:number;index:number;count:number;role:string};
+export type Props={cleanPresentation?:boolean;codeVisual?:CodeVisualData;clientPresentation?:boolean;suppressTitle?:boolean;typography?:TypographyData;captionNote?:string;titleLayout?:{text:string;image:string;width:number;height:number;font_size:number;lines:string[];font_family?:string};motionPlan?:{quote?:{text:string;fact_ids:string[];label?:string};prompt_card?:string|null;presentation?:{zoom:number;travel_frames:number;shape:string};visual_finish?:string;version:2;amount:number;cue_frame:number;intent:string;strength:string;guard_outcome:string;beats:{text:string;frame:number}[]};shotRecipe?:string;preview?:boolean;format?:string;treatment?:string;transition?:string;exitTransition?:string;captions:CaptionData[];src:string;kind:string;frames:number;text:string;headline:string;style:string;brand:{name:string;ink:string;paper:string;accent:string;subtitle_size:number};motion:string;fit:'contain'|'cover';focus_x:number;focus_y:number;sample:boolean;words:{text:string;start:number;end:number}[];voiceStart:number;voiceEnd:number;index:number;count:number;role:string};
 const Shot:React.FC<Props>=(p)=>{
  const f=useCurrentFrame(),t=f/30,progress=camEase(clamp(f/Math.max(1,p.frames-1)));
  const collage=p.style==='collage',quiet=p.style==='quiet',geo=p.style==='bauhaus',evidence=p.style==='evidence',kinetic=p.style==='kinetic';

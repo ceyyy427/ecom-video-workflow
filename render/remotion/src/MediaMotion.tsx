@@ -1,6 +1,7 @@
 // Project-owned real-media choreography, from pinned Shotcraft/Huashu methods.
 // No generated product geometry, source retiming, stochastic values or audio tracks.
 import React from 'react';
+import {CodeVisual} from './CodeVisual';
 import {Img, Video, staticFile, useCurrentFrame} from 'remotion';
 import type {Props} from './index';
 import {cubic, segment} from './motion';
@@ -8,7 +9,7 @@ import {cubic, segment} from './motion';
 export const MediaMotion: React.FC<{p: Props; mediaStyle: React.CSSProperties}> = ({p, mediaStyle}) => {
  const f=useCurrentFrame(), plan=p.motionPlan!, cue=plan.cue_frame;
  const spec=plan.presentation??{zoom:1.18,travel_frames:12,shape:'rounded'};
- const media=(style:React.CSSProperties)=>p.kind==='image'?<Img src={staticFile(p.src)} style={style}/>:<Video src={staticFile(p.src)} muted style={style}/>;
+ const media=(style:React.CSSProperties)=>p.codeVisual?<CodeVisual data={p.codeVisual} style={style}/>:p.kind==='image'?<Img src={staticFile(p.src)} style={style}/>:<Video src={staticFile(p.src)} muted style={style}/>;
  const origin=`${100*p.focus_x}% ${100*p.focus_y}%`;
  const progress=cubic(segment(f,cue,cue+spec.travel_frames));
  if(p.shotRecipe==='product-detail-bracket'){
@@ -19,7 +20,7 @@ export const MediaMotion: React.FC<{p: Props; mediaStyle: React.CSSProperties}> 
    <div style={{position:'absolute',left:`${x}%`,top:`${y}%`,width:'32%',height:'32%',opacity:amount}}>
     {[0,1,2,3].map(k=><div key={k} style={{position:'absolute',width:40,height:40,borderStyle:'solid',borderColor:p.brand.accent,borderWidth:0,...(k%2?{right:0,borderRightWidth:4}:{left:0,borderLeftWidth:4}),...(k>1?{bottom:0,borderBottomWidth:4}:{top:0,borderTopWidth:4}),opacity:cubic(segment(f,cue+k*3,cue+k*3+spec.travel_frames))*(1-back),transform:`translate(${(k%2?1:-1)*14*(1-progress)}px,${(k>1?1:-1)*14*(1-progress)}px)`}}/>)}
    </div>
-   {amount>0&&!p.clientPresentation&&<span style={{position:'absolute',left:20,top:20,padding:'4px 10px',fontSize:24,background:p.brand.paper,color:p.brand.ink,opacity:amount}}>文稿焦点 · 人工核对</span>}
+   {amount>0&&!p.clientPresentation&&!p.cleanPresentation&&<span style={{position:'absolute',left:20,top:20,padding:'4px 10px',fontSize:24,background:p.brand.paper,color:p.brand.ink,opacity:amount}}>文稿焦点 · 人工核对</span>}
   </div>;
  }
  if(p.shotRecipe==='product-fact-row'){
@@ -27,7 +28,7 @@ export const MediaMotion: React.FC<{p: Props; mediaStyle: React.CSSProperties}> 
   return <div data-layer="product-fact-row" style={{position:'absolute',inset:0,background:p.brand.paper}}>
    <div style={{position:'absolute',inset:0,bottom:quote?`${30*amount}%`:0,overflow:'hidden'}}>{media(mediaStyle)}</div>
    {quote&&amount>0&&<div style={{position:'absolute',left:'5%',right:'5%',bottom:'3%',height:'24%',padding:'8px 16px',boxSizing:'border-box',opacity:amount,color:p.brand.ink,borderBottom:`3px solid ${p.brand.accent}`,transform:`perspective(900px) translateY(${-35*(1-progress)}px) rotateX(${12*(1-progress)}deg)`,transformOrigin:'center bottom'}}>
-    {!p.clientPresentation&&<div style={{fontSize:24,marginBottom:10}}>引用原文 · 条件须人工核对</div>}
+    {!p.clientPresentation&&!p.cleanPresentation&&<div style={{fontSize:24,marginBottom:10}}>引用原文 · 条件须人工核对</div>}
     <div style={{fontSize:40,lineHeight:1.35,overflowWrap:'anywhere'}}>{quote.text}</div>
    </div>}
   </div>;
@@ -63,7 +64,7 @@ export const MediaMotion: React.FC<{p: Props; mediaStyle: React.CSSProperties}> 
   return <div data-layer="same-frame-panels" style={{position:'absolute',inset:0,overflow:'hidden'}}>
    {media(mediaStyle)}
    {[0,1].map(side=><div key={side} style={{position:'absolute',inset:0,opacity:amount,clipPath:side?'polygon(72% 0%,100% 0%,100% 100%,60% 100%)':'polygon(0% 0%,40% 0%,28% 100%,0% 100%)',transform:`translateX(${(side?1:-1)*40*(1-amount)}%)`}}><div style={{position:'absolute',inset:0,transform:`scale(${spec.zoom})`,transformOrigin:origin}}>{media(mediaStyle)}</div></div>)}
-   {!p.clientPresentation&&<span style={{position:'absolute',left:16,top:16,fontSize:24,padding:'5px 10px',color:p.brand.ink,background:p.brand.paper,opacity:amount}}>同帧取景</span>}
+   {!p.clientPresentation&&!p.cleanPresentation&&<span style={{position:'absolute',left:16,top:16,fontSize:24,padding:'5px 10px',color:p.brand.ink,background:p.brand.paper,opacity:amount}}>同帧取景</span>}
   </div>;
  }
  if(p.shotRecipe==='media-punch-in'){
@@ -78,7 +79,7 @@ export const MediaMotion: React.FC<{p: Props; mediaStyle: React.CSSProperties}> 
    <div data-view="whole" style={{position:'absolute',top:0,left:0,right:0,height:`${wholeHeight}%`,overflow:'hidden'}}>{media(mediaStyle)}</div>
    <div data-view="detail" style={{position:'absolute',left:0,right:0,bottom:0,height:`calc(${36*fade}% - ${gap}px)`,minHeight:0,opacity:fade,overflow:'hidden',borderTop:`2px solid ${p.brand.accent}`,background:p.brand.paper}}>
     <div style={{position:'absolute',inset:0,transform:`scale(${spec.zoom})`,transformOrigin:origin}}>{media({...mediaStyle,objectFit:'cover'})}</div>
-    {!p.clientPresentation&&<span style={{position:'absolute',left:16,top:12,fontSize:24,padding:'5px 10px',color:p.brand.ink,background:p.brand.paper}}>同帧细节视图</span>}
+    {!p.clientPresentation&&!p.cleanPresentation&&<span style={{position:'absolute',left:16,top:12,fontSize:24,padding:'5px 10px',color:p.brand.ink,background:p.brand.paper}}>同帧细节视图</span>}
    </div>
   </div>;
  }

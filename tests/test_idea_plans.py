@@ -93,7 +93,7 @@ def test_plan_queue_survives_restart_cancels_and_recovers_expired_runs(tmp_path)
     with pytest.raises(Conflict):
         svc.check(p["id"], claimed["lease_token"])
     assert svc.enqueue(p["id"], p["basis"])["status"] == "queued"
-    second = svc.claim()
+    svc.claim()
     with store.transaction() as c:
         c.execute("UPDATE idea_plans SET updated_at=0 WHERE id=?", (p["id"],))
     restarted = IdeaPlans(tmp_path, Store(tmp_path / "workflow.db"))
