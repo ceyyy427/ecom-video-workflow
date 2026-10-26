@@ -50,7 +50,11 @@ def plan_board(job, settings, style_id, alignment=None):
     if settings.get("delivery_version"):
         from .delivery_plan import identity_matches
 
-        board["delivery"] = {"version": 1, "caption_policy": "pause-v1", "identity_lock": settings.get("identity_lock")}
+        board["delivery"] = {
+            "version": 1,
+            "caption_policy": "pause-v1",
+            "identity_lock": settings.get("identity_lock"),
+        }
         visuals = [a for a in visuals if identity_matches(a, settings.get("identity_lock"))]
     if not visuals:
         raise ValueError("请至少上传一份符合款式/配色限制并人工核对的商品画面")
@@ -93,8 +97,13 @@ def plan_board(job, settings, style_id, alignment=None):
                 raise ValueError("动作词对齐需要配音；纯展示请关闭动作对齐，仍可保留同款核对")
             constraints["anchors"] = voice_anchors(lines, durations, alignment)
         decisions, matching_model = select(
-            {**job, "assets": visuals + [a for a in job["assets"] if a["kind"] == "audio"],
-             "matching_constraints": constraints}, durations, mode
+            {
+                **job,
+                "assets": visuals + [a for a in job["assets"] if a["kind"] == "audio"],
+                "matching_constraints": constraints,
+            },
+            durations,
+            mode,
         )
     counts = {a["id"]: 0 for a in visuals}
     notes = (
@@ -321,6 +330,9 @@ def plan_board(job, settings, style_id, alignment=None):
             motion_plan=row["motion_plan"],
         )
         notes.append(f"{shot['shot_id']} Prompt匹配：{row['reason']}；不新增商品事实。")
+    from .idea_adoption import apply_board
+
+    apply_board(job, board, mode, notes)
     transitions = effective_transitions(
         [{**s, "frames": round(s["duration"] * 30)} for s in board["shots"]]
     )

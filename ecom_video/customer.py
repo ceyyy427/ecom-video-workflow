@@ -68,7 +68,11 @@ class Customers:
 
         return signature(
             {
-                **({"delivery_identity": identity_state(p["media"])} if p["settings"].get("delivery_version") else {}),
+                **(
+                    {"delivery_identity": identity_state(p["media"])}
+                    if p["settings"].get("delivery_version")
+                    else {}
+                ),
                 "settings": p["settings"],
                 **(
                     {"material_checks_version": MATERIAL_VERSION}
@@ -99,7 +103,11 @@ class Customers:
 
         return signature(
             {
-                **({"delivery_identity": identity_state(p["media"])} if p["settings"].get("delivery_version") else {}),
+                **(
+                    {"delivery_identity": identity_state(p["media"])}
+                    if p["settings"].get("delivery_version")
+                    else {}
+                ),
                 "settings": p["settings"],
                 "review": p["product"]["current_review_id"],
                 "draft": p["product"]["current_draft_id"],
@@ -178,6 +186,9 @@ class Customers:
         from .creative_proposals import current_plan
 
         p["creative_plan"] = current_plan(p["product"])
+        from .idea_adoption import selected_plan
+
+        p["idea_plan"] = selected_plan(self.store, pid)
         p["job"] = self.store.get(p["active_job_id"]) if active else None
         p["inputs_changed"] = bool(active and active["input_fingerprint"] != self.fingerprint(p))
         p["visual_revision_allowed"] = bool(active and active["basis_fingerprint"] == self.basis(p))
@@ -236,6 +247,7 @@ class Customers:
             p["delivery_reviews"] = review_state(c, p)
         from .customer_handoff import status
         from .delivery_revision import review_state as shot_review_state
+
         with self.store.connect() as c:
             p["shot_reviews"] = shot_review_state(c, p["job"])
         p["handoff_status"] = status(p)
@@ -670,6 +682,7 @@ class Customers:
                 if obj[key]:
                     obj[key] = mapping[obj[key]]
             from .shot_changes import apply_changes
+
             apply_changes(shot, changes, selected, existing["id"] if selected else None)
             from .shotcraft import effective_transitions
 

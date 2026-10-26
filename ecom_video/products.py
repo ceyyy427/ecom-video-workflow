@@ -304,6 +304,11 @@ class Products:
                 plan = current_plan(product)
                 if plan:
                     provenance["creative_plan"] = plan
+                from .idea_adoption import selected_plan
+
+                idea_plan = selected_plan(self.store, pid, connection=c)
+                if idea_plan:
+                    provenance["idea_plan"] = idea_plan
                 c.execute(
                     "INSERT INTO jobs(id,title,script,seconds,status,created_at,updated_at,provenance) VALUES(?,?,?,?,'draft',?,?,?)",
                     (jid, title, script, seconds, now, now, encoded(provenance)),

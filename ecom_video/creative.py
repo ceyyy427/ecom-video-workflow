@@ -144,10 +144,22 @@ def signature(value):
     ).hexdigest()
 
 
+def idea_selection(job):
+    provenance = job.get("provenance") or {}
+    if isinstance(provenance, str):
+        provenance = json.loads(provenance)
+    return provenance.get("idea_plan")
+
+
 def fingerprint(job, brief, *, policy=1):
     return signature(
         {
             "version": policy,
+            **(
+                {"idea_plan": {k: idea_selection(job)[k] for k in ("basis", "option_id")}}
+                if idea_selection(job)
+                else {}
+            ),
             "title": job["title"],
             "script": job["script"],
             "brief": {k: v for k, v in brief.items() if k != "format" or v != "auto"},
@@ -225,6 +237,13 @@ def contextual(job, brief, policy=3):
                 },
             )
         )
+    selected = idea_selection(job)
+    if selected:
+        favored_id = selected["option"]["native_style"]
+        ranked = [
+            (score + (100000 if option["id"] == favored_id else 0), tie, option)
+            for score, tie, option in ranked
+        ]
     ranked.sort(key=lambda r: (r[0], r[1]), reverse=True)
     chosen, families = [], set()
     for _, _, option in ranked:

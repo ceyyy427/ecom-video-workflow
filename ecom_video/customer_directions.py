@@ -17,6 +17,7 @@ def direction_input(p):
         "title": p["product"]["title"],
         "script": "\n".join(s["text"] for s in draft["payload"]),
         "assets": p["media"],
+        **({"provenance": {"idea_plan": p["idea_plan"]}} if p.get("idea_plan") else {}),
     }
 
 
@@ -62,14 +63,24 @@ def preparation_blockers(p):
 def editorial_basis(p):
     from .delivery_plan import identity_state
 
-    return signature({"draft": p["product"]["current_draft_id"], "title": p["product"]["title"],
-                      "brief": p["settings"]["brief"],
-                      "visuals": sorted((a["sha256"], a["kind"]) for a in p["media"] if a["kind"] != "audio"),
-                      **({"delivery": p["settings"].get("delivery_version"),
-                          "identity_lock": p["settings"].get("identity_lock"),
-                          "identity": identity_state(p["media"]),
-                          "review": p["product"]["current_review_id"]}
-                         if p["settings"].get("delivery_version") else {})})
+    return signature(
+        {
+            "draft": p["product"]["current_draft_id"],
+            "title": p["product"]["title"],
+            "brief": p["settings"]["brief"],
+            "visuals": sorted((a["sha256"], a["kind"]) for a in p["media"] if a["kind"] != "audio"),
+            **(
+                {
+                    "delivery": p["settings"].get("delivery_version"),
+                    "identity_lock": p["settings"].get("identity_lock"),
+                    "identity": identity_state(p["media"]),
+                    "review": p["product"]["current_review_id"],
+                }
+                if p["settings"].get("delivery_version")
+                else {}
+            ),
+        }
+    )
 
 
 def directions(p):
