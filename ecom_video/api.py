@@ -510,6 +510,9 @@ def create_app(root):
     from .film_styles_api import router as film_styles_router
 
     app.include_router(film_styles_router())
+    from .idea_api import router as idea_router
+
+    app.include_router(idea_router(root, store))
 
     @app.get("/ideas")
     def ideas_page():

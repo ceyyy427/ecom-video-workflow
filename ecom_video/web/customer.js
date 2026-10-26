@@ -658,9 +658,10 @@ $('confirmFacts').onclick = () => run(async () => {
         if (missing) { scenes=preserved; scriptDirty=true; renderScenes(); }
         message(missing ? '事实已更新，原文稿已保留在编辑区。请为失效引用重新选择来源并确认文稿。' : '事实已确认，保留原文稿为待确认版本，避免替换已有配音的原稿。请重新核对文稿。');
     } else {
-        await post(productBase()+'/scripts/generate', {revision:prod.revision,mode:'directed',brief:p.settings.brief});
+        if(p.idea_plan) await post('/idea-plans/'+p.idea_plan.plan_id+'/script', {project_id:p.id,basis:p.idea_plan.basis,revision:prod.revision});
+        else await post(productBase()+'/scripts/generate', {revision:prod.revision,mode:'directed',brief:p.settings.brief});
         adopt(await api(base()));
-        message('已根据确认事实编排建议文稿。已有配音时，请使用对应稿件并核对来源。');
+        message(p.idea_plan ? '已带入选定创意的原文稿，仍需核对并确认；可以编辑，已有配音请重新检查是否同稿。' : '已根据确认事实编排建议文稿。已有配音时，请使用对应稿件并核对来源。');
     }
 });
 $('scriptUpload').onchange = () => run(async () => { const f = $('scriptUpload').files[0]; if (!f)
