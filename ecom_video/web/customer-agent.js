@@ -31,7 +31,13 @@
             if(dirty() && action!=='cancel' && action!=='pause') throw Error('请先保存未完成的修改，再继续自动制作。');
             if(action==='start') {
                 if(!selected || !$('agentStyleChecked').checked || !$('agentReviewer').value.trim()) throw Error('请先确认风格并填写确认人。');
-                const proposal=await request('/runs',{schema_version:1,request_id:'ui-'+crypto.randomUUID().replaceAll('-',''),operation:'project.produce',input:{project_id:p.id,expected_revision:p.revision,expected_product_revision:p.product.revision,policy:{policy_id:'local-v1',max_steps:Number($('agentSteps').value),max_elapsed_s:Number($('agentSeconds').value),max_model_calls:Number($('agentCalls').value),max_cost_cny:'0'}}});
+                const input={project_id:p.id,expected_revision:p.revision,expected_product_revision:p.product.revision,policy:{policy_id:'local-v1',max_steps:Number($('agentSteps').value),max_elapsed_s:Number($('agentSeconds').value),max_model_calls:Number($('agentCalls').value),max_cost_cny:'0'}},requestId='ui-'+crypto.randomUUID().replaceAll('-','');
+                let proposal;
+                if(p.idea_plan?.version==='domestic-creative-v1'){
+                    const response=await fetch('/api/operations/executions/propose',{method:'POST',headers:{'Content-Type':'application/json','X-Workflow-Token':token},body:JSON.stringify({...input,request_id:requestId,plan_id:p.idea_plan.plan_id,plan_basis:p.idea_plan.basis,option_id:p.idea_plan.option_id})}),result=await response.json();
+                    if(!response.ok||!result.legacy_result)throw Error(result.error?.safe_message||result.warnings?.join('；')||'国内方案交接未完成，请核对当前版本');
+                    proposal=result.legacy_result;
+                } else proposal=await request('/runs',{schema_version:1,request_id:requestId,operation:'project.produce',input});
                 current=await request(`/runs/${proposal.run_id}/execution`);
                 await saveChoice();
                 current=await request(`/runs/${current.run_id}/execute`,binding(current));

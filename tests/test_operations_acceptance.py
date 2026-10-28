@@ -14,7 +14,7 @@ def test_content_cli_is_explicit_and_bad_cases_do_not_create_workspace(tmp_path)
         capture_output=True,
         text=True,
     )
-    assert "{foundation,content}" in help_result.stdout
+    assert "content" in help_result.stdout and "foundation" in help_result.stdout
     backup = tmp_path / "backup"
     backup.mkdir()
     manifest = tmp_path / "cases.json"

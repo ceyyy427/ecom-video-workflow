@@ -29,13 +29,13 @@ def validate_cases(cases):
             raise ValueError("隔离样例只能导入本机清单中的素材，不继承项目或审批")
 
 
-def contact_sheet(video, directory):
+def contact_sheet(video, directory, times=None):
     from PIL import Image, ImageOps
 
     from ..media import digest, run_checked
 
     frames = []
-    for i, at in enumerate((0.4, 1.8, 2.8, 3.7, 5.1, 6.6)):
+    for i, at in enumerate(times or (0.4, 1.8, 2.8, 3.7, 5.1, 6.6)):
         target = directory / f"frame-{i}.png"
         run_checked(
             [

@@ -1,6 +1,7 @@
 """Local CPU alignment, immutable input identity, explicit human acceptance."""
 
 import json
+import os
 import sys
 import threading
 import time
@@ -15,6 +16,21 @@ PROJECT = Path(__file__).resolve().parent.parent
 MODEL = PROJECT / "var/models/firered"
 SCRIPT = PROJECT / "ecom_video/local_asr.py"
 LOCK = threading.Lock()
+
+
+def model_path(*, verify=False):
+    configured = os.environ.get("ECOM_ASR_MODEL_DIR")
+    path = Path(configured) if configured else MODEL
+    if not path.is_absolute():
+        raise ValueError("本机对齐模型目录须为绝对路径")
+    if verify and configured:
+        expected = json.loads((PROJECT / "docs/P5_MODEL.json").read_text())["files"]
+        if any(
+            not (path / name).is_file() or digest(path / name) != sha
+            for name, sha in expected.items()
+        ):
+            raise ValueError("共享对齐模型未通过固定SHA校验，请核对安装目录；未替换模型")
+    return path
 
 
 def input_hash(job, asset):
@@ -142,7 +158,9 @@ class AlignmentService:
         )
         if not asset:
             raise ValueError("请选择本任务的配音")
-        if not all((MODEL / f).is_file() for f in ["model.int8.onnx", "tokens.txt"]):
+        if not all(
+            (model_path(verify=True) / f).is_file() for f in ["model.int8.onnx", "tokens.txt"]
+        ):
             raise ValueError("本机对齐模型未安装，请运行 scripts/setup_p5.py")
         from .resource_leases import Lease
 
@@ -185,6 +203,7 @@ class AlignmentService:
         return self.get(jid, aid)
 
     def run(self, aid, job, asset, lease=None):
+        model = model_path(verify=True)
         folder = self.root / "alignments" / aid
         folder.mkdir(parents=True, exist_ok=True)
 
@@ -236,7 +255,7 @@ class AlignmentService:
                         "ecom_video.local_asr",
                         str(wav),
                         str(script_path),
-                        str(MODEL),
+                        str(model),
                         str(output),
                     ],
                     check,
@@ -273,7 +292,7 @@ class AlignmentService:
                         "ecom_video.alignment_recovery",
                         str(wav),
                         str(script_path),
-                        str(MODEL),
+                        str(model),
                         str(retry_output),
                     ],
                     check,
@@ -315,7 +334,7 @@ class AlignmentService:
             result.update(
                 engine="firered-ctc-int8",
                 audio_sha256=asset["sha256"],
-                model_sha256=digest(MODEL / "model.int8.onnx"),
+                model_sha256=digest(model / "model.int8.onnx"),
                 adapter_sha256=digest(SCRIPT),
             )
             diagnostic = result.get("diagnostic")

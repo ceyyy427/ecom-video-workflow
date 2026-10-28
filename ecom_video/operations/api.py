@@ -146,13 +146,16 @@ def router(root, store):
 
     @api.get("/capabilities")
     def capabilities():
+        from .execution import enabled as execution_ready
+
         valid = True
         try:
             load_resources()
         except (ValueError, OSError):
             valid = False
         return {
-            "phase": "D1",
+            "phase": "D2",
+            "execution_enabled": execution_ready(),
             "content_enabled": enabled() and valid,
             "resources_valid": valid,
             "model_policy": "local_first",
@@ -172,5 +175,30 @@ def router(root, store):
         brief, evidence, guard = prepare(root, store, data)
         plan = plan_content(brief, evidence, resources, engine=engine_key())
         return IdeaPlans(root, store).persist(plan, guard=guard)
+
+    from .execution import ExecutionInput, propose_execution
+
+    @api.post("/executions/propose", status_code=201)
+    def production(data: ExecutionInput):
+        from fastapi.responses import JSONResponse
+
+        result = propose_execution(root, store, data.model_dump())
+        status = (
+            409
+            if result.status == "needs_human"
+            else (
+                201
+                if result.status == "completed"
+                else {
+                    "AGENT_DISABLED": 403,
+                    "STALE_INPUT": 409,
+                    "HUMAN_CONFIRMATION_REQUIRED": 409,
+                    "REQUEST_CONFLICT": 409,
+                    "NOT_FOUND": 404,
+                    "INVALID_INPUT": 422,
+                }.get(result.error.code if result.error else "", 422)
+            )
+        )
+        return JSONResponse(result.model_dump(), status_code=status)
 
     return api
