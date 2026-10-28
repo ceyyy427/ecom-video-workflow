@@ -1,0 +1,371 @@
+{
+  "schema_version": 1,
+  "bundle_id": "domestic-toolkit-d0",
+  "resource_root": "resources/domestic-toolkit",
+  "upstream": {
+    "repository": "heqiangdiao-wq/AI-Cross-Border-Ecommerce-Agent-Toolkit",
+    "commit": "cec98a9cab382d28dfe5b4ed0de444f33c455cb5"
+  },
+  "fork": {
+    "repository": "ceyyy427/AI-Cross-Border-Ecommerce-Agent-Toolkit",
+    "commit": "705c0a905bc14c4312e8aa1f0ca7cdd03b58f2f1"
+  },
+  "license": {
+    "spdx": "MIT",
+    "path": "LICENSE",
+    "sha256": "fbb7ebfdad031cb3c1be1feb809b6188e5cee26d298b5f3a99c38fef594a2cfc"
+  },
+  "files": [
+    {
+      "id": "upstream-0-license",
+      "path": "LICENSE",
+      "sha256": "fbb7ebfdad031cb3c1be1feb809b6188e5cee26d298b5f3a99c38fef594a2cfc",
+      "size_bytes": 1109,
+      "source": {
+        "repository": "heqiangdiao-wq/AI-Cross-Border-Ecommerce-Agent-Toolkit",
+        "commit": "cec98a9cab382d28dfe5b4ed0de444f33c455cb5",
+        "path": "LICENSE"
+      },
+      "kind": "license",
+      "status": "reference"
+    },
+    {
+      "id": "upstream-1-readme",
+      "path": "upstream/Agents/01_Market_Research_Agent/README.md",
+      "sha256": "85114964bdda1e2843524ba274332c44603bc1c1ed0c92e44f3fe3067ea907cd",
+      "size_bytes": 9345,
+      "source": {
+        "repository": "heqiangdiao-wq/AI-Cross-Border-Ecommerce-Agent-Toolkit",
+        "commit": "cec98a9cab382d28dfe5b4ed0de444f33c455cb5",
+        "path": "Agents/01_Market_Research_Agent/README.md"
+      },
+      "kind": "readme",
+      "status": "reference"
+    },
+    {
+      "id": "upstream-2-readme",
+      "path": "upstream/Agents/02_Product_Strategy_Agent/README.md",
+      "sha256": "a7b73e1fb3830c6c83f2ac9bf722b1609518957e200b58a3478ff954582caa3c",
+      "size_bytes": 8080,
+      "source": {
+        "repository": "heqiangdiao-wq/AI-Cross-Border-Ecommerce-Agent-Toolkit",
+        "commit": "cec98a9cab382d28dfe5b4ed0de444f33c455cb5",
+        "path": "Agents/02_Product_Strategy_Agent/README.md"
+      },
+      "kind": "readme",
+      "status": "reference"
+    },
+    {
+      "id": "upstream-3-readme",
+      "path": "upstream/Agents/03_Listing_Creative_Agent/README.md",
+      "sha256": "789b145feb54b931520648d1e11ed71df566509153345bc16f361f69bae2307c",
+      "size_bytes": 8798,
+      "source": {
+        "repository": "heqiangdiao-wq/AI-Cross-Border-Ecommerce-Agent-Toolkit",
+        "commit": "cec98a9cab382d28dfe5b4ed0de444f33c455cb5",
+        "path": "Agents/03_Listing_Creative_Agent/README.md"
+      },
+      "kind": "readme",
+      "status": "reference"
+    },
+    {
+      "id": "upstream-4-spec-consistency",
+      "path": "upstream/Agents/03_Listing_Creative_Agent/scripts/spec_consistency.py",
+      "sha256": "93c193c23e434ac5d93eb86a8dd2bc0c87e11591fe9af4fd427062fb70363171",
+      "size_bytes": 5613,
+      "source": {
+        "repository": "heqiangdiao-wq/AI-Cross-Border-Ecommerce-Agent-Toolkit",
+        "commit": "cec98a9cab382d28dfe5b4ed0de444f33c455cb5",
+        "path": "Agents/03_Listing_Creative_Agent/scripts/spec_consistency.py"
+      },
+      "kind": "script",
+      "status": "reference"
+    },
+    {
+      "id": "upstream-5-readme",
+      "path": "upstream/Agents/04_Product_Image_Agent/README.md",
+      "sha256": "abeb6e267389095d8101b08c680688a6add8801d9bf9d7f80606d08964061ef8",
+      "size_bytes": 9295,
+      "source": {
+        "repository": "heqiangdiao-wq/AI-Cross-Border-Ecommerce-Agent-Toolkit",
+        "commit": "cec98a9cab382d28dfe5b4ed0de444f33c455cb5",
+        "path": "Agents/04_Product_Image_Agent/README.md"
+      },
+      "kind": "readme",
+      "status": "reference"
+    },
+    {
+      "id": "upstream-video-readme",
+      "path": "upstream/Agents/05_Product_Video_Agent/README.md",
+      "sha256": "f9fb77322c8c78a3f42d0a278a580e8efd562ec2932d4672825e50ee05d1c461",
+      "size_bytes": 7234,
+      "source": {
+        "repository": "heqiangdiao-wq/AI-Cross-Border-Ecommerce-Agent-Toolkit",
+        "commit": "cec98a9cab382d28dfe5b4ed0de444f33c455cb5",
+        "path": "Agents/05_Product_Video_Agent/README.md"
+      },
+      "kind": "readme",
+      "status": "reference"
+    },
+    {
+      "id": "upstream-7-00-system",
+      "path": "upstream/Agents/05_Product_Video_Agent/prompts/00_system.md",
+      "sha256": "f23213c0693cbe83c160d43e857ccad51a6a71e5ab37c5c5a020a859c3a3c283",
+      "size_bytes": 5931,
+      "source": {
+        "repository": "heqiangdiao-wq/AI-Cross-Border-Ecommerce-Agent-Toolkit",
+        "commit": "cec98a9cab382d28dfe5b4ed0de444f33c455cb5",
+        "path": "Agents/05_Product_Video_Agent/prompts/00_system.md"
+      },
+      "kind": "prompt",
+      "status": "reference"
+    },
+    {
+      "id": "upstream-8-01-script-and-storyboard",
+      "path": "upstream/Agents/05_Product_Video_Agent/prompts/01_script_and_storyboard.md",
+      "sha256": "f96254d8f87177d3ed4b16158e04ac949ae56f5915f22904b83cfb93cf8e6f5b",
+      "size_bytes": 6747,
+      "source": {
+        "repository": "heqiangdiao-wq/AI-Cross-Border-Ecommerce-Agent-Toolkit",
+        "commit": "cec98a9cab382d28dfe5b4ed0de444f33c455cb5",
+        "path": "Agents/05_Product_Video_Agent/prompts/01_script_and_storyboard.md"
+      },
+      "kind": "prompt",
+      "status": "reference"
+    },
+    {
+      "id": "upstream-9-02-ai-video-and-voice",
+      "path": "upstream/Agents/05_Product_Video_Agent/prompts/02_ai_video_and_voice.md",
+      "sha256": "44554bb53dd421c21161f7e5f7d7e9b011958b46815ffabb914086d593499247",
+      "size_bytes": 7435,
+      "source": {
+        "repository": "heqiangdiao-wq/AI-Cross-Border-Ecommerce-Agent-Toolkit",
+        "commit": "cec98a9cab382d28dfe5b4ed0de444f33c455cb5",
+        "path": "Agents/05_Product_Video_Agent/prompts/02_ai_video_and_voice.md"
+      },
+      "kind": "prompt",
+      "status": "reference"
+    },
+    {
+      "id": "upstream-10-video-specs",
+      "path": "upstream/Agents/05_Product_Video_Agent/references/video-specs.md",
+      "sha256": "91d0dfe918f482e17a30eab068302cd0468a488dfb768a41ebc8d5590318c32b",
+      "size_bytes": 1817,
+      "source": {
+        "repository": "heqiangdiao-wq/AI-Cross-Border-Ecommerce-Agent-Toolkit",
+        "commit": "cec98a9cab382d28dfe5b4ed0de444f33c455cb5",
+        "path": "Agents/05_Product_Video_Agent/references/video-specs.md"
+      },
+      "kind": "reference",
+      "status": "reference"
+    },
+    {
+      "id": "upstream-11-video-timing",
+      "path": "upstream/Agents/05_Product_Video_Agent/scripts/video_timing.py",
+      "sha256": "4061060349b9ff3c5f3596d8018745032c35ab756cd48beba251412b0ddf5c6c",
+      "size_bytes": 8903,
+      "source": {
+        "repository": "heqiangdiao-wq/AI-Cross-Border-Ecommerce-Agent-Toolkit",
+        "commit": "cec98a9cab382d28dfe5b4ed0de444f33c455cb5",
+        "path": "Agents/05_Product_Video_Agent/scripts/video_timing.py"
+      },
+      "kind": "script",
+      "status": "reference"
+    },
+    {
+      "id": "upstream-12-input-video-brief",
+      "path": "upstream/Agents/05_Product_Video_Agent/templates/input_video_brief.md",
+      "sha256": "e8ee4ed63a391204962d62e9963dd833abc181cf3e4a4b71103ba9c2186c3ca9",
+      "size_bytes": 3458,
+      "source": {
+        "repository": "heqiangdiao-wq/AI-Cross-Border-Ecommerce-Agent-Toolkit",
+        "commit": "cec98a9cab382d28dfe5b4ed0de444f33c455cb5",
+        "path": "Agents/05_Product_Video_Agent/templates/input_video_brief.md"
+      },
+      "kind": "template",
+      "status": "reference"
+    },
+    {
+      "id": "upstream-13-output-video-pack",
+      "path": "upstream/Agents/05_Product_Video_Agent/templates/output_video_pack.yaml",
+      "sha256": "92c8fded7ab6f6d5cd8774426c682376acbbd3933fe661ecd1d5aad01a4ee017",
+      "size_bytes": 7597,
+      "source": {
+        "repository": "heqiangdiao-wq/AI-Cross-Border-Ecommerce-Agent-Toolkit",
+        "commit": "cec98a9cab382d28dfe5b4ed0de444f33c455cb5",
+        "path": "Agents/05_Product_Video_Agent/templates/output_video_pack.yaml"
+      },
+      "kind": "template",
+      "status": "reference"
+    },
+    {
+      "id": "upstream-14-readme",
+      "path": "upstream/Agents/06_Advertising_Optimization_Agent/README.md",
+      "sha256": "dc89cef964f4761f72e51cbcd93ce147c5e74a08686a0a8dc6aaf493de476b45",
+      "size_bytes": 12769,
+      "source": {
+        "repository": "heqiangdiao-wq/AI-Cross-Border-Ecommerce-Agent-Toolkit",
+        "commit": "cec98a9cab382d28dfe5b4ed0de444f33c455cb5",
+        "path": "Agents/06_Advertising_Optimization_Agent/README.md"
+      },
+      "kind": "readme",
+      "status": "reference"
+    },
+    {
+      "id": "upstream-15-ad-metrics",
+      "path": "upstream/Agents/06_Advertising_Optimization_Agent/scripts/ad_metrics.py",
+      "sha256": "845eb0d2dd7e54629f5211c51f3e34eeff21596f2f1737da902a7d32e5c3bb21",
+      "size_bytes": 16286,
+      "source": {
+        "repository": "heqiangdiao-wq/AI-Cross-Border-Ecommerce-Agent-Toolkit",
+        "commit": "cec98a9cab382d28dfe5b4ed0de444f33c455cb5",
+        "path": "Agents/06_Advertising_Optimization_Agent/scripts/ad_metrics.py"
+      },
+      "kind": "script",
+      "status": "reference"
+    },
+    {
+      "id": "upstream-16-readme",
+      "path": "upstream/Agents/07_Review_Analysis_Agent/README.md",
+      "sha256": "22068917268e85a9253d404e2448fca782f5a8375e40af4b7fcce17c12594b0e",
+      "size_bytes": 10716,
+      "source": {
+        "repository": "heqiangdiao-wq/AI-Cross-Border-Ecommerce-Agent-Toolkit",
+        "commit": "cec98a9cab382d28dfe5b4ed0de444f33c455cb5",
+        "path": "Agents/07_Review_Analysis_Agent/README.md"
+      },
+      "kind": "readme",
+      "status": "reference"
+    },
+    {
+      "id": "upstream-17-review-stats",
+      "path": "upstream/Agents/07_Review_Analysis_Agent/scripts/review_stats.py",
+      "sha256": "f60b0eaa97d0f3f6694e0d3a6b8de94f7c7adc2ec377b2b5396a277e0411fb5a",
+      "size_bytes": 10321,
+      "source": {
+        "repository": "heqiangdiao-wq/AI-Cross-Border-Ecommerce-Agent-Toolkit",
+        "commit": "cec98a9cab382d28dfe5b4ed0de444f33c455cb5",
+        "path": "Agents/07_Review_Analysis_Agent/scripts/review_stats.py"
+      },
+      "kind": "script",
+      "status": "reference"
+    },
+    {
+      "id": "domestic-18-readme",
+      "path": "domestic/01_Market/README.md",
+      "sha256": "492d162edd0baea51b5f97829b256e1de23ac97eaed9811f4c27595261ee5385",
+      "size_bytes": 376,
+      "source": {
+        "repository": "ceyyy427/AI-Cross-Border-Ecommerce-Agent-Toolkit",
+        "commit": "705c0a905bc14c4312e8aa1f0ca7cdd03b58f2f1",
+        "path": "Domestic/01_Market/README.md"
+      },
+      "kind": "readme",
+      "status": "reference"
+    },
+    {
+      "id": "domestic-19-readme",
+      "path": "domestic/02_Positioning/README.md",
+      "sha256": "64add664db1cf51951493c58dc09792e90d3c5d18436997bc0ccfe89a9e13470",
+      "size_bytes": 377,
+      "source": {
+        "repository": "ceyyy427/AI-Cross-Border-Ecommerce-Agent-Toolkit",
+        "commit": "705c0a905bc14c4312e8aa1f0ca7cdd03b58f2f1",
+        "path": "Domestic/02_Positioning/README.md"
+      },
+      "kind": "readme",
+      "status": "reference"
+    },
+    {
+      "id": "domestic-20-readme",
+      "path": "domestic/03_Content/README.md",
+      "sha256": "f24ff7ab73ea9d3a2c902415848298267dfe43de852007491ca104e870928478",
+      "size_bytes": 377,
+      "source": {
+        "repository": "ceyyy427/AI-Cross-Border-Ecommerce-Agent-Toolkit",
+        "commit": "705c0a905bc14c4312e8aa1f0ca7cdd03b58f2f1",
+        "path": "Domestic/03_Content/README.md"
+      },
+      "kind": "readme",
+      "status": "reference"
+    },
+    {
+      "id": "domestic-21-readme",
+      "path": "domestic/04_Image/README.md",
+      "sha256": "fd496a24aed5c72c5e99fa5435b2545ab2d6759373667ca98ac7e76e586050d5",
+      "size_bytes": 374,
+      "source": {
+        "repository": "ceyyy427/AI-Cross-Border-Ecommerce-Agent-Toolkit",
+        "commit": "705c0a905bc14c4312e8aa1f0ca7cdd03b58f2f1",
+        "path": "Domestic/04_Image/README.md"
+      },
+      "kind": "readme",
+      "status": "reference"
+    },
+    {
+      "id": "domestic-22-readme",
+      "path": "domestic/05_Video/README.md",
+      "sha256": "3fb6c6b0bc74e61a39366431978313f5a94790c468e80018e7b7bd53638751f4",
+      "size_bytes": 379,
+      "source": {
+        "repository": "ceyyy427/AI-Cross-Border-Ecommerce-Agent-Toolkit",
+        "commit": "705c0a905bc14c4312e8aa1f0ca7cdd03b58f2f1",
+        "path": "Domestic/05_Video/README.md"
+      },
+      "kind": "readme",
+      "status": "reference"
+    },
+    {
+      "id": "domestic-23-readme",
+      "path": "domestic/06_Performance/README.md",
+      "sha256": "79036faf4186b350bfe10d4f065485d18aa610e754b6fa9669cc1f60a4284b33",
+      "size_bytes": 385,
+      "source": {
+        "repository": "ceyyy427/AI-Cross-Border-Ecommerce-Agent-Toolkit",
+        "commit": "705c0a905bc14c4312e8aa1f0ca7cdd03b58f2f1",
+        "path": "Domestic/06_Performance/README.md"
+      },
+      "kind": "readme",
+      "status": "reference"
+    },
+    {
+      "id": "domestic-24-readme",
+      "path": "domestic/07_Comments/README.md",
+      "sha256": "52244d870a812a05092df57e8abb33d28c4b9a2d4d2569d36055d32468bfc2f2",
+      "size_bytes": 376,
+      "source": {
+        "repository": "ceyyy427/AI-Cross-Border-Ecommerce-Agent-Toolkit",
+        "commit": "705c0a905bc14c4312e8aa1f0ca7cdd03b58f2f1",
+        "path": "Domestic/07_Comments/README.md"
+      },
+      "kind": "readme",
+      "status": "reference"
+    },
+    {
+      "id": "domestic-25-readme",
+      "path": "domestic/README.md",
+      "sha256": "b627f0165c6f594af1fae95d756df54a9cece4a5d31c37bc1ce6ce0cefcf0493",
+      "size_bytes": 1700,
+      "source": {
+        "repository": "ceyyy427/AI-Cross-Border-Ecommerce-Agent-Toolkit",
+        "commit": "705c0a905bc14c4312e8aa1f0ca7cdd03b58f2f1",
+        "path": "Domestic/README.md"
+      },
+      "kind": "readme",
+      "status": "reference"
+    },
+    {
+      "id": "domestic-26-manifest",
+      "path": "domestic/manifest.json",
+      "sha256": "f5cd448ab1d7867e683365c2e2aba9dc6e7336b7012a15930d6c8f627e00ee51",
+      "size_bytes": 1796,
+      "source": {
+        "repository": "ceyyy427/AI-Cross-Border-Ecommerce-Agent-Toolkit",
+        "commit": "705c0a905bc14c4312e8aa1f0ca7cdd03b58f2f1",
+        "path": "Domestic/manifest.json"
+      },
+      "kind": "manifest",
+      "status": "reference"
+    }
+  ]
+}
