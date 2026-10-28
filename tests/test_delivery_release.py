@@ -6,11 +6,11 @@ from ecom_video.customer_setup import release_info
 
 def test_release_identifies_all_delivery_upgrades_and_ships_existing_guide():
     root = Path(__file__).resolve().parents[1]
-    assert release_info(root)["version"] == "0.17.0"
+    assert release_info(root)["version"] == "0.18.0"
     lock = tomllib.loads((root / "uv.lock").read_text())
     assert (
         next(p for p in lock["package"] if p["name"] == "ecom-video-workflow")["version"]
-        == "0.17.0"
+        == "0.18.0"
     )
     assert "逐镜审核" in (root / "docs/CUSTOMER_HANDOFF.md").read_text()
     assert "恢复历史版" in (root / "docs/CUSTOMER_HANDOFF.md").read_text()

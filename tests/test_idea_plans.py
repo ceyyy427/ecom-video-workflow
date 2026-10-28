@@ -76,7 +76,7 @@ def test_no_data_never_creates_numbers_and_unsupported_reference_is_explicit():
 
 
 def test_plan_queue_survives_restart_cancels_and_recovers_expired_runs(tmp_path):
-    from ecom_video.db import Conflict, Store
+    from ecom_video.db import SCHEMA_VERSION, Conflict, Store
     from ecom_video.idea_plans import IdeaPlans
 
     store = Store(tmp_path / "workflow.db")
@@ -101,7 +101,7 @@ def test_plan_queue_survives_restart_cancels_and_recovers_expired_runs(tmp_path)
     assert restarted.get(p["id"])["status"] == "failed"
     assert store.get(old["id"])["script"] == "原来的文稿" and store.get(old["id"])["reviews"] == []
     with store.connect() as c:
-        assert c.execute("PRAGMA user_version").fetchone()[0] == 15
+        assert c.execute("PRAGMA user_version").fetchone()[0] == SCHEMA_VERSION
         assert c.execute("PRAGMA foreign_key_check").fetchall() == []
 
 

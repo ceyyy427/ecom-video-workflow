@@ -278,6 +278,10 @@ def test_schema_12_upgrade_preserves_prior_rows(tmp_path):
             t: [tuple(r) for r in db.execute('SELECT * FROM "' + t + '" ORDER BY rowid')]
             for t in tables
         }
+        # A schema12 fixture cannot retain tables from the new schema16 migration.
+        db.execute("DROP TABLE operation_oauth_states")
+        db.execute("DROP TABLE operation_files")
+        db.execute("DROP TABLE operation_objects")
         db.execute("DROP TABLE idea_adoptions")
         db.execute("DROP TABLE idea_plans")
         db.execute("DROP TABLE idea_uploads")
