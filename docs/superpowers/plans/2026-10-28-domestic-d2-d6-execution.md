@@ -6,6 +6,8 @@
 
 **Goal:** 完成原 [D2–D6清单](2026-10-28-domestic-ecommerce-expansion.md)，提供可检查的 Mac 候选交付包、真实样例、操作与回滚指南，最终发布留给用户。
 
+**Spec:** [原设计](../specs/2026-10-28-domestic-ecommerce-expansion.md)。
+
 **Architecture:** 既有 Customer/Runtime/渲染/冻结/版本管理继续拥有执行与人工关卡；运营层只做严格参数编译、只读/文件适配、可追溯草稿。自然内容观测与原广告报表分开存储、定义和展示。新增持久对象采用明确增量迁移和既有备份引用校验，不散落任意路径 JSON。
 
 **Tech Stack:** Python/Pydantic/FastAPI/SQLite、原 Remotion/FFmpeg/Pillow、静态页面。可选 MCP 使用经核验的官方 SDK 隔离依赖。无新云调用、平台写能力或常驻 n8n。
@@ -29,47 +31,47 @@
 
 ### Task 1: 收尾 D1
 
-- [ ] 隔离安装 Playwright 1.61.0（Apache-2.0，Python≥3.10），不写共享制作环境；真实页面两视口/播放/重入/输入变更验收。
-- [ ] 记录两品类各六条真实七秒预览、自动回归、来源与回滚，单独提交 D1。
+- [x] 隔离安装 Playwright 1.61.0（Apache-2.0，Python≥3.10），不写共享制作环境；真实页面两视口/播放/重入/输入变更验收。
+- [x] 记录两品类各六条真实七秒预览、自动回归、来源与回滚，单独提交 D1。
 
 ### Task 2: D2 方案编译、运行桥接与作品回归
 
 **Files:** `operations/execution.py`、`operations/api.py`、`web/customer-agent.js`，`tests/test_operations_execution.py`，既有视频验收脚本的适配。
 
-- [ ] RED：方案/采用项目不符、旧版本、缺人工确认、超预算、重复、取消迟到、结果不明等测试；原 Runtime 测试保持。
-- [ ] `compile_plan(...)` 仅编译为原 P13命令，`propose_execution(...)` 复用 AgentService/Runtime；无第二队列。固定工作流兜底只建议原安全路径，不修改人工输入。
-- [ ] 客户工作台将国内方案交接到旧有界运行控件；原启用开关不被绕过，默认没有自主云/平台权限。
-- [ ] 隔离工程样例验证原声时钟、三种视觉、原速动作、单镜缓存与旧版本；实际客户作品保留待审。交错三轮记录 Agent/原工作流耗时与内存，不承诺提速。
-- [ ] 目标回归后独立提交；更新 `--stage video` 与限制。
+- [x] RED：方案/采用项目不符、旧版本、缺人工确认、超预算、重复、取消迟到、结果不明等测试；原 Runtime 测试保持。
+- [x] `compile_plan(...)` 仅编译为原 P13命令，`propose_execution(...)` 复用 AgentService/Runtime；无第二队列。固定工作流兜底只建议原安全路径，不修改人工输入。
+- [x] 客户工作台将国内方案交接到旧有界运行控件；原启用开关不被绕过，默认没有自主云/平台权限。
+- [x] 隔离工程样例验证原声时钟、三种视觉、原速动作、单镜缓存与旧版本；实际客户作品保留待审。交错三轮记录 Agent/原工作流耗时与内存，不承诺提速。
+- [x] 目标回归后独立提交；更新 `--stage video` 与限制。
 
 ### Task 3: D3 只读连接器与交接包
 
 **Files:** `connectors/{contracts,registry,mcp_client,douyin_readonly,xhs_import}.py`，`operations/{records,media_pack}.py`，必要迁移/备份引用，`tests/test_connectors_policy.py/test_connectors_import.py`。
 
-- [ ] RED：假只读 hints、任意地址/命令/作用域、跨账户、限流/未获批、秘密泄漏等。
-- [ ] 核对官方 SDK 固定版本/许可/兼容/空闲资源；可选依赖隔离，不引入自制 MCP 协议栈。
-- [ ] 抖音官方本人作品只读接口与手工导入；小红书通用笔记 API 未证实则 unavailable，浏览器 MCP 禁用。
-- [ ] 复用原凭据隔离、OAuth 与导出结构；待审包明确不能发布，已审包仍由客户自行发布。登记内容 ID 不触发平台写入。
-- [ ] 离线 import/export/恢复验收、独立提交，实接状态与模拟结果分开。
+- [x] RED：假只读 hints、任意地址/命令/作用域、跨账户、限流/未获批、秘密泄漏等。
+- [x] 核对官方 SDK 固定版本/许可/兼容/空闲资源；可选依赖隔离，不引入自制 MCP 协议栈。
+- [x] 抖音官方本人作品只读接口与手工导入；小红书通用笔记 API 未证实则 unavailable，浏览器 MCP 禁用。
+- [x] 复用原凭据隔离、OAuth 与导出结构；待审包明确不能发布，已审包仍由客户自行发布。登记内容 ID 不触发平台写入。
+- [x] 离线 import/export/恢复验收、独立提交，实接状态与模拟结果分开。
 
 ### Task 4: D4 自然内容冻结、评论与下一版
 
 **Files:** `operations/{observations,comments,iterations}.py`，既有快照/实验/创意特征的适配，Fork 06/07，`tests/test_operations_observations.py/test_operations_comments.py`。
 
-- [ ] RED：缺失/零、累计/每日、口径冲突、重复源、冻结后改源、注入与隐私、失效父片等。
-- [ ] 冻结观测及文件 SHA、定义/缺失原因；与广告快照分开，兼容原流程。
-- [ ] 评论先作有证据候选分类并计数；无可用本机文本模型时明确规则回退与未知，不发送云端。
-- [ ] 人工选择假设后创建待确认下一版，关联父片/快照/实际变更；下一轮只做可比的描述性对照。
-- [ ] 两份工程导出完整闭环，原广告复盘回归，独立提交。
+- [x] RED：缺失/零、累计/每日、口径冲突、重复源、冻结后改源、注入与隐私、失效父片等。
+- [x] 冻结观测及文件 SHA、定义/缺失原因；与广告快照分开，兼容原流程。
+- [x] 评论先作有证据候选分类并计数；无可用本机文本模型时明确规则回退与未知，不发送云端。
+- [x] 人工选择假设后创建待确认下一版，关联父片/快照/实际变更；下一轮只做可比的描述性对照。
+- [x] 两份工程导出完整闭环，原广告复盘回归，独立提交。
 
 ### Task 5: D5 七模块与页面
 
 **Files:** `operations/{research,positioning,media_pack}.py`，`web/operations.*`，Fork 01/02/04，`tests/test_operations_research.py/test_operations_media_pack.py`。
 
-- [ ] RED：来源不足、币种/费用日期不齐、型号冲突、失效事实、图示冒充照片。
-- [ ] 复用确定性统计/毛利试算；只解释合法提供的样本；真实帧/Pillow封面与图文建议，未知不造数。
-- [ ] 原 UI 增量运营入口，七模块输入/输出/状态/限制与内容矩阵；不做 ERP/SaaS 或自动排期发布。
-- [ ] 模块回归、来源锁更新并单独提交。
+- [x] RED：来源不足、币种/费用日期不齐、型号冲突、失效事实、图示冒充照片。
+- [x] 复用确定性统计/毛利试算；只解释合法提供的样本；真实帧/Pillow封面与图文建议，未知不造数。
+- [x] 原 UI 增量运营入口，七模块输入/输出/状态/限制与内容矩阵；不做 ERP/SaaS 或自动排期发布。
+- [x] 模块回归、来源锁更新并单独提交。
 
 ### Task 6: D6 Mac 候选交付
 

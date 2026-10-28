@@ -109,3 +109,27 @@ def test_sources_bind_declared_owner_and_freeze_original_bytes(tmp_path):
     assert source["payload"]["account_ref"] == account["id"]
     with pytest.raises(ValueError):
         freeze_source(records, account["id"], b"x", "../../a.csv", "")
+
+
+def test_corrupt_keychain_record_is_not_echoed_in_validation_error(tmp_path, monkeypatch):
+    from ecom_video.connectors.oauth import DouyinAuth
+    from ecom_video.db import Store
+    from ecom_video.operations.records import Records
+
+    monkeypatch.setenv("ECOM_DOMESTIC_OFFICIAL_READ", "1")
+    records = Records(tmp_path, Store(tmp_path / "workflow.db"))
+    secrets = Secrets()
+    account = records.put("connection", {"platform": "douyin", "ownership": "oauth_verified_owner"})
+    secrets.write(
+        "dy-" + account["id"],
+        {
+            "open_id": "owner",
+            "token": "private-token",
+            "scopes": ["video.data"],
+            "expires_at": 9999999999,
+            "unexpected": "PRIVATE_SHOULD_NOT_BE_ECHOED",
+        },
+    )
+    with pytest.raises(ValueError) as error:
+        DouyinAuth(records, secrets=secrets).grant(account["id"])
+    assert "PRIVATE_SHOULD_NOT_BE_ECHOED" not in str(error.value)

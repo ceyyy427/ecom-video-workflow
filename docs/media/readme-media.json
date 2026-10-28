@@ -63,15 +63,27 @@
       "kind": "muted_excerpt_from_actual_rendered_films",
       "duration": 4.8,
       "sha256": "00c35112b3d2be31349d67d81bf081cfd8b23a0cefe38c499df8385175f642b2"
+    },
+    {
+      "path": "docs/media/readme-domestic-operations.png",
+      "kind": "actual_local_browser_screenshot_engineering_data",
+      "checked_on": "2026-10-28",
+      "sha256": "5167e87baec732ec3a90dde293ef5d3f14272a9ac2135729b4d4d3d29c0b1640",
+      "width": 1440,
+      "height": 1674,
+      "customer_signoff": false,
+      "customer_media": false,
+      "account_data": "synthetic authorized QA rows"
     }
   ],
-  "page_images_are_browser_screenshots": false,
-  "page_images": "Original illustrations of implemented controls, with licensed real footage; audio waveforms and control state are illustrative",
+  "page_images": "Original editor/prompt/review pages are layout illustrations; domestic operations image is an actual local screenshot, identified per asset.",
   "motion_preview": "4.8-second muted excerpts of existing rendered films; not full-action or human listening approval evidence",
   "private_reference_videos_published": false,
   "customer_media_published": false,
   "original_mp4_published": false,
   "audio_or_music_published": false,
   "new_cloud_calls": 0,
-  "computer_use": false
+  "computer_use": false,
+  "candidate_update_on": "2026-10-28",
+  "all_page_images_are_browser_screenshots": false
 }

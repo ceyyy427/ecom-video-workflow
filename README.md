@@ -12,6 +12,8 @@
 
 </div>
 
+**0.18.0 国内运营候选版：**新增市场资料、商品定位、六方向内容、封面图文、视频交接、表现复盘和评论迭代。保留原制作工作台；候选包尚未发布，客户实际听审及最终发布由用户决定。见[候选版能力与限制](docs/DOMESTIC_CAPABILITY_MATRIX.md)、[操作指南](docs/DOMESTIC_SUITE_GUIDE.md)与[工程验收](docs/DOMESTIC_ACCEPTANCE.md)。下方「Mac 快速开始」仍指向已发布版本。
+
 ## 实拍效果
 
 同一段鲜橙实拍，在现有工作流中制作的三种呈现。下面直接截取已渲染样片，分别展示开场、收尾和动作讲解。
@@ -30,6 +32,12 @@
 实拍： [Maksim Semashko / Pexels](https://www.pexels.com/video/cutting-orange-with-knife-13107467/)，按 [Pexels License](https://www.pexels.com/license/) 使用。来源与派生记录见[展示素材说明](docs/README_SHOWCASE.md)。
 
 ## 工作台展示
+
+### 内容运营：从资料到下一版
+
+这是候选版的**实际浏览器截图**。七个模块沿用原工作台的配色和布局，按任务显示常用字段，来源与诊断信息收在展开区域。图中使用工程数据，**不是客户真实账号、运营成绩或人工签收**。
+
+![内容运营工作台实际截图：七模块导航、市场样本导入与有来源的结果](docs/media/readme-domestic-operations.png)
 
 素材、文稿、声音与修改都围绕同一个商品项目。以下页面按现有工作台布局绘制，嵌入许可实拍与真实成片帧；**页面图是布局示意，不是浏览器截图**。
 
@@ -104,6 +112,7 @@ python3 scripts/launch_customer.py
 | 要做什么 | 页面 |
 |---|---|
 | 商品资料、文稿、声音与剪辑 | `/create` |
+| 七模块运营、自然内容冻结与评论迭代 | `/operations`（[候选版指南](docs/DOMESTIC_SUITE_GUIDE.md)） |
 | 国内定位、六个动态方向与发布文案草稿 | `/ideas`（[D1指南](docs/DOMESTIC_D1_USAGE.md)） |
 | 自主选 Prompt 与逐句适配 | `/prompts` |
 | 本机样片与效果参考 | `/samples` |

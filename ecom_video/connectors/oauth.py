@@ -203,9 +203,13 @@ class DouyinAuth:
         if not enabled() or account.get("ownership") != "oauth_verified_owner":
             raise ValueError("需要本安装内有效的本人授权")
         data = self.secrets.read("dy-" + account_id)
-        if not data or data.get("expires_at", 0) <= time.time():
+        try:
+            grant = ReadGrant(account_id=account_id, **data)
+        except (ValueError, TypeError):
+            raise ValueError("本机授权记录无效，请重新授权；不会回显凭据或使用明文回退") from None
+        if grant.expires_at <= time.time():
             raise ValueError("未连接或授权已过期，请重新授权；未自动刷新或重试")
-        return ReadGrant(account_id=account_id, **data)
+        return grant
 
     def disconnect(self, account_id):
         self.records.get(account_id, "connection")

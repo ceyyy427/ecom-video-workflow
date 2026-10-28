@@ -31,6 +31,20 @@ def test_benchmark_edits_use_supported_fields_and_confirmed_copy():
     assert ShotChanges.model_validate(changes_for("warm_single_shot")).typography.mode == "contrast"
 
 
+def test_native_workbench_keyword_comes_from_confirmed_script_not_a_nonexistent_shot_field():
+    from scripts.accept_domestic_workbench import native_headline
+
+    assert (
+        native_headline(
+            {
+                "script": "切开以后，细节才看得清。\n看看切面",
+                "storyboard": {"shots": [{"shot_id": "s1"}]},
+            }
+        )
+        == "切开以后"
+    )
+
+
 def test_video_acceptance_rejects_missing_rights_bad_hash_and_same_category(tmp_path):
     from ecom_video.media import digest
     from ecom_video.operations.video_acceptance import validate_video_cases

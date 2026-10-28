@@ -126,6 +126,16 @@ def unpack_release(path, target, expected, schema, current):
                 "ecom_video/api.py",
                 "ecom_video/recovery_api.py",
             }
+            if version(release["version"]) >= (0, 18, 0):
+                required.update(
+                    {
+                        "docs/third-party/domestic-toolkit.lock.json",
+                        "ecom_video/web/operations.html",
+                        "ecom_video/operations/records.py",
+                        "ecom_video/migrations/016_operations.sql",
+                        "docs/DOMESTIC_SUITE_GUIDE.md",
+                    }
+                )
             if version(release["version"]) >= (0, 13, 0):
                 required.update(
                     {
@@ -152,6 +162,12 @@ def unpack_release(path, target, expected, schema, current):
             project = tomllib.loads((target / "pyproject.toml").read_text())["project"]
             if project["name"] != release["app"] or project["version"] != release["version"]:
                 raise MaintenanceError("应用版本与发行清单不一致。")
+            if version(release["version"]) >= (0, 18, 0):
+                from .operations.resources import load_resources
+
+                load_resources(
+                    target / "docs/third-party/domestic-toolkit.lock.json", project_root=target
+                )
             return release
     except (KeyError, TypeError, OSError, ValueError, zipfile.BadZipFile, RuntimeError):
         raise MaintenanceError(

@@ -51,6 +51,20 @@ DOCS = {
     "P3_USAGE.md",
     "P3_CONTRACTS.md",
 }
+LEGACY017_ROOT_FILES = frozenset(ROOT_FILES)
+LEGACY017_DOCS = frozenset(DOCS)
+ROOT_FILES.add("requirements-mcp.txt")
+DOCS.update(
+    {
+        "MAC_WORKBENCH_GUIDE.md",
+        "DOMESTIC_SUITE_GUIDE.md",
+        "DOMESTIC_CAPABILITY_MATRIX.md",
+        "DOMESTIC_ACCEPTANCE.md",
+        "TYPOGRAPHY_PROMPT_GUIDE.md",
+        "VOICESTUDIO_LOCAL.md",
+    }
+)
+DOMESTIC_LOCKS = {"domestic-toolkit.lock.json", "domestic-connectors.json"}
 
 
 def sha(path):
@@ -130,6 +144,13 @@ def package_path_allowed(value):
         or (len(parts) == 2 and parts[0] == "scripts" and parts[1] in SCRIPTS)
         or (len(parts) == 2 and parts[0] == "docs" and parts[1] in DOCS)
         or (parts[:2] == ("docs", "third-party") and "LICENSE" in Path(name).name)
+        or (len(parts) == 3 and parts[:2] == ("docs", "third-party") and parts[2] in DOMESTIC_LOCKS)
+        or (
+            parts[:2] == ("resources", "domestic-toolkit")
+            and Path(name).suffix in (".md", ".txt", ".json", ".py", ".yaml", ".yml")
+        )
+        or (parts == ("resources", "domestic-toolkit", "LICENSE"))
+        or (parts == ("docs", "examples", "n8n-readonly-snapshot.json"))
         or (
             parts[:2] in (("vendor", "video-shotcraft"), ("vendor", "mg-styles-15"))
             and Path(name).name == "LICENSE"
@@ -141,18 +162,29 @@ def build_package(root, target):
     root, target = Path(root).resolve(), Path(target).absolute()
     if target.exists() or target.is_symlink():
         raise ValueError("安装包目标已存在，不能覆盖")
+    lock = root / "docs/third-party/domestic-toolkit.lock.json"
+    resource_files = set()
+    if lock.exists():
+        from .operations.resources import load_resources
+
+        bundle = load_resources(lock, project_root=root)
+        resource_files = {"resources/domestic-toolkit/" + item.path for item in bundle.entries}
     files = []
     for path in sorted(root.rglob("*")):
         name = path.relative_to(root)
         parts = name.parts
         # Do not traverse or include data/dependency trees, even when they contain code files.
         selected = package_path_allowed(name)
+        if parts[:2] == ("resources", "domestic-toolkit") and name.as_posix() not in resource_files:
+            continue
         if not selected or any(p in ("__pycache__", "node_modules", ".venv") for p in parts):
             continue
         if path.is_symlink() or any(p.is_symlink() for p in path.parents if p != root.parent):
             raise ValueError("安装包源文件包含软链接")
         if path.is_file():
             files.append((name.as_posix(), path))
+    if resource_files - {name for name, _ in files}:
+        raise ValueError("发行包遗漏固定资源，未开始创建安装包")
     manifest = {
         "format": 1,
         "release": release_info(root),
@@ -175,12 +207,14 @@ def build_package(root, target):
     return {"files": len(files), "bytes": target.stat().st_size, "sha256": sha(target)}
 
 
-def build_bridge(root, target):
+def build_bridge(root, target, *, bridge_version="0.12.1"):
     """0.12.0's immutable file allowlist needs one transparent loader upgrade first.
 
     No code is executed during preparation. The customer starts the independent
     0.12.1 copy, then uploads the normal release there; data remains copied.
     """
+    if bridge_version not in ("0.12.1", "0.17.1"):
+        raise ValueError("仅支持已核验的0.12.1或0.17.1过渡版本")
     target = Path(target)
     if target.exists() or target.is_symlink():
         raise ValueError("安装包目标已存在，不能覆盖")
@@ -192,25 +226,56 @@ def build_bridge(root, target):
         "docs/CUSTOMER_WINDOWS.md",
         "docs/CUSTOMER_HANDOFF.md",
     }
+    if bridge_version == "0.17.1":
+        excluded = set()
     with tempfile.TemporaryDirectory(prefix="ecom-bridge-") as directory:
         complete = Path(directory) / "complete.zip"
         build_package(root, complete)
         with zipfile.ZipFile(complete) as source:
             manifest = json.loads(source.read("PACKAGE.json"))
             old_version = manifest["release"]["version"]
-            manifest["release"]["version"] = "0.12.1"
+            manifest["release"]["version"] = bridge_version
             values = {}
             for row in manifest["files"]:
                 name = row["path"]
                 if name in excluded:
                     continue
+                parts = Path(name).parts
+                if (
+                    parts[0] == "resources"
+                    or (len(parts) == 1 and name not in LEGACY017_ROOT_FILES)
+                    or (len(parts) == 2 and parts[0] == "docs" and parts[1] not in LEGACY017_DOCS)
+                    or (parts[:2] == ("docs", "third-party") and "LICENSE" not in Path(name).name)
+                    or parts[:2] == ("docs", "examples")
+                ):
+                    continue
                 raw = source.read(name)
                 if name in ("pyproject.toml", "uv.lock", "ecom_video/api.py"):
-                    raw = raw.replace(('"' + old_version + '"').encode(), b'"0.12.1"')
+                    text = raw.decode()
+                    if name == "pyproject.toml":
+                        pattern = (
+                            r'(?ms)(^\[project\]\s*\n(?:(?!^\[).)*?^version\s*=\s*)"'
+                            + re.escape(old_version)
+                            + '"'
+                        )
+                    elif name == "uv.lock":
+                        pattern = (
+                            r'(?m)(^name = "ecom-video-workflow"\nversion = )"'
+                            + re.escape(old_version)
+                            + '"'
+                        )
+                    else:
+                        pattern = r'(version\s*=\s*)"' + re.escape(old_version) + '"'
+                    text, changed = re.subn(
+                        pattern, lambda m: m[1] + '"' + bridge_version + '"', text, count=1
+                    )
+                    if changed != 1:
+                        raise ValueError("过渡包应用版本字段不唯一或缺失，未替换依赖版本")
+                    raw = text.encode()
                 if name in ("CUSTOMER_NOTICE.md", "docs/CUSTOMER_INSTALL.md"):
                     raw = (
-                        "# 0.12.1 过渡版：只用于升级\n\n"
-                        "从0.12.0页面准备本包并人工启动副本后，直接进入 /maintenance 登记正式0.13.1包。"
+                        f"# {bridge_version} 过渡版：只用于升级\n\n"
+                        "从旧版页面准备本包并人工启动副本后，直接进入 /maintenance 登记完整新版包。"
                         "这是旧校验器白名单的兼容步骤，不代表已完成正式新版升级；"
                         "不要在此过渡副本配置声音或制作商品。两阶段均先备份、恢复新目录，原版保留。\n\n"
                     ).encode() + raw
@@ -237,7 +302,7 @@ def build_bridge(root, target):
         "files": len(values),
         "bytes": target.stat().st_size,
         "sha256": sha(target),
-        "version": "0.12.1",
+        "version": bridge_version,
         "purpose": "legacy_loader_bridge_only",
     }
 
@@ -295,14 +360,21 @@ def main():
     sub = parser.add_subparsers(dest="action", required=True)
     package = sub.add_parser("package")
     package.add_argument("--to", type=Path, required=True)
-    package.add_argument("--legacy-bridge", action="store_true", help="仅供0.12.0校验器过渡到新版")
+    package.add_argument(
+        "--legacy-bridge", action="store_true", help="旧版文件白名单的过渡包，不用于制作"
+    )
+    package.add_argument("--bridge-version", choices=["0.12.1", "0.17.1"], default="0.12.1")
     models = sub.add_parser("models")
     models.add_argument("--asr-from", type=Path)
     models.add_argument("--vision-model")
     args = parser.parse_args()
     try:
         if args.action == "package":
-            result = (build_bridge if args.legacy_bridge else build_package)(PROJECT, args.to)
+            result = (
+                build_bridge(PROJECT, args.to, bridge_version=args.bridge_version)
+                if args.legacy_bridge
+                else build_package(PROJECT, args.to)
+            )
         else:
             result = {}
             if args.asr_from:

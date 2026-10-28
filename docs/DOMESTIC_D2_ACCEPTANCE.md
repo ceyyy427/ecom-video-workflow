@@ -9,6 +9,7 @@
 - 六条已有工程分镜经当前 Worker/Remotion 实际重渲：藏蓝服装21/24.1/21秒，许可鲜橙26.5/26.5/26.5秒。保留原选段、人声、字幕和动作保护；这是样式回放，不冒充六份新人工审批或自由创作质量验收。
 - 第一条仅修改一镜后，其他五镜文件 SHA、解码 PCM、SRT 和父片 SHA 均保持；新片均 needs_review。
 - 独立安装可显式设置 ECOM_ASR_MODEL_DIR 复用只读模型缓存；须绝对路径且匹配 docs/P5_MODEL.json 的两个 SHA。不换模型，不经 HTTP 接受任意模型路径。
+- 补充原生链路验证：鲜橙、滴管瓶两个已完成六预览的国内方案，实际采用→事实/稿件工程确认→新提案入口→原 Runtime→最终分镜关卡→26秒成片→单镜重做→恢复父版→待审交接包。另三个镜头文件、解码PCM、SRT、父片SHA不变，恢复后子版仍在。此链路为静音商品展示；配音链路分别用六条工程重渲与D6藏蓝全新上传/本机ASR覆盖，不冒称这两条都重新生成配音。
 
 ## 三轮交错实测
 
@@ -29,6 +30,7 @@ Agent 单元进程树峰值 RSS 1.39/1.54/1.47 GiB；固定路径1.43/1.53/1.46 
 
 - video-acceptance-final/acceptance.json：六条 MP4、SHA、时长与单镜结果；video-manifest.json 锁定来源。客户服装素材只作私有样片，不公开。
 - interleaved-render/acceptance.json：12次真实渲染、耗时、缓存命中、内存、PCM/SRT；失败的早期验收目录保留，未纳入统计。
+- native-workbench-final/acceptance.json：两个真实原生采用/Runtime链路；D6在安装包副本中重复运行，新增35份资源校验，见总交付验收。
 - scripts/benchmark_domestic_execution.py --source ABS_ENGINEERING_DATA --project ID --workspace ABS_NEW_DIR --simulate-confirmations。脚本仅接受 AUTOMATED FIXTURE 项目，绝不写生产数据；预算、原片和权限检查保留。
 - .venv/bin/python -m pytest -q tests/test_operations_execution.py tests/test_operations_video.py tests/test_agent_runtime.py tests/test_agent_recovery.py tests/test_idea_adoption.py tests/test_delivery_reviews.py。
 

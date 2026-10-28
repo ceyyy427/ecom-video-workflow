@@ -1,6 +1,6 @@
 # 国内电商运营 Agent 套件升级设计
 
-日期：2026-10-28。状态：已通过设计；D0 实施记录见 [验收](../../DOMESTIC_D0_ACCEPTANCE.md)，D1–D6 待实施。最初规划轮次只新增文档，后续实施状态不应与规划时的阅读评估混淆。
+日期：2026-10-28。状态：已通过设计；D0 实施记录见 [验收](../../DOMESTIC_D0_ACCEPTANCE.md)，D1–D5 候选实现与工程验收完成，D6 安装/升级与最终回归进行中。实际覆盖和未验项以[交付验收](../../DOMESTIC_ACCEPTANCE.md)为准；工程夹具不是客户确认，最终发布仍由用户决定。
 
 ## 目标与仓库关系
 
@@ -12,7 +12,7 @@
 2. `ecom-video-workflow` 继续作为可安装应用及执行引擎的维护源。固定版本同步 Fork 的资源包，增加运营入口和适配器；不复制另一套渲染器、数据库或审核状态。
 3. Mac 客户只安装一个剪序应用包；Fork 首页链接到该交付包。资源包记录 Fork URL、上游 SHA、国内修订 SHA、文件哈希与许可。后续上游更新经过差异审阅再同步，不在运行时拉取 `main`。
 
-这样既能基于 Fork 扩展七类运营方法，也能保留已验证的工作台、客户资料和制作能力。D0 已创建 [用户 Fork 国内分支](https://github.com/ceyyy427/AI-Cross-Border-Ecommerce-Agent-Toolkit/tree/codex/domestic-d0/Domestic)，其余方法仍标为 planned。
+这样既能基于 Fork 扩展七类运营方法，也能保留已验证的工作台、客户资料和制作能力。D0 已创建 [用户 Fork 国内分支](https://github.com/ceyyy427/AI-Cross-Border-Ecommerce-Agent-Toolkit/tree/codex/domestic-d0/Domestic)，后续 D1/D4/D5 方法修订保留在本地 codex/domestic-suite 候选分支；未获最终发布前不推送，发行锁和文本随包。
 
 ## 已核对的事实与限制
 
@@ -40,7 +40,7 @@
 | [n8n 许可](https://github.com/n8n-io/n8n/blob/b6520fb6aef75f1aec74ac82298a9cc4920e8b72/LICENSE.md) | 后期可选外部 HTTP 触发样例，复用现有工作流 API | Sustainable Use License，有使用/分发边界，不按 MIT 处理；不嵌入交付包、不替代本机队列，不把调度层声称为视觉推理提速方案。 |
 | 已接入的 Remotion/FFmpeg、Shotcraft、Lemo、Narrato 字幕兼容与 `spoken_copy.py` | 持续复用当前渲染、有限卡片、声音时钟和口语化守则；参考现有 third-party 声明 | 不再下载一套平行生产引擎；不将参考卡数量当成可执行模板数量；Remotion 许可继续按既有声明单独核对。 |
 
-D0 已固定下载工具箱参考资源且未执行上游脚本；其他新增外部项目仍为阅读评估。官方接口、规则和第三方实现到对应阶段再复核一次。
+D0 已固定下载工具箱参考资源且未执行上游脚本；D3 官方 MCP 2.3.0 在隔离环境完成内存协议验证，作为可选依赖，不默认安装或调用。官方抖音只读契约已核对并模拟验证，真实账号权限/回调仍待实接；浏览器 MCP 与 n8n 不嵌入运行。详见各期采用依据，以下设计表保留最初评估语境。
 
 ## 系统结构与 Agent 边界
 

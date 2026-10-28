@@ -8,7 +8,7 @@
 
 **Tech Stack:** 既有 Python 3.11+/FastAPI/Pydantic/SQLite、Remotion/FFmpeg、静态工作台、本机模型与独立 VoiceStudio；MCP 官方 SDK 按 D3 独立验证后可选加入。
 
-**Spec:** [国内电商运营套件设计](../specs/2026-10-28-domestic-ecommerce-expansion.md)。日期 2026-10-28；本清单最初为规划，D0 实施与验收见 [D0 记录](../../DOMESTIC_D0_ACCEPTANCE.md)。D1–D6 尚未实施。已完成的六动态预览是复用基线，不重复立项。
+**Spec:** [国内电商运营套件设计](../specs/2026-10-28-domestic-ecommerce-expansion.md)。日期 2026-10-28；本清单最初为规划，D0 实施与验收见 [D0 记录](../../DOMESTIC_D0_ACCEPTANCE.md)。D1–D5 已完成候选实现与工程验收，D6 正在进行安装/升级及最终回归。后续授权改为连续推进到 D6，见[执行计划](2026-10-28-domestic-d2-d6-execution.md)。真实账号实接、客户听审和发布继续待办。已完成的六动态预览是复用基线，不重复立项。
 
 ## Global Constraints
 
@@ -41,7 +41,7 @@
 | D5：七模块业务扩展 | P2 | 市场研究、商品策略、图文封面与内容矩阵 | D1–D4 的主链路可用后逐模块发布 |
 | D6：Mac 交付与试用 | 发布门槛 | 单安装包、客户指南、两品类验收、升级回滚 | 全部纳入发布范围的阶段通过；未过项禁用 |
 
-先发布 D0–D2 的“国内内容制作版”，再发布 D3–D4 的“运营复盘版”；D5 分模块增加能力。每个版本都执行 D6 的打包/回归门槛，不等全部功能写完才验证安装。此表是工作依赖，不是未经实测的工期承诺。
+最初拟分批发布；后续用户要求连续完成 D1–D6，全部保留本地候选，最后统一由用户验收发布。每个版本都执行 D6 的打包/回归门槛，不等全部功能写完才验证安装。此表是工作依赖，不是未经实测的工期承诺。
 
 ## 文件边界与接口（拟新增）
 
@@ -60,7 +60,7 @@
 
 新 API 前缀 `/api/operations`；保留旧 `/api/agent`、`/api/idea-plans` 和客户接口。各期数据库脚本在实施时取“当前下一个空闲迁移编号”，禁止预先固定 016 与其他开发冲突。业务对象以 ID/版本/哈希互相引用，不复制审批表。
 
-验收脚本公共契约：`--stage foundation|content|video|connectors|review|expansion|mac --workspace ABS_DIR --manifest FILE --mode engineering|customer`。工程模式只能用带专用标记的独立数据，审批明确写 `AUTOMATED FIXTURE`；客户模式在真实人工关卡停下，不能替人批准。下列新命令/测试是对应任务必须交付的接口，当前尚不存在。
+验收脚本公共契约：`--stage foundation|content|video|connectors|review|expansion|mac --workspace ABS_DIR --manifest FILE --mode engineering|customer`。工程模式只能用带专用标记的独立数据，审批明确写 `AUTOMATED FIXTURE`；客户模式在真实人工关卡停下，不能替人批准。下列命令/测试已按阶段提供；工程与客户模式分开，具体覆盖和限制见各期验收记录。
 
 ```sh
 # 后续执行时先设置：仓库外新目录；manifest 只引用已核对使用范围的本机素材。
@@ -95,12 +95,12 @@ manifest 字段固定为 `cases[{id,category,asset_paths,asset_sha256,source_ref
 
 **涉及文件：**Fork `Domestic/02_Positioning/03_Content/05_Video`；本库 `operations/{positioning,content,planner}.py`、`content_plan.py` 的兼容适配、`spoken_copy.py`、`operations/api.py`、原 `/ideas` 的增量字段、`tests/test_operations_content.py`。
 
-- [ ] 先写测试：无空格中文、品牌型号、带条件数字、未知人群、混色/缺镜头不误判；改商品/人群/气质会改变选择理由与内容；不新增无依据性能、使用经历和对比结论。
-- [ ] 运行新增测试确认缺少实现而失败；保留旧预览测试基线。
-- [ ] 适配上游“一个核心卖点、钩子候选、输入/输出、自检”结构；先使用既有本机模型/规则路径。中文预估只用于预算，正式字幕时间不使用上游葡语词速算法。
-- [ ] 输出六套联合方向：默认商品展示/场景分享/证据讲解各两种视觉结构；每套包含钩子、全文、实拍依据、动效与声音建议、缺口及预计时长。检测仅换色/同稿重复；素材不足的方向明确标“需补拍/仅图示”。
-- [ ] 给出抖音与小红书不同的标题/正文/封面建议；平台规则记录来源、适用内容类型、核对日期，不把创作建议当硬性平台限制。自然表达复用 `spoken_copy.py` 与已核对 Humanizer 方法。
-- [ ] 接回原六预览和采用入口；当前 24 秒 v1 不变，新增时长使用显式新版本适配。真实预览依然 6–8 秒，声音预览未听核即待审。通过测试并单独提交。
+- [x] 先写测试：无空格中文、品牌型号、带条件数字、未知人群、混色/缺镜头不误判；改商品/人群/气质会改变选择理由与内容；不新增无依据性能、使用经历和对比结论。
+- [x] 运行新增测试确认缺少实现而失败；保留旧预览测试基线。
+- [x] 适配上游“一个核心卖点、钩子候选、输入/输出、自检”结构；先使用既有本机模型/规则路径。中文预估只用于预算，正式字幕时间不使用上游葡语词速算法。
+- [x] 输出六套联合方向：默认商品展示/场景分享/证据讲解各两种视觉结构；每套包含钩子、全文、实拍依据、动效与声音建议、缺口及预计时长。检测仅换色/同稿重复；素材不足的方向明确标“需补拍/仅图示”。
+- [x] 给出抖音与小红书不同的标题/正文/封面建议；平台规则记录来源、适用内容类型、核对日期，不把创作建议当硬性平台限制。自然表达复用 `spoken_copy.py` 与已核对 Humanizer 方法。
+- [x] 接回原六预览和采用入口；当前 24 秒 v1 不变，新增时长使用显式新版本适配。真实预览依然 6–8 秒，声音预览未听核即待审。通过测试并单独提交。
 
 **验收命令：**`.venv/bin/python -m pytest -q tests/test_operations_content.py tests/test_idea_plans.py tests/test_idea_adoption.py`；`.venv/bin/python scripts/accept_domestic_suite.py --stage content --workspace "$ACCEPT_ROOT/D1" --manifest "$MANIFEST" --mode engineering`。
 
@@ -112,12 +112,12 @@ manifest 字段固定为 `cases[{id,category,asset_paths,asset_sha256,source_ref
 
 **涉及文件：**`operations/{tools,execution}.py`，`agent_runtime.py/agent_worker.py` 的桥接，`customer_planner.py/delivery_plan.py`，`content_plan.py/idea_renderer.py`，`tests/test_operations_execution.py`、验收脚本 video stage。
 
-- [ ] 先写测试：运行超时、进程中断、同请求重入、取消后迟到结果、引擎升级、依赖缺失、低质量素材；所有路径都不能绕过人工关卡或自动调用云。
-- [ ] 运行新测试见失败，再将方案编译为已有白名单识别/选段/准备分镜/渲染步骤；额外规划重试最多 2 次，总步骤/模型/时长预算沿用已有 Policy 上限，不放宽全局门槛。
-- [ ] 只对幂等本机步骤恢复；校验当前文稿、方案、素材和审批哈希。`needs_human` 显示缺口/编辑入口；`unknown` 留证并停止。回退改变内容需新版本和重新确认，不静默换素材或风格。
-- [ ] 扩展时长为选定 20–30 秒，统一整稿配音/停顿/语义拍/关键词字幕；原速完整动作、主体可见、同款配色与单镜缓存继续执行。镜号、进度等工程标记只留诊断页。
-- [ ] 用藏蓝和另一许可实拍品类分别制作三条完整作品；真实文稿/听核/分镜/成片确认逐版等待人操作。单镜改后核对其他镜头哈希、未改声音、字幕与旧审批。
-- [ ] 同机同素材对比 Agent 和固定工作流：端到端、中间计算、人工等待分别统计；冷/暖分开，交错至少 3 轮。若改识别后端，必须另外使用固定五段强制重推。测试通过单独提交。
+- [x] 先写测试：运行超时、进程中断、同请求重入、取消后迟到结果、引擎升级、依赖缺失、低质量素材；所有路径都不能绕过人工关卡或自动调用云。
+- [x] 运行新测试见失败，再将方案编译为已有白名单识别/选段/准备分镜/渲染步骤；额外规划重试最多 2 次，总步骤/模型/时长预算沿用已有 Policy 上限，不放宽全局门槛。
+- [x] 只对幂等本机步骤恢复；校验当前文稿、方案、素材和审批哈希。`needs_human` 显示缺口/编辑入口；`unknown` 留证并停止。回退改变内容需新版本和重新确认，不静默换素材或风格。
+- [x] 扩展时长为选定 20–30 秒，统一整稿配音/停顿/语义拍/关键词字幕；原速完整动作、主体可见、同款配色与单镜缓存继续执行。镜号、进度等工程标记只留诊断页。
+- [x] 用藏蓝和另一许可实拍品类分别制作三条完整作品；真实文稿/听核/分镜/成片确认逐版等待人操作。单镜改后核对其他镜头哈希、未改声音、字幕与旧审批。
+- [x] 同机同素材对比 Agent 和固定工作流：端到端、中间计算、人工等待分别统计；冷/暖分开，交错至少 3 轮。若改识别后端，必须另外使用固定五段强制重推。测试通过单独提交。
 
 **验收命令：**`.venv/bin/python -m pytest -q tests/test_operations_execution.py tests/test_agent_runtime.py tests/test_agent_recovery.py tests/test_idea_adoption.py tests/test_delivery_reviews.py`；`.venv/bin/python scripts/accept_domestic_suite.py --stage video --workspace "$ACCEPT_ROOT/D2" --manifest "$MANIFEST" --mode engineering`，再用 `--mode customer` 进行实际客户流程验收。
 
@@ -129,12 +129,12 @@ manifest 字段固定为 `cases[{id,category,asset_paths,asset_sha256,source_ref
 
 **涉及文件：**`connectors/{contracts,registry,mcp_client,douyin_readonly,xhs_import}.py`、`operations/media_pack.py`、`operations/api.py`、原配置/交付页面的增量、`tests/test_connectors_policy.py/test_connectors_import.py`。
 
-- [ ] 先写测试：MCP 的 `readOnlyHint` 造假、工具声明更改、Prompt 注入要求开权限、任意 URL/命令、跨账户、token 过期、限流、未获批、导出包密钥泄漏；默认全部拒绝新增平台写能力。
-- [ ] 运行失败测试；独立环境评估官方 MCP SDK v2.3.0 的锁依赖、Python 兼容和空闲资源；合格再做 optional extra。协议使用官方 SDK，业务检查复用已有边界，不写自制 MCP 协议栈。
-- [ ] 抖音只做已获批且用户授权的本人作品数据，具体 scope/回调在实施时按官方契约确认。OAuth state、凭据 Keychain、错误脱敏、限流与断连保留；无权限可先人工导入，不阻塞视频制作。
-- [ ] 小红书先交付授权导出文件/链接登记，内容数据 API 未证实可用则保持 `unavailable`；登记 xpzouying MCP 为“浏览器依赖，当前禁用”，不下载浏览器、不搬运 Cookie、不把其发布工具暴露给 Agent。
-- [ ] 将已审/待审成片、封面、平台标题正文话题、SRT、来源及操作清单导出；客户自行发布后登记内容 ID。已有千川广告数据与抖音自然数据使用不同连接器/数据集。
-- [ ] 工具按语义白名单（包括合法的只读 POST）、固定协议/版本/地址、输出大小及凭据隔离执行。n8n 仅保留外部触发样例，非本期安装依赖；通过测试后单独提交。
+- [x] 先写测试：MCP 的 `readOnlyHint` 造假、工具声明更改、Prompt 注入要求开权限、任意 URL/命令、跨账户、token 过期、限流、未获批、导出包密钥泄漏；默认全部拒绝新增平台写能力。
+- [x] 运行失败测试；独立环境评估官方 MCP SDK v2.3.0 的锁依赖、Python 兼容和空闲资源；合格再做 optional extra。协议使用官方 SDK，业务检查复用已有边界，不写自制 MCP 协议栈。
+- [x] 抖音只做已获批且用户授权的本人作品数据，具体 scope/回调在实施时按官方契约确认。OAuth state、凭据 Keychain、错误脱敏、限流与断连保留；无权限可先人工导入，不阻塞视频制作。
+- [x] 小红书先交付授权导出文件/链接登记，内容数据 API 未证实可用则保持 `unavailable`；登记 xpzouying MCP 为“浏览器依赖，当前禁用”，不下载浏览器、不搬运 Cookie、不把其发布工具暴露给 Agent。
+- [x] 将已审/待审成片、封面、平台标题正文话题、SRT、来源及操作清单导出；客户自行发布后登记内容 ID。已有千川广告数据与抖音自然数据使用不同连接器/数据集。
+- [x] 工具按语义白名单（包括合法的只读 POST）、固定协议/版本/地址、输出大小及凭据隔离执行。n8n 仅保留外部触发样例，非本期安装依赖；通过测试后单独提交。
 
 **验收命令：**`.venv/bin/python -m pytest -q tests/test_connectors_policy.py tests/test_connectors_import.py tests/test_qianchuan_api.py`；`.venv/bin/python scripts/accept_domestic_suite.py --stage connectors --workspace "$ACCEPT_ROOT/D3" --manifest "$MANIFEST" --mode engineering`。真实只读验收单列账户、获批 scope、请求时间、脱敏回执；无凭证只能写“模拟通过/实接待验”，不能宣称已联调。
 
@@ -146,12 +146,12 @@ manifest 字段固定为 `cases[{id,category,asset_paths,asset_sha256,source_ref
 
 **涉及文件：**`operations/{observations,comments}.py`；`reporting.py/review_snapshots.py/experiments.py` 的增量适配，`creative_features.py`；Fork `Domestic/06_Performance/07_Comments`；`tests/test_operations_observations.py/test_operations_comments.py`。
 
-- [ ] 先写测试：零/缺失、累计/每日、自然/广告、归因窗口/币种/时区冲突、重复导入、抽样偏差；评论提示注入及无昵称输入不会损坏流程。
-- [ ] 运行失败测试；复用既有冻结与假设表，必要字段通过新增引用/表扩展，不把历史账户×素材×日快照改成另一口径。
-- [ ] 冻结平台×账户×内容×日期/观测时间、来源文件 SHA、指标定义和缺失原因；只有确认口径一致才计算比例。累计快照差值若不能排除删除/回填，则不能标为日增量。
-- [ ] 参考上游评论分类/误解识别，由本机模型给候选分类，确定性脚本计数；保留原文证据与样本范围，个人标识默认去除，不自动回复、抓取或把意见当产品事实。
-- [ ] 将钩子、镜头/字幕结构、商品证据、评论疑问写入迭代假设；人工选择后生成下一版，绑定父片/冻结快照/实际变更。两期可比与不可比分开，保留未知，不做因果归因。
-- [ ] 两份脱敏导出完成导入→冻结→假设→制作草稿→下一轮比较；真实数据不足时标记工程案例。测试通过单独提交。
+- [x] 先写测试：零/缺失、累计/每日、自然/广告、归因窗口/币种/时区冲突、重复导入、抽样偏差；评论提示注入及无昵称输入不会损坏流程。
+- [x] 运行失败测试；复用既有冻结与假设表，必要字段通过新增引用/表扩展，不把历史账户×素材×日快照改成另一口径。
+- [x] 冻结平台×账户×内容×日期/观测时间、来源文件 SHA、指标定义和缺失原因；只有确认口径一致才计算比例。累计快照差值若不能排除删除/回填，则不能标为日增量。
+- [x] 参考上游评论分类/误解识别，由本机模型给候选分类，确定性脚本计数；保留原文证据与样本范围，个人标识默认去除，不自动回复、抓取或把意见当产品事实。
+- [x] 将钩子、镜头/字幕结构、商品证据、评论疑问写入迭代假设；人工选择后生成下一版，绑定父片/冻结快照/实际变更。两期可比与不可比分开，保留未知，不做因果归因。
+- [x] 两份脱敏导出完成导入→冻结→假设→制作草稿→下一轮比较；真实数据不足时标记工程案例。测试通过单独提交。
 
 **验收命令：**`.venv/bin/python -m pytest -q tests/test_operations_observations.py tests/test_operations_comments.py tests/test_reporting.py tests/test_review_snapshots.py tests/test_experiments.py`；`.venv/bin/python scripts/accept_domestic_suite.py --stage review --workspace "$ACCEPT_ROOT/D4" --manifest "$MANIFEST" --mode engineering`。
 
@@ -163,12 +163,12 @@ manifest 字段固定为 `cases[{id,category,asset_paths,asset_sha256,source_ref
 
 **涉及文件：**Fork `Domestic/01_Market/02_Positioning/04_Image`，`operations/{research,positioning,media_pack}.py`，`web/operations.*`，`tests/test_operations_research.py/test_operations_media_pack.py`。
 
-- [ ] 先写测试：样本过少/缺来源、跨平台价格币种、未填成本、过期费率、型号冲突、图片与卖点不符；从事实中移除依据后相关建议必须失效。
-- [ ] 运行失败测试；逐模块核对上游脚本与现有实现，能直接复用的纯计算保留许可并封装，缺失补零或跨境硬编码不直接带入。不得为复用又增加常驻服务。
-- [ ] 市场模块分析客户合法导出的样本/自主提交参考，输出样本覆盖与未知；不宣称全平台市场容量、真实搜索热度或自动抓取竞品私有数据。
-- [ ] 商品策略输出人群/场景/核心卖点/证据/拍摄需求；只有成本、费率、生效日、币种等齐备才展示确定性毛利试算，不自动改价。
-- [ ] 图片模块先复用实际帧与 Pillow/Remotion 生成封面、信息图、图文页；无商品照片用标记图示，不伪造真实外观。生成式图片/视频作为独立可选 Provider，需另行核验资源、权重和内容一致性，未过验收不列为已支持。
-- [ ] 七模块输入/输出通过公共引用串联，发布内容矩阵草稿（平台/主题/版本/所需素材），不自动定时发布；逐模块通过测试再提交，不一次上线全部实验功能。
+- [x] 先写测试：样本过少/缺来源、跨平台价格币种、未填成本、过期费率、型号冲突、图片与卖点不符；从事实中移除依据后相关建议必须失效。
+- [x] 运行失败测试；逐模块核对上游脚本与现有实现，能直接复用的纯计算保留许可并封装，缺失补零或跨境硬编码不直接带入。不得为复用又增加常驻服务。
+- [x] 市场模块分析客户合法导出的样本/自主提交参考，输出样本覆盖与未知；不宣称全平台市场容量、真实搜索热度或自动抓取竞品私有数据。
+- [x] 商品策略输出人群/场景/核心卖点/证据/拍摄需求；只有成本、费率、生效日、币种等齐备才展示确定性毛利试算，不自动改价。
+- [x] 图片模块先复用实际帧与 Pillow/Remotion 生成封面、信息图、图文页；无商品照片用标记图示，不伪造真实外观。生成式图片/视频作为独立可选 Provider，需另行核验资源、权重和内容一致性，未过验收不列为已支持。
+- [x] 七模块输入/输出通过公共引用串联，发布内容矩阵草稿（平台/主题/版本/所需素材），不自动定时发布；逐模块通过测试再提交，不一次上线全部实验功能。
 
 **验收命令：**`.venv/bin/python -m pytest -q tests/test_operations_research.py tests/test_operations_media_pack.py tests/test_operations_content.py`；`.venv/bin/python scripts/accept_domestic_suite.py --stage expansion --workspace "$ACCEPT_ROOT/D5" --manifest "$MANIFEST" --mode engineering`。
 
@@ -193,8 +193,11 @@ manifest 字段固定为 `cases[{id,category,asset_paths,asset_sha256,source_ref
 
 **通过标准/不做：**客户用一个 Mac 包即可制作和回滚；全部人工确认真正在界面执行；平台无写入；Windows 原生和互联网多租户不列入本轮验收。保留升级前程序/备份，独立目录启动旧版本即可回退；恢复旧库会失去升级后的新数据，因此始终保留新目录供导出。
 
-## 本轮结论与下一步
+## 实施状态与验收限制
 
-最初规划轮次只完成上游阅读、复用评估与设计。后续用户已批准仅执行 D0；实际 Fork、共同契约及兼容结果见 D0 记录。没有新增 MCP/模型或推理提速实测。
+D0–D5 的实现与隔离工程证据见 DOMESTIC_D0/D1/D2/D3/D4/D5_ACCEPTANCE.md；D6 总记录见[交付验收](../../DOMESTIC_ACCEPTANCE.md)。本计划中的勾选表示工程实现/验证，不表示真实客户审批或平台联调。
 
-建议下一次先执行 D0，紧接 D1；先把国内商品定位和可解释的六方向接到现有工作台。D2 的两品类真实作品通过后再扩大平台与运营模块，避免只增加 Agent 名称而没有可交付内容。
+D2 三轮性能验收从准备好的分镜开始，冷/暖渲染分别记录；不含首次识别、人工等待与完整上传到交付的端到端计时，没有稳定的整体提速，默认后端不切换。六条20–30秒作品是明确标记的工程分镜重放；另有真实六方向采用→Runtime→成片链路，均保留待审。
+
+D4 使用规则候选回退，不新装语义模型；自然内容另存追加型对象，未改变原广告表。真实评论/账号/下一轮数据尚未提供，不捏造真实平台对照。D6 候选包不发布，由用户最终实际确认后决定发布。
+
