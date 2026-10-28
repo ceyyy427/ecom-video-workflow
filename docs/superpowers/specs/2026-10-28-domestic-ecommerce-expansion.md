@@ -66,7 +66,7 @@ Agent 提升规划、检索和工具选择效率；实际编码仍交给确定�
 
 ## 共用协议（设计）
 
-- `SuiteBrief.v1`：`project_id, platform, objective, audience, tone, product_ref, sku_color_policy, evidence_refs, material_refs, duration_s, constraints`。通过适配器引用既有 `ContentBrief`；不在旧 v1 增加必填字段或取消 24 秒限制。
+- `SuiteBrief.v1`：`project_id, platform, objective, audience, tone, product_ref, sku_color_policy, evidence_refs, material_refs, duration_s, constraints`。可选 `content_brief` 完整保留旧请求的想法、来源及素材归属；D0 不冒充已将跨项目素材解析到新项目。不在旧 v1 增加必填字段或取消 24 秒限制。
 - `SuitePlan.v1`：`plan_id, revision, basis, brief_ref, six_options, tasks, gaps, cost_policy, source_versions`。每方案含 `narrative, hook, script_refs, storyboard_ref, voice_profile, render_recipe, evidence_refs, feasibility`；默认三种叙事各两种视觉编排，但须通过差异校验，不仅换色换标题。
 - `ToolSpec.v1`：`id, version, input_schema, output_schema, effects, transport, requires_human, timeout_s, retries, resource_class, license_ref`。工具只传对象 ID/哈希，不接受任意路径、shell、Python/JS 代码或任意远程 URL。
 - `OpsResult.v1`：`status, output_refs, evidence_refs, warnings, error, usage, checkpoint_ref`；状态为 `completed/needs_human/failed/unknown`，适配既有运行记录，不修改 P13 旧结果格式。

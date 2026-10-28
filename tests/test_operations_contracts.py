@@ -202,3 +202,50 @@ def test_old_result_and_new_result_statuses_cannot_disagree():
     }
     with pytest.raises(ValidationError):
         OpsResult(status="completed", legacy_result=old)
+
+
+@pytest.mark.parametrize(
+    "change",
+    [
+        "object_id",
+        "object_revision",
+        "object_sha",
+        "missing_outputs",
+        "run_id",
+        "missing_checkpoint",
+        "receipt_without_run",
+    ],
+)
+def test_legacy_receipt_binds_exact_output_objects_and_checkpoint(change):
+    from ecom_video.operations.contracts import OpsResult
+
+    legacy = {
+        "status": "proposed",
+        "run_id": "a" * 32,
+        "output_refs": [{"kind": "project", "id": "d" * 32, "revision": 2, "sha256": "e" * 64}],
+    }
+    value = {
+        "status": "completed",
+        "output_refs": copy.deepcopy(legacy["output_refs"]),
+        "checkpoint_ref": {"kind": "agent_run", "id": "a" * 32},
+        "legacy_result": legacy,
+    }
+    # A normal serialized bridge result must still round-trip exactly.
+    valid = OpsResult.model_validate(value)
+    assert OpsResult.model_validate_json(valid.model_dump_json()) == valid
+    if change == "object_id":
+        value["output_refs"][0]["id"] = "b" * 32
+    elif change == "object_revision":
+        value["output_refs"][0]["revision"] = 3
+    elif change == "object_sha":
+        value["output_refs"][0]["sha256"] = "f" * 64
+    elif change == "missing_outputs":
+        value.pop("output_refs")
+    elif change == "run_id":
+        value["checkpoint_ref"]["id"] = "c" * 32
+    elif change == "missing_checkpoint":
+        value.pop("checkpoint_ref")
+    elif change == "receipt_without_run":
+        value["legacy_result"]["run_id"] = None
+    with pytest.raises(ValidationError):
+        OpsResult.model_validate(value)

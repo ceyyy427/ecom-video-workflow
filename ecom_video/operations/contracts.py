@@ -215,6 +215,13 @@ class OpsResult(Strict):
                 expected = "unknown"
             if self.status != expected or self.error != legacy.error or self.usage != legacy.usage:
                 raise ValueError("桥接状态、错误与用量须保持原回执语义")
+            if [r.model_dump() for r in self.output_refs] != [
+                r.model_dump() for r in legacy.output_refs
+            ]:
+                raise ValueError("桥接输出对象、版本与哈希须保持原回执引用")
+            checkpoint = ObjectRef(kind="agent_run", id=legacy.run_id) if legacy.run_id else None
+            if self.checkpoint_ref != checkpoint:
+                raise ValueError("桥接检查点须精确指向原运行回执")
         return self
 
 

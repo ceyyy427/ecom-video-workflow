@@ -78,12 +78,12 @@ manifest 字段固定为 `cases[{id,category,asset_paths,asset_sha256,source_ref
 
 **涉及文件：**Fork `Domestic/README.md`、`Domestic/manifest.json`；本库 `operations/{contracts,resources}.py`、资源目录、lock、`tests/test_operations_contracts.py`、`scripts/accept_domestic_suite.py`。
 
-- [ ] 先写契约失败测试：旧 `ContentBrief.v1` 和 P13 命令原样解析；未知字段/工具/路径/非法引用拒绝；资源哈希变更拒绝；重复请求只有一条业务效果。
-- [ ] 运行上述测试确认因新契约缺失而失败；原 `test_agent_contracts.py/test_idea_plans.py` 仍通过。
-- [ ] 使用用户 GitHub 账户 Fork 上游，保留 upstream 指向；记录实际 Fork URL 与 SHA。仅下载选定文本/脚本，逐文件保留 MIT；不引入原始 PDF/案例媒体或执行安装脚本。
-- [ ] 实现协议适配与资源校验；区分“参考/已适配/已实测”；建立工具效果白名单和能力开关，默认不调用新模型/平台。
-- [ ] 从升级前备份恢复到独立目录，记录旧表、文件、审批指纹，完成只增量迁移；旧运行和预览可读且指纹未变。
-- [ ] 测试通过后单独提交；产出来源清单、数据指纹和 D0 验收 JSON。
+- [x] 先写契约失败测试：旧 `ContentBrief.v1` 和 P13 命令原样解析；未知字段/工具/路径/非法引用拒绝；资源哈希变更拒绝；重复请求只有一条业务效果。
+- [x] 运行上述测试确认因新契约缺失而失败；原 `test_agent_contracts.py/test_idea_plans.py` 仍通过。
+- [x] 使用用户 GitHub 账户 Fork 上游，保留 upstream 指向；记录实际 Fork URL 与 SHA。仅下载选定文本/脚本，逐文件保留 MIT；不引入原始 PDF/案例媒体或执行安装脚本。
+- [x] 实现协议适配与资源校验；区分“参考/已适配/已实测”；建立工具效果白名单和能力开关，默认不调用新模型/平台。
+- [x] 从升级前备份恢复到独立目录，记录旧表、文件、审批指纹，完成只增量迁移；旧运行和预览可读且指纹未变。
+- [x] 测试通过后单独提交；产出来源清单、数据指纹和 D0 验收 JSON。
 
 **验收命令：**`.venv/bin/python -m pytest -q tests/test_operations_contracts.py tests/test_agent_contracts.py tests/test_idea_plans.py`；`.venv/bin/python scripts/accept_domestic_suite.py --stage foundation --workspace "$ACCEPT_ROOT/D0" --manifest "$MANIFEST" --mode engineering`。
 
