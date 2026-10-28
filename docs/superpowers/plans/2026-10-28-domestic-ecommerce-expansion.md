@@ -8,7 +8,7 @@
 
 **Tech Stack:** 既有 Python 3.11+/FastAPI/Pydantic/SQLite、Remotion/FFmpeg、静态工作台、本机模型与独立 VoiceStudio；MCP 官方 SDK 按 D3 独立验证后可选加入。
 
-**Spec:** [国内电商运营套件设计](../specs/2026-10-28-domestic-ecommerce-expansion.md)。日期 2026-10-28；本清单最初为规划，D0 实施与验收见 [D0 记录](../../DOMESTIC_D0_ACCEPTANCE.md)。D1–D5 已完成候选实现与工程验收，D6 正在进行安装/升级及最终回归。后续授权改为连续推进到 D6，见[执行计划](2026-10-28-domestic-d2-d6-execution.md)。真实账号实接、客户听审和发布继续待办。已完成的六动态预览是复用基线，不重复立项。
+**Spec:** [国内电商运营套件设计](../specs/2026-10-28-domestic-ecommerce-expansion.md)。日期 2026-10-28；本清单最初为规划，D0 实施与验收见 [D0 记录](../../DOMESTIC_D0_ACCEPTANCE.md)。D1–D6 已完成候选实现、安装/升级及工程回归，最终独立复核和用户实际验收仍待处理。后续授权改为连续推进到 D6，见[执行计划](2026-10-28-domestic-d2-d6-execution.md)。真实账号实接、客户听审和发布继续待办。已完成的六动态预览是复用基线，不重复立项。
 
 ## Global Constraints
 
