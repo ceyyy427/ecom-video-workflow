@@ -25,6 +25,14 @@ def job_binding(records, jid):
     with records.store.connect() as c:
         raw = dict(c.execute("SELECT * FROM jobs WHERE id=?", (jid,)).fetchone())
     feature = extract(raw, video["sha256"])
+    from ..delivery_revision import canonical
+
+    feature["production_manifest"] = {
+        "version": 1,
+        "board": canonical(job),
+        "script": job["script"],
+        "scope": "submitted production parameters; not pixel/audio equivalence or causal evidence",
+    }
     approved = job["status"] == "ready" and any(
         r["decision"] == "ready"
         and r["checklist_confirmed"]

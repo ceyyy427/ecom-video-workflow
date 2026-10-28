@@ -533,6 +533,9 @@ def create_app(root):
     from .connectors.api import router as connectors_router
 
     app.include_router(connectors_router(root, store))
+    from .operations.review_api import router as operations_review_router
+
+    app.include_router(operations_review_router(root, store))
     @app.get("/ideas")
     def ideas_page():
         return FileResponse(WEB / "ideas.html")

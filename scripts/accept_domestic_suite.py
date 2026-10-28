@@ -89,6 +89,10 @@ def validate_inputs(args):
         from ecom_video.operations.video_acceptance import validate_video_cases
 
         validate_video_cases(data["cases"])
+    elif args.stage in ("connectors", "review", "expansion", "mac"):
+        from ecom_video.operations.suite_acceptance import validate_cases
+
+        validate_cases(data["cases"])
     return work, bundle
 
 
@@ -202,7 +206,7 @@ def run_foundation(work, bundle, mode):
 
 def main(argv=None):
     parser = Parser(description=__doc__)
-    parser.add_argument("--stage", choices=["foundation", "content", "video"], required=True)
+    parser.add_argument("--stage", choices=["foundation", "content", "video", "connectors", "review", "expansion", "mac"], required=True)
     parser.add_argument("--workspace", type=Path, required=True)
     parser.add_argument("--manifest", type=Path, required=True)
     parser.add_argument("--mode", choices=["engineering", "customer"], required=True)
@@ -215,10 +219,14 @@ def main(argv=None):
             from ecom_video.operations.acceptance import run_content
 
             report = run_content(work, bundle, json.loads(args.manifest.read_bytes()), args.mode)
-        else:
+        elif args.stage == "video":
             from ecom_video.operations.video_acceptance import run_video
 
             report = run_video(work, bundle, json.loads(args.manifest.read_bytes()), args.mode)
+        else:
+            from ecom_video.operations.suite_acceptance import run_suite
+
+            report = run_suite(work, bundle, json.loads(args.manifest.read_bytes()), args.mode, args.stage)
     except (ValueError, TypeError, KeyError, OSError, sqlite3.Error):
         parser.error("invalid inputs or validation failure")
     print(json.dumps(report, ensure_ascii=False))

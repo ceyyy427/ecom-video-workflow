@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "phase": "D1",
-  "status": "content_planning_adapter",
+  "phase": "D4",
+  "status": "local_content_and_review_adapters",
   "upstream": {
     "repository": "heqiangdiao-wq/AI-Cross-Border-Ecommerce-Agent-Toolkit",
     "commit": "cec98a9cab382d28dfe5b4ed0de444f33c455cb5"
@@ -55,14 +55,14 @@
     {
       "id": "06_Performance",
       "title": "数据复盘",
-      "status": "planned",
+      "status": "adapted_local_rules",
       "phase": "D4",
       "upstream_path": "Agents/06_Advertising_Optimization_Agent/README.md"
     },
     {
       "id": "07_Comments",
       "title": "评论洞察",
-      "status": "planned",
+      "status": "adapted_local_rules",
       "phase": "D4",
       "upstream_path": "Agents/07_Review_Analysis_Agent/README.md"
     }
