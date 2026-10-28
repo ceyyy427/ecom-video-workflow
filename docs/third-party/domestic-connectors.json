@@ -1,0 +1,38 @@
+{
+  "checked_at": "2026-10-28",
+  "sdk": {
+    "name": "modelcontextprotocol/python-sdk",
+    "version": "2.3.0",
+    "license": "MIT",
+    "requirements_sha256": "0f91b96ec8a88dfdce3c4559d114785c1f9056f962f9a32c8b896f2a51fb75a7",
+    "license_file": "docs/third-party/MCP-SDK-LICENSE.txt",
+    "isolated_environment_disk_mib": 61,
+    "import_peak_rss_bytes": 68583424,
+    "python": "3.11",
+    "core_default_install": false,
+    "protocol_smoke": "official Client/Server in-memory; passed; no platform connection",
+    "source": "https://github.com/modelcontextprotocol/python-sdk/releases/tag/v2.3.0"
+  },
+  "douyin": {
+    "scope": "video.data",
+    "contract": "POST https://open.douyin.com/video/data/; query open_id; access-token header; item_ids JSON <=10",
+    "oauth": "POST /oauth/access_token/; form encoded; state one-use 600s",
+    "official_docs": [
+      "https://open.douyin.com/platform/resource/docs/openapi/video-management/douyin/search-video/video-data/",
+      "https://open.douyin.com/platform/resource/docs/openapi/account-permission/get-access-token"
+    ],
+    "live_verified": false
+  },
+  "xiaohongshu": {
+    "generic_notes_api": "unavailable",
+    "browser_mcp": "disabled",
+    "fallback": "authorized local CSV"
+  },
+  "n8n": {
+    "installation": "not required; standalone optional",
+    "license": "Sustainable Use License; not bundled",
+    "example": "docs/examples/n8n-readonly-snapshot.json"
+  },
+  "secrets": "OS keychain only, per installation root; not backed up or shipped",
+  "platform_writes": false
+}

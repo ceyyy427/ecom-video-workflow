@@ -10,7 +10,7 @@ from pathlib import Path
 
 ACTIVE = ("validating", "rendering", "auditing")
 LEASE_SECONDS = 45
-SCHEMA_VERSION = 15
+SCHEMA_VERSION = 16
 TRANSITIONS = {
     "validating": {"rendering", "blocked", "failed"},
     "rendering": {"auditing", "failed"},
@@ -66,6 +66,7 @@ class Store:
                     (13, "013_voice_takes.sql"),
                     (14, "014_voice_patches.sql"),
                     (15, "015_idea_plans.sql"),
+                    (16, "016_operations.sql"),
                 ):
                     if version >= target:
                         continue

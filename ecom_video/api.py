@@ -158,7 +158,9 @@ def create_app(root):
         origin = request.headers.get("origin")
         expected = f"{request.url.scheme}://{request.headers.get('host', '')}"
         oauth_callback = (
-            request.method == "GET" and request.url.path == "/api/qianchuan/oauth/callback"
+            request.method == "GET" and request.url.path in (
+                "/api/qianchuan/oauth/callback", "/api/operations/connectors/douyin/callback"
+            )
         )
         if not oauth_callback and (
             (origin and origin != expected) or request.headers.get("sec-fetch-site") == "cross-site"
@@ -169,6 +171,11 @@ def create_app(root):
         ):
             return JSONResponse({"detail": "页面会话已更新，请刷新页面后重试"}, status_code=403)
         import os
+        from .operations.flags import features, route_feature
+
+        feature = route_feature(request.url.path)
+        if request.method not in ("GET", "HEAD", "OPTIONS") and feature and not features()[feature] and not request.url.path.endswith("/disconnect"):
+            return JSONResponse({"detail": "这个运营模块已关闭，历史记录和原工作台仍可使用。"}, status_code=403)
 
         from .maintenance_lock import MaintenanceBusy, acquire
 
@@ -201,6 +208,10 @@ def create_app(root):
 
     @app.exception_handler(RequestValidationError)
     async def validation_error(request, exc):
+        if request.url.path.startswith("/api/operations/"):
+            return JSONResponse(
+                {"detail": "配置或表单格式无效；请核对当前字段，不回显凭据或原始输入。"}, status_code=422
+            )
         if request.url.path == "/api/setup/voice":
             return JSONResponse(
                 {"detail": "语音配置格式无效；请检查 Key、音色和表单字段。"}, status_code=422
@@ -519,7 +530,9 @@ def create_app(root):
     from .operations.api import router as operations_router
 
     app.include_router(operations_router(root, store))
+    from .connectors.api import router as connectors_router
 
+    app.include_router(connectors_router(root, store))
     @app.get("/ideas")
     def ideas_page():
         return FileResponse(WEB / "ideas.html")

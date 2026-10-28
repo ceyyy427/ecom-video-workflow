@@ -19,6 +19,9 @@ dependencies = [
     "zhconv==1.4.3",
     "pypinyin==0.55.0",
 ]
+[project.optional-dependencies]
+connectors = ["mcp==2.3.0"]
+
 [dependency-groups]
 browser = [
     "playwright==1.61.0",

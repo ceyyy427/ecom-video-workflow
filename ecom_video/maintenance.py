@@ -45,7 +45,16 @@ PENDING = {
         "creating",
     ),
 }
-DATA_DIRS = {"jobs", "products", "customers", "analyses", "reports", "distribution", "ideas"}
+DATA_DIRS = {
+    "jobs",
+    "products",
+    "customers",
+    "analyses",
+    "reports",
+    "distribution",
+    "ideas",
+    "operations",
+}
 
 
 class MaintenanceError(ValueError):
@@ -186,6 +195,9 @@ def references(c, tables):
             if raw and (retained or aid in frozen_ids):
                 add_frames(aid, json.loads(raw))
             latest.add(mid)
+    if "operation_files" in tables:
+        for path, sha in c.execute("SELECT path,sha256 FROM operation_files"):
+            add(path, sha)
     return result
 
 

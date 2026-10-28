@@ -1,0 +1,50 @@
+{
+  "name": "剪序本机冻结快照只读示例（不发布）",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "manual",
+      "name": "人工触发",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "url": "http://127.0.0.1:8765/api/operations/objects?kind=observation_snapshot",
+        "options": {
+          "timeout": 15000
+        }
+      },
+      "id": "read-snapshots",
+      "name": "读取本机冻结快照",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        260,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "人工触发": {
+      "main": [
+        [
+          {
+            "node": "读取本机冻结快照",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {}
+}
