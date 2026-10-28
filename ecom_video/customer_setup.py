@@ -60,11 +60,16 @@ DOCS.update(
         "DOMESTIC_SUITE_GUIDE.md",
         "DOMESTIC_CAPABILITY_MATRIX.md",
         "DOMESTIC_ACCEPTANCE.md",
+        "DOMESTIC_D2_ACCEPTANCE.md",
         "TYPOGRAPHY_PROMPT_GUIDE.md",
         "VOICESTUDIO_LOCAL.md",
     }
 )
-DOMESTIC_LOCKS = {"domestic-toolkit.lock.json", "domestic-connectors.json"}
+THIRD_PARTY_DOCS = {
+    "domestic-toolkit.lock.json",
+    "domestic-connectors.json",
+    "concat-lemo-voicestudio-n8n.md",
+}
 
 
 def sha(path):
@@ -144,7 +149,7 @@ def package_path_allowed(value):
         or (len(parts) == 2 and parts[0] == "scripts" and parts[1] in SCRIPTS)
         or (len(parts) == 2 and parts[0] == "docs" and parts[1] in DOCS)
         or (parts[:2] == ("docs", "third-party") and "LICENSE" in Path(name).name)
-        or (len(parts) == 3 and parts[:2] == ("docs", "third-party") and parts[2] in DOMESTIC_LOCKS)
+        or (len(parts) == 3 and parts[:2] == ("docs", "third-party") and parts[2] in THIRD_PARTY_DOCS)
         or (
             parts[:2] == ("resources", "domestic-toolkit")
             and Path(name).suffix in (".md", ".txt", ".json", ".py", ".yaml", ".yml")
