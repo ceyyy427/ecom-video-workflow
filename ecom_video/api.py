@@ -516,6 +516,9 @@ def create_app(root):
     from .idea_api import router as idea_router
 
     app.include_router(idea_router(root, store))
+    from .operations.api import router as operations_router
+
+    app.include_router(operations_router(root, store))
 
     @app.get("/ideas")
     def ideas_page():

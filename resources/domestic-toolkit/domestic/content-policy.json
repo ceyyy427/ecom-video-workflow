@@ -1,0 +1,61 @@
+{
+  "version": "domestic-policy-v1",
+  "narratives": [
+    {
+      "id": "product_showcase",
+      "label": "商品展示",
+      "styles": [
+        "dark-keynote",
+        "swiss-motion"
+      ],
+      "purposes": [
+        "hook",
+        "overview",
+        "detail",
+        "closing"
+      ]
+    },
+    {
+      "id": "scenario_share",
+      "label": "场景分享",
+      "styles": [
+        "paper-popup",
+        "kino-montage"
+      ],
+      "purposes": [
+        "hook",
+        "scene",
+        "detail",
+        "closing"
+      ]
+    },
+    {
+      "id": "detail_explain",
+      "label": "细节讲解",
+      "styles": [
+        "blueprint",
+        "dataviz"
+      ],
+      "purposes": [
+        "hook",
+        "detail",
+        "evidence",
+        "closing"
+      ]
+    }
+  ],
+  "platforms": {
+    "douyin": {
+      "strategy": "先给观看理由，再用商品或动作解释一个重点；不将创作建议当平台硬规则。",
+      "source_url": "https://open.douyin.com/platform/resource/docs/operation-standard/agreement-protocol",
+      "scope": "一般内容真实性原则，非视频发布尺寸/字数规范",
+      "checked_at": "2026-10-28"
+    },
+    "xiaohongshu": {
+      "strategy": "从具体选择问题切入，讲清观察依据和使用条件；不编造亲身经历。",
+      "source_url": "https://school.xiaohongshu.com/rule/detail/3439",
+      "scope": "商品推广内容与实际商品相符；具体规则发布前由客户复核",
+      "checked_at": "2026-10-28"
+    }
+  }
+}

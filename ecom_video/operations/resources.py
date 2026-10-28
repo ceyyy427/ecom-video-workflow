@@ -47,6 +47,7 @@ class ResourceEntry(Strict):
     source: ResourceSource
     kind: str
     status: str
+    adapter_ref: str | None = None
 
     @model_validator(mode="after")
     def coherent(self):
@@ -60,8 +61,10 @@ class ResourceEntry(Strict):
             "manifest",
         }:
             raise ValueError("仅允许已登记的文本资源类型")
-        if self.status != "reference":
-            raise ValueError("D0 资料只可登记为参考，不能代替适配或实测")
+        if self.status not in {"reference", "adapted"}:
+            raise ValueError("仅登记参考或明确适配的资源，不冒充实测")
+        if self.status == "adapted" and self.adapter_ref != "ecom_video/operations/planner.py":
+            raise ValueError("适配资源须绑定已审核的本机编排器")
         allowed = {".md", ".txt", ".yaml", ".yml", ".json", ".py"}
         if self.path != "LICENSE" and PurePosixPath(self.path).suffix not in allowed:
             raise ValueError("只接受文本参考，不能登记可执行安装文件或媒体")
@@ -87,7 +90,7 @@ class ResourceLock(Strict):
     def coherent(self):
         if (
             self.schema_version != 1
-            or self.bundle_id != "domestic-toolkit-d0"
+            or self.bundle_id not in {"domestic-toolkit-d0", "domestic-toolkit-d1"}
             or self.resource_root != "resources/domestic-toolkit"
         ):
             raise ValueError("不支持的资源锁版本或目录")

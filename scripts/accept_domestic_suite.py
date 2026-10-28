@@ -1,4 +1,4 @@
-"""D0 isolated restore/contract acceptance. No video execution or customer approvals."""
+"""D0 restore / D1 silent content acceptance in fresh external directories; no approvals."""
 
 import argparse
 import hashlib
@@ -14,7 +14,7 @@ sys.path.insert(0, str(PROJECT))
 
 class Parser(argparse.ArgumentParser):
     def error(self, message):
-        self.exit(2, "D0 验收参数无效：只支持 foundation，须使用仓库外全新目录及有效本机清单。\n")
+        self.exit(2, "验收参数或证据无效：须使用仓库外全新目录及有效本机清单，参见 --help。\n")
 
 
 def fingerprints(path):
@@ -81,6 +81,10 @@ def validate_inputs(args):
             p = Path(path)
             if not p.is_absolute() or not p.is_file() or p.is_symlink() or digest(p) != sha:
                 raise ValueError("material fingerprint mismatch")
+    if args.stage == "content":
+        from ecom_video.operations.acceptance import validate_cases
+
+        validate_cases(data["cases"])
     return work, bundle
 
 
@@ -194,14 +198,19 @@ def run_foundation(work, bundle, mode):
 
 def main(argv=None):
     parser = Parser(description=__doc__)
-    parser.add_argument("--stage", choices=["foundation"], required=True)
+    parser.add_argument("--stage", choices=["foundation", "content"], required=True)
     parser.add_argument("--workspace", type=Path, required=True)
     parser.add_argument("--manifest", type=Path, required=True)
     parser.add_argument("--mode", choices=["engineering", "customer"], required=True)
     args = parser.parse_args(argv)
     try:
         work, bundle = validate_inputs(args)
-        report = run_foundation(work, bundle, args.mode)
+        if args.stage == "foundation":
+            report = run_foundation(work, bundle, args.mode)
+        else:
+            from ecom_video.operations.acceptance import run_content
+
+            report = run_content(work, bundle, json.loads(args.manifest.read_bytes()), args.mode)
     except (ValueError, TypeError, KeyError, OSError, sqlite3.Error):
         parser.error("invalid inputs or validation failure")
     print(json.dumps(report, ensure_ascii=False))

@@ -19,15 +19,31 @@ class Element{
  addEventListener(name,fn){this.listeners[name]=fn;} pause(){this.paused=true;}
  querySelectorAll(tag){return this.children.flatMap(n=>[...(n.tagName===tag?[n]:[]),...n.querySelectorAll(tag)]);}
 }
-async function boot({mutateDuringSubmit=false,mutateDuringRestore=false}={}){
+async function boot({mutateDuringSubmit=false,mutateDuringRestore=false,domestic=false}={}){
  const ids=new Map(),get=id=>{if(!ids.has(id))ids.set(id,new Element());return ids.get(id);};
  for(const [id,value]of Object.entries({ideaText:'桥梁怎样承重',ideaSubject:'桥梁',ideaAudience:'中学生',ideaTone:'清楚',ideaMode:'code'}))get(id).value=value;
  const options=['swiss-motion','blueprint','dataviz','paper-popup','dark-keynote','kino-montage'].map(id=>({id,name:id,native_style:'lab',script:'示例文稿',reason:'按主题解释',missing:[],source:{url:'https://example.test/source'},scenes:[{text:'一句待核对文稿',visual_reason:'场景示意'}],voice_suggestion:{tone:'自然',speed:1}}));
  const row={id:'plan1',basis:'basis1',status:'ready',completed:6,plan:{options,missing:[],brief:{idea:'旧主题A',subject:'桥梁',audience:'中学生',tone:'清楚',mode:'code',facts:[],data:[]},materials:[],preview_seconds:7},previews:Object.fromEntries(options.map(o=>[o.id,{video:{sha256:'sha'},poster:{sha256:'sha'}}]))};
+ if(domestic){get('ideaPlatform').value='xiaohongshu';get('ideaObjective').value='detail_explain';get('ideaDuration').value='26';row.plan.positioning={core_selling_point:{text:'可见细节'},gaps:['检查待复核']};row.plan.publication_copy={platform:'xiaohongshu',titles:['细节笔记'],body:'有来源的原文',tags:['商品细节']};}
+ const requests=[];
  const context={console,URLSearchParams,location:{search:''},setTimeout(){return 1;},clearTimeout(){},localStorage:{getItem(){return mutateDuringRestore?"plan1":null;},setItem(){}},document:{getElementById:get,createElement:tag=>new Element(tag),querySelectorAll:tag=>get('ideaResults').querySelectorAll(tag)},window:{IdeaState:state},fetch:async url=>{if(url==='/api/idea-plans/plan1'&&mutateDuringRestore){get('ideaText').value='正在填写的新主题';get('ideaForm').listeners.input();}if(url==='/api/idea-plans'&&mutateDuringSubmit){get('ideaText').value='新主题B';get('ideaForm').listeners.input();}return {ok:true,json:async()=>url==='/api/session'?{token:'test'}:url==='/api/film-styles'?options:url==='/api/idea-plans'?row:url.endsWith('/adopt')?{id:'new-project'}:row}}};
+ const previous=context.fetch;context.fetch=async(url,opts)=>{requests.push({url,body:opts?.body?JSON.parse(opts.body):null});if(url==='/api/operations/plans'&&mutateDuringSubmit){get('ideaText').value='新主题B';get('ideaForm').listeners.input();}return previous(url,opts);};
  vm.createContext(context);vm.runInContext(fs.readFileSync(path.resolve(__dirname,'../../ecom_video/web/ideas.js'),'utf8'),context);await new Promise(r=>setImmediate(r));
- await get('ideaForm').listeners.submit({preventDefault(){}});return {get,row,context};
+ await get('ideaForm').listeners.submit({preventDefault(){}});return {get,row,context,requests};
 }
+test('domestic UI uses D1 API and renders sourced positioning and platform drafts',async()=>{
+ const {get,requests}=await boot({domestic:true});const request=requests.find(r=>r.url==='/api/operations/plans');assert.ok(request);assert.equal(request.body.brief.platform,'xiaohongshu');assert.equal(request.body.brief.duration_s,26);assert.equal(request.body.brief.objective,'detail_explain');assert.equal(request.body.brief.content_brief.subject,'桥梁');
+ const copy=get('ideaPublication');assert.ok(copy.children.some(n=>n.textContent.includes('有来源的原文')));assert.ok(get('ideaPositioning').textContent.includes('可见细节'));
+});
+test('domestic direction adoption stays disabled when inputs change during planning',async()=>{
+ const {get}=await boot({domestic:true,mutateDuringSubmit:true});assert.equal(get('ideaText').value,'新主题B');assert.ok(get('ideaResults').querySelectorAll('button').filter(n=>n.textContent==='采用这个方向').every(n=>n.disabled));
+});
+test('domestic wrapper carries explicit parent versions, never client approvals or file paths',()=>{
+ const values={platform:'douyin',objective:'scenario_share',duration:'27',idea:'展示细节',subject:'外套',audience:'通勤',tone:'自然',mode:'footage',preferred:'',facts:'口袋｜来源',data:''};
+ const parent={id:'a'.repeat(32),revision:3,product:{revision:8}};
+ const out=state.domestic(values,[{origin:'customer',project_id:parent.id,id:'b'.repeat(32),path:'/private'}],parent);
+ assert.equal(out.expected_project_revision,3);assert.equal(out.brief.product_ref.revision,8);assert.equal(out.brief.project_id,parent.id);assert.equal(out.brief.content_brief.materials[0].path,undefined);assert.equal(out.brief.confirmed,undefined);
+});
 test('ready plan shows six real video controls and adoption opens a pending customer project',async()=>{
  const {get}=await boot();assert.equal(get('ideaResults').querySelectorAll('video').length,6);
  const use=get('ideaResults').querySelectorAll('button').find(n=>n.textContent==='采用这个方向');assert.ok(use);assert.equal(use.disabled,false);await use.onclick();

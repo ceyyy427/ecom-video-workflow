@@ -104,6 +104,7 @@ python3 scripts/launch_customer.py
 | 要做什么 | 页面 |
 |---|---|
 | 商品资料、文稿、声音与剪辑 | `/create` |
+| 国内定位、六个动态方向与发布文案草稿 | `/ideas`（[D1指南](docs/DOMESTIC_D1_USAGE.md)） |
 | 自主选 Prompt 与逐句适配 | `/prompts` |
 | 本机样片与效果参考 | `/samples` |
 | 客户投放后的报表与冻结复盘 | `/distribution` |

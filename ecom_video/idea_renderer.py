@@ -174,11 +174,11 @@ def render_option(plan, option, root, directory, check=lambda: None):
             if kind == "image":
                 shutil.copyfile(source, public / src)
             else:
-                start = asset["source_in"]
+                start = scene.get("source_in", asset["source_in"])
                 duration = asset["metadata"]["duration"]
                 # Distinct consecutive ranges where possible; never loop or freeze.
                 candidate = start + (option["preview_scene_seconds"][0] if index else 0)
-                if candidate + seconds <= duration + 0.001:
+                if "source_in" not in scene and candidate + seconds <= duration + 0.001:
                     start = candidate
                 if start + seconds > duration + 0.001:
                     raise ValueError("实拍长度不足，不能靠循环或冻结凑预览")

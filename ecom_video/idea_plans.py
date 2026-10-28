@@ -40,7 +40,17 @@ class IdeaPlans:
         from .idea_media import freeze_materials
 
         plan = build_plan(brief, freeze_materials(self.root, materials), engine=engine)
+        return self.persist(plan)
+
+    def persist(self, plan, *, guard=None):
+        """Internal compiler output only; callers cannot submit serialized plans through HTTP."""
+        from .creative import signature
+
+        if signature({k: v for k, v in plan.items() if k != "basis"}) != plan["basis"]:
+            raise ValueError("待保存方案的内容摘要不一致")
         with self.store.transaction() as c:
+            if guard:
+                guard(c)
             prior = c.execute(
                 "SELECT id FROM idea_plans WHERE basis=?", (plan["basis"],)
             ).fetchone()
@@ -49,7 +59,10 @@ class IdeaPlans:
             else:
                 if c.execute("SELECT COUNT(*) FROM idea_plans").fetchone()[0] >= 200:
                     raise Conflict("创意计划已达200个，请先备份并整理历史数据")
-                pid, now = uuid.uuid4().hex, time.time()
+                pid, now = (
+                    (plan.get("suite_plan") or {}).get("plan_id", uuid.uuid4().hex),
+                    time.time(),
+                )
                 c.execute(
                     "INSERT INTO idea_plans(id,basis,plan,status,created_at,updated_at) VALUES(?,?,?,'draft',?,?)",
                     (pid, plan["basis"], encoded(plan), now, now),

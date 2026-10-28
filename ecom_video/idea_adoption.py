@@ -58,6 +58,8 @@ def adopt(root, store, plan_id, basis, option_id):
         ).fetchone()
     if prior:
         return Customers(root, store).get(prior["product_id"])
+    if option.get("feasibility") == "needs_materials":
+        raise Conflict("该方向仍缺完整画面，请补素材或改稿后重新预览，再进入制作")
     if row["status"] != "ready" or len(row["previews"]) != 6:
         raise Conflict("请先完成六个真实动态预览，再选择进入制作")
     for item in row["plan"]["options"]:
@@ -138,11 +140,15 @@ def adopt(root, store, plan_id, basis, option_id):
         )
         settings = Settings(
             brief={
-                "format": "showcase",
+                "format": "narrated"
+                if option.get("narrative") in {"scenario_share", "detail_explain"}
+                else "showcase",
                 "audience": plan["brief"]["audience"],
                 "tone": plan["brief"]["tone"],
             },
             delivery_version=1,
+            identity_lock=plan.get("source_context", {}).get("identity_target"),
+            strict_product=bool(plan.get("source_context", {}).get("identity_target")),
             brand=option.get("brand"),
         ).model_dump()
         with store.transaction() as c:
@@ -302,7 +308,7 @@ def apply_board(job, board, mode, notes, *, preserve_media=False):
             None,
         )
         if matched and not preserve_media:
-            start = matched["metadata"].get("source_in", 0)
+            start = scene.get("source_in", matched["metadata"].get("source_in", 0))
             if (
                 matched["kind"] == "video"
                 and start + shot["duration"] > matched["metadata"]["duration"] + 0.001

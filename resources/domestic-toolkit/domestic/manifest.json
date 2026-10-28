@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "phase": "D0",
-  "status": "foundation_only",
+  "phase": "D1",
+  "status": "content_planning_adapter",
   "upstream": {
     "repository": "heqiangdiao-wq/AI-Cross-Border-Ecommerce-Agent-Toolkit",
     "commit": "cec98a9cab382d28dfe5b4ed0de444f33c455cb5"
@@ -27,14 +27,14 @@
     {
       "id": "02_Positioning",
       "title": "商品定位",
-      "status": "planned",
+      "status": "adapted",
       "phase": "D1",
       "upstream_path": "Agents/02_Product_Strategy_Agent/README.md"
     },
     {
       "id": "03_Content",
       "title": "平台内容",
-      "status": "planned",
+      "status": "adapted",
       "phase": "D1",
       "upstream_path": "Agents/03_Listing_Creative_Agent/README.md"
     },
@@ -48,7 +48,7 @@
     {
       "id": "05_Video",
       "title": "商品视频",
-      "status": "planned",
+      "status": "adapted",
       "phase": "D1–D2",
       "upstream_path": "Agents/05_Product_Video_Agent/README.md"
     },
