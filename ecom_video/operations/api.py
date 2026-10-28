@@ -13,6 +13,7 @@ from ..idea_plans import IdeaPlans
 from ..idea_renderer import engine_key
 from ..products import Products
 from .contracts import ColorPolicy, ObjectRef, Strict, SuiteBrief
+from .flags import features
 from .planner import plan_content
 from .resources import load_resources
 
@@ -154,7 +155,8 @@ def router(root, store):
         except (ValueError, OSError):
             valid = False
         return {
-            "phase": "D2",
+            "phase": "D5",
+            "features": features(),
             "execution_enabled": execution_ready(),
             "content_enabled": enabled() and valid,
             "resources_valid": valid,
@@ -175,6 +177,27 @@ def router(root, store):
         brief, evidence, guard = prepare(root, store, data)
         plan = plan_content(brief, evidence, resources, engine=engine_key())
         return IdeaPlans(root, store).persist(plan, guard=guard)
+
+    @api.get("/plans")
+    def plans():
+        with store.connect() as c:
+            rows = c.execute(
+                "SELECT id,basis,plan,status FROM idea_plans ORDER BY created_at DESC LIMIT 200"
+            ).fetchall()
+        result = []
+        for row in rows:
+            p = json.loads(row["plan"])
+            if p.get("version") == "domestic-creative-v1":
+                result.append(
+                    {
+                        "id": row["id"],
+                        "basis": row["basis"],
+                        "status": row["status"],
+                        "subject": p["subject"],
+                        "version": p["version"],
+                    }
+                )
+        return result
 
     from .execution import ExecutionInput, propose_execution
 

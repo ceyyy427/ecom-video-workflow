@@ -57,3 +57,23 @@ def test_pending_publication_pack_is_traceable_and_never_implies_publish_approva
     path.write_bytes(b"changed")
     with pytest.raises(ValueError):
         publication_pack(records, jid, "douyin", "title", "copy")
+
+
+def test_image_pack_uses_bound_product_assets_or_explicit_schematic(tmp_path):
+    from test_customer import approve, client, picture, project
+
+    from ecom_video.operations.media_pack import image_pack
+    from ecom_video.operations.records import Records
+    from ecom_video.operations.research import create_strategy
+
+    c = client(tmp_path)
+    p = approve(c, picture(c, project(c)))
+    r = Records(tmp_path, c.app.state.store)
+    s = create_strategy(r, p["id"], p["product"]["revision"], "通勤人群", "克制", None)
+    schematic = image_pack(r, s["id"], None)
+    assert schematic["payload"]["display_kind"] == "schematic_not_product_photo"
+    real = image_pack(r, s["id"], p["media"][0]["id"])
+    assert real["payload"]["display_kind"] == "provided_asset_with_literal_text"
+    assert real["payload"]["review_status"] == "pending"
+    with pytest.raises(ValueError):
+        image_pack(r, s["id"], "a" * 32)

@@ -536,6 +536,14 @@ def create_app(root):
     from .operations.review_api import router as operations_review_router
 
     app.include_router(operations_review_router(root, store))
+    from .operations.expansion_api import router as operations_expansion_router
+
+    app.include_router(operations_expansion_router(root, store))
+
+    @app.get("/operations")
+    def operations_page():
+        return FileResponse(WEB / "operations.html")
+
     @app.get("/ideas")
     def ideas_page():
         return FileResponse(WEB / "ideas.html")

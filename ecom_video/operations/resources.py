@@ -67,6 +67,8 @@ class ResourceEntry(Strict):
             "ecom_video/operations/planner.py",
             "ecom_video/operations/observations.py",
             "ecom_video/operations/comments.py",
+            "ecom_video/operations/research.py",
+            "ecom_video/operations/media_pack.py",
         }:
             raise ValueError("适配资源须绑定已审核的本机编排器")
         allowed = {".md", ".txt", ".yaml", ".yml", ".json", ".py"}
@@ -95,7 +97,12 @@ class ResourceLock(Strict):
         if (
             self.schema_version != 1
             or self.bundle_id
-            not in {"domestic-toolkit-d0", "domestic-toolkit-d1", "domestic-toolkit-d4"}
+            not in {
+                "domestic-toolkit-d0",
+                "domestic-toolkit-d1",
+                "domestic-toolkit-d4",
+                "domestic-toolkit-d5",
+            }
             or self.resource_root != "resources/domestic-toolkit"
         ):
             raise ValueError("不支持的资源锁版本或目录")

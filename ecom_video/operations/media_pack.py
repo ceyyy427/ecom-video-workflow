@@ -3,7 +3,9 @@
 import io
 import json
 import re
+import tempfile
 import zipfile
+from pathlib import Path
 
 from ..creative_features import extract
 from ..media import digest, safe_path
@@ -144,3 +146,143 @@ def register_content(records, pack_id, account_id, content_id, reviewer, confirm
             raise ValueError("该作品ID已登记到其他成片；未覆盖绑定")
 
     return records.put("publication_registration", payload, on_create=check)
+
+
+def image_pack(records, strategy_id, asset_id):
+    from PIL import Image, ImageDraw, ImageFont, ImageOps
+
+    from ..customer import Customers
+    from ..media import font_path, run_checked
+    from .research import strategy_state
+
+    state = strategy_state(records, strategy_id)
+    if not state["current"]:
+        raise ValueError(state["reason"])
+    strategy = state["record"]["payload"]
+    project = Customers(records.root, records.store).get(strategy["product_id"])
+    chosen = next(
+        (a for a in project["media"] if a["id"] == asset_id and a["kind"] != "audio"), None
+    )
+    if asset_id and not chosen:
+        raise ValueError("封面素材必须属于当前商品，不能混用其他商品图片")
+    target = project["settings"].get("identity_lock")
+    if chosen and target and chosen["metadata"].get("identity"):
+        identity = chosen["metadata"]["identity"]
+        if any(identity.get(k) != target.get(k) for k in ("sku", "color")):
+            raise ValueError("封面素材与当前单色/款式约束不一致")
+    canvas = Image.new("RGB", (1080, 1440), "#f5f2eb")
+    draw = ImageDraw.Draw(canvas)
+    at = None
+    if chosen:
+        source = safe_path(records.root, chosen["path"])
+        if not source.is_file() or digest(source) != chosen["sha256"]:
+            raise ValueError("封面源素材已变化，请恢复或重新上传")
+        with tempfile.TemporaryDirectory(prefix="ecom-cover-") as temp:
+            if chosen["kind"] == "video":
+                ranges = chosen["metadata"].get("verified_visible_ranges") or []
+                at = ranges[0]["start"] if ranges else chosen["source_in"]
+                frame = Path(temp) / "frame.png"
+                run_checked(
+                    [
+                        "ffmpeg",
+                        "-v",
+                        "error",
+                        "-ss",
+                        str(at),
+                        "-i",
+                        str(source),
+                        "-frames:v",
+                        "1",
+                        str(frame),
+                    ]
+                )
+                source = frame
+            with Image.open(source) as original:
+                photo = ImageOps.contain(
+                    ImageOps.exif_transpose(original).convert("RGB"), (1000, 940)
+                )
+                canvas.paste(photo, ((1080 - photo.width) // 2, (960 - photo.height) // 2))
+    else:
+        draw.rounded_rectangle((100, 140, 980, 840), radius=40, outline="#8f897d", width=3)
+        draw.line((170, 300, 890, 700), fill="#a6a094", width=3)
+        draw.line((170, 700, 890, 300), fill="#a6a094", width=3)
+    font = str(font_path())
+
+    def text(value, top, size, max_lines):
+        # Keep complete model/numerical conditions; shrink, never silently truncate.
+        while size >= 24:
+            f = ImageFont.truetype(font, size)
+            lines, line = [], ""
+            for char in value:
+                if f.getlength(line + char) > 920 and line:
+                    lines.append(line)
+                    line = char
+                else:
+                    line += char
+            if line:
+                lines.append(line)
+            if len(lines) <= max_lines:
+                draw.multiline_text((80, top), "\n".join(lines), font=f, fill="#252c29", spacing=12)
+                return
+            size -= 2
+        raise ValueError("完整文案超过封面布局，请人工选择更短且不删条件的事实原文")
+
+    text(strategy["positioning"]["subject"], 1000, 62, 2)
+    core = strategy["positioning"]["core_selling_point"]
+    text(core["text"] if core else "商品资料待补齐", 1170, 42, 3)
+    text("素材与文案待核对" if chosen else "代码图示 · 非商品照片", 1380, 28, 1)
+    raw = io.BytesIO()
+    canvas.save(raw, format="PNG")
+    payload = {
+        "schema_version": "ImagePackDraft.v1",
+        "strategy_ref": strategy_id,
+        "strategy_basis": state["record"]["basis"],
+        "product_id": strategy["product_id"],
+        "source_asset_id": asset_id,
+        "source_sha256": chosen["sha256"] if chosen else None,
+        "source_frame_at": at,
+        "display_kind": "provided_asset_with_literal_text"
+        if chosen
+        else "schematic_not_product_photo",
+        "review_status": "pending",
+        "copy_fact_refs": [core["id"]] if core else [],
+        "engine_basis": digest(Path(__file__)),
+        "font_sha256": digest(Path(font)),
+        "notes": [
+            "保持提供画面比例，不伪造外观或内部结构",
+            "若素材识别未知，封面主体仍须人工核对；使用权由客户确认",
+        ],
+    }
+    return records.freeze_bytes("image_pack", payload, raw.getvalue(), ".png")
+
+
+def content_matrix(records, plan_id):
+    from ..idea_plans import IdeaPlans
+
+    plan = IdeaPlans(records.root, records.store).get(plan_id)
+    if plan["plan"]["version"] != "domestic-creative-v1":
+        raise ValueError("请选择国内六方向方案")
+    p = plan["plan"]
+    return records.put(
+        "content_matrix",
+        {
+            "schema_version": "ContentMatrixDraft.v1",
+            "plan_ref": plan_id,
+            "plan_basis": plan["basis"],
+            "rows": [
+                {
+                    "option_id": o["id"],
+                    "title": o["name"],
+                    "platform": p["suite_brief"]["platform"],
+                    "narrative": o["narrative"],
+                    "script": o["script"],
+                    "feasibility": o["feasibility"],
+                    "gaps": o.get("gaps", []),
+                    "status": "draft_not_scheduled",
+                }
+                for o in p["options"]
+            ],
+            "scheduling": False,
+            "publishing": False,
+        },
+    )

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "phase": "D4",
-  "status": "local_content_and_review_adapters",
+  "phase": "D5",
+  "status": "seven_local_modules_candidate",
   "upstream": {
     "repository": "heqiangdiao-wq/AI-Cross-Border-Ecommerce-Agent-Toolkit",
     "commit": "cec98a9cab382d28dfe5b4ed0de444f33c455cb5"
@@ -20,14 +20,14 @@
     {
       "id": "01_Market",
       "title": "市场资料",
-      "status": "planned",
+      "status": "adapted_local_rules",
       "phase": "D5",
       "upstream_path": "Agents/01_Market_Research_Agent/README.md"
     },
     {
       "id": "02_Positioning",
       "title": "商品定位",
-      "status": "adapted",
+      "status": "adapted_local_rules",
       "phase": "D1",
       "upstream_path": "Agents/02_Product_Strategy_Agent/README.md"
     },
@@ -41,7 +41,7 @@
     {
       "id": "04_Image",
       "title": "封面图文",
-      "status": "planned",
+      "status": "adapted_local_rules",
       "phase": "D5",
       "upstream_path": "Agents/04_Product_Image_Agent/README.md"
     },
@@ -66,5 +66,6 @@
       "phase": "D4",
       "upstream_path": "Agents/07_Review_Analysis_Agent/README.md"
     }
-  ]
+  ],
+  "runtime_policy": "existing_runtime_opt_in; all human gates retained"
 }
