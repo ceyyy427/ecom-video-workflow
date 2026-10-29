@@ -12,7 +12,7 @@
 
 </div>
 
-**0.18.0 国内运营候选版：**新增市场资料、商品定位、六方向内容、封面图文、视频交接、表现复盘和评论迭代。保留原制作工作台；候选包尚未发布，客户实际听审及最终发布由用户决定。见[候选版能力与限制](docs/DOMESTIC_CAPABILITY_MATRIX.md)、[操作指南](docs/DOMESTIC_SUITE_GUIDE.md)与[工程验收](docs/DOMESTIC_ACCEPTANCE.md)。下方「Mac 快速开始」仍指向已发布版本。
+**0.18.0 国内运营套件：**新增市场资料、商品定位、六方向内容、封面图文、视频交接、表现复盘和评论迭代，保留原制作工作台。软件发布与每条作品的人工听审分开；平台内容由客户自行发布。见[能力与限制](docs/DOMESTIC_CAPABILITY_MATRIX.md)、[操作指南](docs/DOMESTIC_SUITE_GUIDE.md)与[工程验收](docs/DOMESTIC_ACCEPTANCE.md)。
 
 ## 实拍效果
 
@@ -35,7 +35,7 @@
 
 ### 内容运营：从资料到下一版
 
-这是候选版的**实际浏览器截图**。七个模块沿用原工作台的配色和布局，按任务显示常用字段，来源与诊断信息收在展开区域。图中使用工程数据，**不是客户真实账号、运营成绩或人工签收**。
+这是本版的**实际浏览器截图**。七个模块沿用原工作台的配色和布局，按任务显示常用字段，来源与诊断信息收在展开区域。图中使用工程数据，**不是客户真实账号、运营成绩或人工签收**。
 
 ![内容运营工作台实际截图：七模块导航、市场样本导入与有来源的结果](docs/media/readme-domestic-operations.png)
 
@@ -79,7 +79,7 @@
 - **逐镜与版本**：修改影响预告、旧新版本比较与恢复、逐镜审核、已审/待审导出。
 - **复盘闭环**：冻结报表、保留缺失值与口径，关联创意特征、下一版假设和后续数据；不作因果归因。
 
-范围与限制见[能力矩阵](docs/CAPABILITY_MATRIX.md)，本版实现与测试见[0.17.0验收](docs/TYPOGRAPHY_PROMPT_ACCEPTANCE.md)。
+范围与限制见[国内运营能力矩阵](docs/DOMESTIC_CAPABILITY_MATRIX.md)，本版实现与测试见[0.18.0验收](docs/DOMESTIC_ACCEPTANCE.md)；原制作能力见[完整能力矩阵](docs/CAPABILITY_MATRIX.md)。
 
 ## Mac 快速开始
 
@@ -87,8 +87,8 @@
 
 | 文件 | 用途 |
 |---|---|
-| `jianxu-mac-apple-silicon-0.17.0.zip` | 首次安装，含客户操作指南 |
-| `jianxu-update-0.17.0.zip` | 旧版先备份，再从维护页面上传升级 |
+| `jianxu-mac-apple-silicon-0.18.0.zip` | 首次安装；也是旧版完成过渡后上传的完整升级包，含客户操作指南 |
+| `jianxu-loader-bridge-0.17.1.zip` | 0.17.0先从维护页面准备过渡副本并启动，再上传0.18.0完整包；每步先备份 |
 | `SHA256SUMS.txt` | 核对下载文件 |
 
 这是联网安装依赖的源码客户版。需 Python 3.11+、uv、Node.js 22/24、FFmpeg/ffprobe 和中文字幕字体；模型另行下载，软件包不附客户项目或密钥。Windows 入口保留，原生验收另行进行。
@@ -112,7 +112,7 @@ python3 scripts/launch_customer.py
 | 要做什么 | 页面 |
 |---|---|
 | 商品资料、文稿、声音与剪辑 | `/create` |
-| 七模块运营、自然内容冻结与评论迭代 | `/operations`（[候选版指南](docs/DOMESTIC_SUITE_GUIDE.md)） |
+| 七模块运营、自然内容冻结与评论迭代 | `/operations`（[使用指南](docs/DOMESTIC_SUITE_GUIDE.md)） |
 | 国内定位、六个动态方向与发布文案草稿 | `/ideas`（[D1指南](docs/DOMESTIC_D1_USAGE.md)） |
 | 自主选 Prompt 与逐句适配 | `/prompts` |
 | 本机样片与效果参考 | `/samples` |

@@ -1,12 +1,12 @@
-# 国内运营套件 0.18.0 · Mac 候选交付验收
+# 国内运营套件 0.18.0 · Mac 交付验收
 
-2026-10-28，分支 `codex/domestic-suite`。状态：工程候选，真实账号、客户听审与发布仍待处理。不把自动测试夹具当作客户审批；本轮不使用 Computer Use、不自动发布或投放。
+2026-10-28，分支 `codex/domestic-suite`。用户授权最终软件验收及GitHub发布；真实账号与各项目的客户听审仍须独立完成。不把自动测试夹具当作客户审批；本轮不使用 Computer Use，不自动向电商平台发布或投放。
 
 ## 交付内容与入口
 
 保留原UI和客户制作入口，新增 `/operations` 七模块：市场资料、商品定位、内容方案、封面图文、视频交接、表现复盘、评论与迭代。六个7秒真实静音方向在 `/ideas`，采用后回到 `/create`，原事实/文稿/风格/听核/最终分镜/逐镜及整片审核继续有效。
 
-使用步骤见 [Mac指南](MAC_WORKBENCH_GUIDE.md)及[国内运营指南](DOMESTIC_SUITE_GUIDE.md)；范围见[能力矩阵](DOMESTIC_CAPABILITY_MATRIX.md)。最终完整包与0.17.1过渡包均为本地候选，不上传GitHub Release，不合并或覆盖原生产目录。最终包SHA单列于交付目录的SHA256SUMS.txt，不使用较早预审包的SHA。
+使用步骤见 [Mac指南](MAC_WORKBENCH_GUIDE.md)及[国内运营指南](DOMESTIC_SUITE_GUIDE.md)；范围见[能力矩阵](DOMESTIC_CAPABILITY_MATRIX.md)。GitHub v0.18.0提供完整包与0.17.1过渡包，发布不覆盖本机原生产目录。发行包SHA单列于Release附件的SHA256SUMS.txt，不使用较早预审包或候选包的SHA。
 
 ## 实测环境与结果
 
@@ -85,16 +85,24 @@ python scripts/accept_domestic_suite.py --stage mac --workspace ABS_NEW_DIR --ma
 
 完整证据保存在本机 `ecom-domestic-d1-20261028` 至 `ecom-domestic-d6-20261028` 专用目录。D6包含 first-launch.json、asr-page-check.json、customer-flow/acceptance.json、native-workbench/acceptance.json、mac-operations/acceptance.json、first-run-ui/ui-final/acceptance.json、navy-backup-restore-final.json、legacy-bridge-check.json、bridge-to-full-check.json、legacy-db-migration/acceptance.json及各回归日志。早期失败的配置/验收尝试保留，未混入通过结果。
 
-## 发布前仍待完成
+## 客户使用时仍需完成
 
 - 用户实际核对新版两品类方向和作品，逐版完成事实、文稿、风格、听核与成片审核；工程签名不转为真人签名。
 - 抖音应用实际获批video.data并验证本机回调、账户和只读结果；未接账号时使用授权文件导入。小红书通用笔记API仍 unavailable。
 - 提供真实评论和下一轮报表后，才判断期间/指标是否可比；当前不宣称真实运营效果或因果结论。
 - Windows原生另机验证，不在本轮Mac验收结论中；第三方音色、媒体及Remotion的客户使用范围分别核对。
-- 最终由用户验收并发布；本地Fork方法候选和应用候选均不推送。
+- 用户授权软件发布，不会将任何工程确认转换成真实项目的事实、文稿、风格、听核或成片签收。方法Fork按固定提交公开，应用继续使用随包文本快照，不在运行时拉取上游代码。
 
 ## 回滚
 
 未迁移生产安装，可直接继续使用原目录。旧0.17用户先过渡包、再完整包，每步页面自动先备份且保留独立应用/数据目录。关闭新版，从升级前旧应用及旧数据副本启动；禁止旧程序打开schema16数据库、改版本号或合并数据库。新目录须保留，以免丢失升级后新项目。
 
 只停用新功能可设 `ECOM_DOMESTIC_EXECUTION=0`，各运营写模块按指南独立关闭；原制作入口和历史仍可读。撤销连接只清本机钥匙串，平台侧授权另行撤销。备份不含模型、凭据或可重建渲染缓存，恢复后重新检查配置。
+
+## GitHub发行最终复核
+
+收到用户最终验收并发布的指令后，再跑Python完整非浏览器集合：**1116通过、4条件跳过、1排除，267.13秒**；该取景布局用例随后用既有隔离Playwright环境单独补跑，**1通过，1.78秒**，未安装或修改生产依赖。实际合计1117项通过，4项条件跳过，未把跳过项算作通过。Node52项、TypeScript及Ruff再次通过。
+
+再次只读请求8类对象共20个来源文件，全部200且SHA一致；12个预览Range全部206。藏蓝主片继续为needs_review，未新增项目审批。静态字号检查因未解析根路径公共CSS产生误报；桌面30/20/14px、手机28/20/14px经隔离页面验证，仅保存该HTML该条规则的窄范围例外，界面未改动。
+
+发行使用原安装包构建器，逐文件核对清单，并与完整流程实测过的候选包比较运行代码、依赖锁及固定资源；变化仅为发行说明和客户指南。发布附件提供SHA256SUMS.txt及RELEASE_MANIFEST.json。GitHub仅有手动Windows工作流，本次结论来自本机Apple Silicon验收，不宣称远端CI或Windows真机已通过。软件发布不代表客户作品签收，也不会执行平台写入。
