@@ -49,7 +49,7 @@ class Records:
     def __init__(self, root, store):
         self.root, self.store = Path(root), store
 
-    def freeze_bytes(self, kind, payload, raw, suffix):
+    def freeze_bytes(self, kind, payload, raw, suffix, *, on_create=None):
         if (
             suffix not in (".csv", ".json", ".zip", ".png")
             or not isinstance(raw, bytes)
@@ -67,7 +67,9 @@ class Records:
         except FileExistsError:
             if not path.is_file() or digest(path) != sha:
                 raise Conflict("冻结文件已存在且内容不同，保留原文件") from None
-        return self.put(kind, payload, files=[{"path": relative, "sha256": sha}])
+        return self.put(
+            kind, payload, files=[{"path": relative, "sha256": sha}], on_create=on_create
+        )
 
     def get(self, oid, kind=None):
         if not isinstance(oid, str) or not re.fullmatch("[a-f0-9]{32}", oid):

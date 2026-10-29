@@ -16,11 +16,11 @@
     case 'research':return '已提供 '+p.sample_count+' 条样本；缺价 '+p.missing_price_rows+' 条，无法据此推断全市场规模。';
     case 'strategy':return (p.positioning?.subject||'商品')+' · '+(p.positioning?.audience||'')+' · 定位草稿待核对';
     case 'image_pack':return p.display_kind==='schematic_not_product_photo'?'代码图示，非商品照片；待审。':'使用本商品提供画面与原文；封面仍待审核。';
-    case 'publication_pack':return (p.review_status==='pending'?'成片待审':'成片已审，平台文案待核对')+'；此包不会发布或投放。';
+    case 'publication_pack':return (p.review_status==='approved_for_manual_handoff'&&p.handoff_review?.approved_for_handoff===true?'成片已审，平台文案待核对':'成片待审')+'；此包不会发布或投放。'+(p.handoff_review?.blockers?.length?' '+p.handoff_review.blockers.join('；'):'');
     case 'observation_snapshot':return (p.counting==='daily'?'每日观测':'累计观测，不作为日增量')+' · '+(p.rows?.length||0)+' 行，未知不补零。';
     case 'comment_insights':return '本机规则候选；保留行级依据，不自动生成商品事实或回复。';
     case 'hypothesis':return '三个待人工选择的创意假设，没有因果结论。';
-    case 'iteration':return '已创建待确认下一版；事实、文稿、风格、听核与成片审核待完成。';
+    case 'iteration':return '已创建待确认下一版；事实、文稿、风格、听核与成片审核待完成。'+(p.warnings?.length?' '+p.warnings.join('；'):'');
     case 'comparison':return p.comparable?'两轮口径可作描述性对照；不能归因于创意改动。':'当前两轮不可比，缺口已保留；不输出效果增幅。';
     case 'content_matrix':return '六方向的主题与素材矩阵草稿；未安排发布。';
     default:return labels[row.kind]||'已保存本机记录';

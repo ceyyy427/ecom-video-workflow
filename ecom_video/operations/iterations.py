@@ -143,7 +143,7 @@ def select_hypothesis(records, hypothesis_id, candidate_id, reviewer, confirmed)
         + "\n\n待重新确认事实原文：\n"
         + "\n".join(u["text"] for u in units)
     )
-    media = []
+    media, reference_mapping = [], {}
     for asset in job["assets"]:
         if asset["kind"] == "audio":
             continue  # Do not attach an old voice as if it matches a new script.
@@ -154,7 +154,13 @@ def select_hypothesis(records, hypothesis_id, candidate_id, reviewer, confirmed)
         path = directory / "media" / (aid + old.suffix)
         path.parent.mkdir(exist_ok=True)
         shutil.copyfile(old, path)
+        if digest(path) != asset["sha256"]:
+            raise ValueError("复制后的父片素材摘要不符，请重新核对；未创建下一版")
         meta = copy.deepcopy(asset["metadata"])
+        if asset["kind"] == "image":
+            reference_mapping[asset["id"]] = aid
+            if meta.get("library_id"):
+                reference_mapping[meta["library_id"]] = aid
         if meta.get("identity"):
             meta["identity_reference"] = meta.pop("identity")
         # Intake originals belong to the old job. Keep only the actual copied normalized file.
@@ -173,6 +179,13 @@ def select_hypothesis(records, hypothesis_id, candidate_id, reviewer, confirmed)
         if parent_project
         else {"delivery_version": 1, "brief": {"format": "narrated"}}
     ).model_dump()
+    warnings = []
+    old_reference = settings.get("product_reference_id")
+    settings["product_reference_id"] = reference_mapping.get(old_reference)
+    if old_reference and not settings["product_reference_id"]:
+        warnings.append(
+            "父版参照图未随本片素材复制，请在下一版重新上传并选择；原同款及动作检查设置保留"
+        )
     settings["review_context"] = "下一版假设 " + hypothesis_id + "；全部人工确认待完成"
     title = (parent_project["product"]["title"] if parent_project else job["title"])[
         :100
@@ -189,6 +202,7 @@ def select_hypothesis(records, hypothesis_id, candidate_id, reviewer, confirmed)
         "project_id": pid,
         "reference_script": job["script"],
         "human_gates": "all_pending",
+        "warnings": warnings,
         "causal_inference": False,
     }
 

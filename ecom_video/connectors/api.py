@@ -24,6 +24,17 @@ from .oauth import DouyinAuth, enabled
 from .registry import connector_catalog
 from .xhs_import import add_account, freeze_source
 
+DOWNLOAD_KINDS = {
+    "source",
+    "publication_pack",
+    "image_pack",
+    "research",
+    "observation_batch",
+    "observation_snapshot",
+    "comments",
+    "comment_insights",
+}
+
 
 def router(root, store):
     api = APIRouter(prefix="/api/operations")
@@ -120,9 +131,7 @@ def router(root, store):
     @api.get("/objects/{oid}/files/{index}")
     def object_file(oid: str, index: int):
         row = records.get(oid)
-        if row["kind"] not in {"source", "publication_pack", "image_pack"} or not 0 <= index < len(
-            row["files"]
-        ):
+        if row["kind"] not in DOWNLOAD_KINDS or not 0 <= index < len(row["files"]):
             raise HTTPException(404, "文件不存在")
         path = safe_path(root, row["files"][index]["path"])
         return FileResponse(path, filename=path.name)

@@ -1,5 +1,6 @@
 """Local handoff files and declared publication ID mappings. Never platform writes."""
 
+import contextlib
 import io
 import json
 import re
@@ -8,7 +9,42 @@ import zipfile
 from pathlib import Path
 
 from ..creative_features import extract
+from ..db import Conflict
 from ..media import digest, safe_path
+
+
+def _handoff_review(records, job):
+    """Use the original workbench predicate, for this exact active version only."""
+    from ..creative import signature
+    from ..customer import Customers
+    from ..customer_handoff import status
+
+    with records.store.connect() as c:
+        owner = c.execute(
+            "SELECT product_id FROM customer_jobs WHERE job_id=?", (job["id"],)
+        ).fetchone()
+    project = None
+    if owner:
+        # Legacy/incomplete context never grants approval.
+        with contextlib.suppress(KeyError, ValueError):
+            project = Customers(records.root, records.store).get(owner[0])
+    if project and project.get("job") and project["job"]["id"] == job["id"]:
+        review = status(project)
+    else:
+        review = status({"job": job})
+        review.update(approved_for_handoff=False, classification="review")
+        review["blockers"].append("缺少对应活动版本的完整客户审核上下文，请回工作台核对或恢复")
+    context = (
+        {
+            "project_id": project["id"],
+            "revision": project["revision"],
+            "product_revision": project["product"]["revision"],
+            "active_job_id": (project.get("job") or {}).get("id"),
+        }
+        if project
+        else None
+    )
+    return review, signature({"job": job, "context": context, "review": review})
 
 
 def job_binding(records, jid):
@@ -35,18 +71,17 @@ def job_binding(records, jid):
         "script": job["script"],
         "scope": "submitted production parameters; not pixel/audio equivalence or causal evidence",
     }
-    approved = job["status"] == "ready" and any(
-        r["decision"] == "ready"
-        and r["checklist_confirmed"]
-        and not re.search(r"fixture|测试|工程", r["reviewer"] + r["note"], re.I)
-        for r in job["reviews"]
-    )
+    review, review_basis = _handoff_review(records, job)
     return job, {
         "job_id": jid,
         "video_sha256": video["sha256"],
         "input_snapshot_hash": feature["input_snapshot_hash"],
         "features": feature,
-        "review_status": "approved_for_manual_handoff" if approved else "pending",
+        "review_status": "approved_for_manual_handoff"
+        if review["approved_for_handoff"]
+        else "pending",
+        "handoff_review": review,
+        "handoff_basis": review_basis,
         "can_publish": False,
         "platform_writes": 0,
     }
@@ -91,7 +126,17 @@ def publication_pack(records, jid, platform, title, text):
             "由客户登录抖音/小红书上传视频，检查封面、字幕、音乐和素材权限。\n"
             "发布后将作品ID登记到运营工作台；平台导出自然内容报表后导入，广告数据用原投放复盘入口。\n",
         )
-    return records.freeze_bytes("publication_pack", payload, buffer.getvalue(), ".zip")
+
+    def guard(_connection):
+        # Records.put holds the existing SQLite write transaction here. Other writes
+        # cannot change facts/reviews/active version between this check and registration.
+        _, current = _handoff_review(records, records.store.get(jid))
+        if current != binding["handoff_basis"]:
+            raise Conflict("打包期间审核或版本依据已变化，请刷新后重试；未登记交接包")
+
+    return records.freeze_bytes(
+        "publication_pack", payload, buffer.getvalue(), ".zip", on_create=guard
+    )
 
 
 def register_content(records, pack_id, account_id, content_id, reviewer, confirmed):
