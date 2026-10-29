@@ -8,7 +8,7 @@
 
 **Tech Stack:** 既有 Python 3.11+/FastAPI/Pydantic/SQLite、Remotion/FFmpeg、静态工作台、本机模型与独立 VoiceStudio；MCP 官方 SDK 按 D3 独立验证后可选加入。
 
-**Spec:** [国内电商运营套件设计](../specs/2026-10-28-domestic-ecommerce-expansion.md)。日期 2026-10-28；本清单最初为规划，D0 实施与验收见 [D0 记录](../../DOMESTIC_D0_ACCEPTANCE.md)。D1–D6 已完成候选实现、安装/升级及工程回归，最终独立复核和用户实际验收仍待处理。后续授权改为连续推进到 D6，见[执行计划](2026-10-28-domestic-d2-d6-execution.md)。真实账号实接、客户听审和发布继续待办。已完成的六动态预览是复用基线，不重复立项。
+**Spec:** [国内电商运营套件设计](../specs/2026-10-28-domestic-ecommerce-expansion.md)。日期 2026-10-28；本清单最初为规划，D0 实施与验收见 [D0 记录](../../DOMESTIC_D0_ACCEPTANCE.md)。D1–D6 已完成候选实现、安装/升级及工程回归，独立复核三项问题已修复，用户实际验收与发布仍待处理。后续授权改为连续推进到 D6，见[执行计划](2026-10-28-domestic-d2-d6-execution.md)。真实账号实接、客户听审和发布继续待办。已完成的六动态预览是复用基线，不重复立项。
 
 ## Global Constraints
 
@@ -180,12 +180,13 @@ manifest 字段固定为 `cases[{id,category,asset_paths,asset_sha256,source_ref
 
 **涉及文件：**`customer_launcher.py/customer_setup.py/maintenance.py`，`scripts/install_customer.py/launch_customer.py`，现有打包入口（先定位真实文件，不另造平行脚本），`docs/MAC_WORKBENCH_GUIDE.md`、README、许可清单，`tests/test_operations_delivery.py` 与 Mac stage。
 
-- [ ] 先写测试：备份缺文件、断电/磁盘不足、升级包与资源版本不匹配、历史审批与恢复串版、可选 MCP/模型未装；故障时保留旧目录并给可执行处理指引。
-- [ ] 运行失败测试；沿用既有一键启动/配置/维护流程，将运营入口与资源包纳入发行；不打包项目、Cookie、Secret、未经公开许可素材、AGPL 应用或 n8n。
-- [ ] 全新 Apple Silicon 目录安装、检查模型和本机声音、创建两品类项目、六预览、各三条作品、单镜改/比较/恢复、审核导出、报表冻结/新版假设走通；首次下载与就绪耗时分别记录。
-- [ ] 升级前备份；新目录恢复后核对资料/声音/项目/历史审批/文件哈希。验证原安装可继续打开，禁止直接覆盖生产数据或修改旧迁移版本号。
-- [ ] 更新客户指南与能力矩阵，分别列出“实测可用/需账号权限/可选未装/未支持”；README 展示真实工作台与许可媒体，示意图和工程预演明确标识。
-- [ ] 完成全套非 CU 回归、资源/许可/泄密检查和客户实际看听；发布包含版本说明、SHA、回滚包和已知问题。发布范围及客户素材公开授权分别核对，不能把既有样片使用权当公开展示权。
+- [x] 先写测试：备份缺文件、断电/磁盘不足、升级包与资源版本不匹配、历史审批与恢复串版、可选 MCP/模型未装；故障时保留旧目录并给可执行处理指引。
+- [x] 运行失败测试；沿用既有一键启动/配置/维护流程，将运营入口与资源包纳入发行；不打包项目、Cookie、Secret、未经公开许可素材、AGPL 应用或 n8n。
+- [x] 全新 Apple Silicon 目录安装、检查模型和本机声音、创建两品类项目、六预览、各三条作品、单镜改/比较/恢复、审核导出、报表冻结/新版假设走通；首次下载与就绪耗时分别记录。
+- [x] 升级前备份；新目录恢复后核对资料/声音/项目/历史审批/文件哈希。验证原安装可继续打开，禁止直接覆盖生产数据或修改旧迁移版本号。
+- [x] 更新客户指南与能力矩阵，分别列出“实测可用/需账号权限/可选未装/未支持”；README 展示真实工作台与许可媒体，示意图和工程预演明确标识。
+- [x] 完成全套非 CU 工程回归、独立复核与三项修复、资源/许可/泄密检查，整理候选包、版本说明、SHA、回滚和已知问题。
+- [ ] 客户逐版实际看听和最后发布：按用户明确要求保持待办。发布范围及素材公开授权单独核对，工程夹具不作审批，既有样片使用权不等于公开展示权。
 
 **验收命令：**`.venv/bin/python -m pytest -q tests/test_operations_delivery.py`；`node --test tests/web/*.test.cjs`；`render/remotion/node_modules/.bin/tsc --noEmit -p render/remotion/tsconfig.json`；`.venv/bin/python scripts/accept_domestic_suite.py --stage mac --workspace "$ACCEPT_ROOT/D6" --manifest "$MANIFEST" --mode customer`。
 
