@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "flat-type-hierarchy",
+        "value": "*",
+        "files": [
+          "ecom_video/web/operations.html"
+        ],
+        "createdAt": "2026-10-29T03:34:43.879Z",
+        "reason": "Codex verified the linked stylesheet cascade in the installed page: at 1440px h1/h2/body are 30/20/14px; at 390px they are 28/20/14px. Both hierarchy steps exceed 1.25; source and served CSS match. Preserve the existing UI; this finding is a verified false positive."
+      }
+    ]
+  }
+}
